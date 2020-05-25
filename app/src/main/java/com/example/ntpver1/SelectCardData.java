@@ -10,26 +10,17 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class SelectData extends AsyncTask<String, Void, String> {
+public class SelectCardData extends AsyncTask<String, Void, String> {
     private static final String TAG = "";
     private String json = "";
 
     @Override
     protected String doInBackground(String... params) {
-//address,cate,ori_cate,"",geoHash.getGeoHashString(),record[5],record[6],"",store_name);
-        String keyword = (String)params[1];
-        String pay_name = (String)params[2];
-        String category = (String)params[3];
-        String start_at = (String)params[4];
-        String end_at = (String)params[5];
+        String user_id = (String)params[1];
 
         String serverURL = (String)params[0];
-        String postParameters = "keyword=" + keyword
-                + "&pay_name=" + pay_name
-                + "&category=" + category
-                + "&start_at=" + start_at
-                + "&end_at=" + end_at;
-        System.out.println(postParameters);
+        String postParameters = "user_id=" + user_id;
+
         try {
 
             URL url = new URL(serverURL);
@@ -89,5 +80,4 @@ public class SelectData extends AsyncTask<String, Void, String> {
         //doInBackground()로 부터 리턴된 값이 onPostExecute()의 매개변수로 넘어오므로 s를 출력한다.
 //        return s;
     }
-
 }

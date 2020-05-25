@@ -82,6 +82,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
         }
     }
 
+
     public void setClean() {
         Log.d(TAG, "setClean() called");
         items.clear();

@@ -38,8 +38,7 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
     private static final int UPDATE = 2;
     private static final double TEST_LATITUDE_VALUE = 37.245347801;
     private static final double TEST_LONGITUDE_VALUE = 127.01442311;
-    private static final int TEST_RADIUS_VALUE = 7000;
-    //500 -> 5000으로 늘렸음 test 05.20 jjs
+    private static final int TEST_RADIUS_VALUE = 500;
 
     private MapActivity thisClass = this;
     private Activity mapAct;
@@ -123,11 +122,11 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
                 mapManager.getMyLocation();
                 mapManager.showMyLocation();
                 //변경 jjs 05.19 try catch 추가
-                try {
-                    doSearch("",mapManager.getSearchCentermymakerlntlng().latitude, mapManager.getSearchCentermymakerlntlng().longitude , 500 ,  2);
-                } catch (InterruptedException | JSONException | ExecutionException e) {
-                    e.printStackTrace();
-                }
+//                try {
+//                    doSearch("",mapManager.getSearchCentermymakerlntlng().latitude, mapManager.getSearchCentermymakerlntlng().longitude , 500 ,  2);
+//                } catch (InterruptedException | JSONException | ExecutionException e) {
+//                    e.printStackTrace();
+//                }
             }
         });
     }
@@ -266,7 +265,8 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
 
             //변경 jjs 05.19 try catch 추가
             try {
-                doSearch(keyWord, TEST_LATITUDE_VALUE, TEST_LONGITUDE_VALUE, TEST_RADIUS_VALUE, SEARCH);
+                doSearch(keyWord,mapManager.getSearchCentermymakerlntlng().latitude, mapManager.getSearchCentermymakerlntlng().longitude , TEST_RADIUS_VALUE ,  SEARCH);
+//                doSearch(keyWord, TEST_LATITUDE_VALUE, TEST_LONGITUDE_VALUE, TEST_RADIUS_VALUE, SEARCH);
             } catch (InterruptedException | ExecutionException | JSONException e) {
                 e.printStackTrace();
             }
@@ -297,28 +297,29 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
         Log.d(TAG, "doSearch() Called");
 
         dbManager.setSearchValue(keyWord, payCategory, storeCategory, latitude, longitude, radius);
-        dbManager.readData(); //변경 jjs 05.19
-
-        Log.d(TAG, "getStoreList() is called");
         storeAdapter.setClean();
         mapManager.RemovePremarker();
+        dbManager.readData(mapManager, dbManager, storeAdapter, sweetSheet); //변경 jjs 05.25
+        Log.d(TAG, "getStoreList() is called");
         //변경 jjs 05.19 getResults로 list 받아오는 것으로 기존 콜백 list에서 변경
-        for (Store store : dbManager.getResults()) {
-            addResult(store);
-            mapManager.Marking(store);
-        }
+        Log.d(TAG, "1testset");
+//        for (Store store : dbManager.getResults()) {
+//            addResult(store);
+//            mapManager.Marking(store);
+//            Log.d(TAG, "2testset");
+//        }
 
-        if (requestCode == SEARCH) {
-            if (!sweetSheet.isShow()) {
-                try {
-                    sweetSheet.show();
-                } catch (Exception e) {
-                    Toast.makeText(getApplicationContext(), "Please, Wait a second", Toast.LENGTH_SHORT).show();
-                    bottomLayoutState = ON_SEARCH_SETTING_BUTTON;
-                    mySetVisibility(bottomLayoutState);
-                }
-            }
-        }
+//        if (requestCode == SEARCH) {
+//            if (!sweetSheet.isShow()) {
+//                try {
+//                    sweetSheet.show();
+//                } catch (Exception e) {
+//                    Toast.makeText(getApplicationContext(), "Please, Wait a second", Toast.LENGTH_SHORT).show();
+//                    bottomLayoutState = ON_SEARCH_SETTING_BUTTON;
+//                    mySetVisibility(bottomLayoutState);
+//                }
+//            }
+//        }
     }
     //가시성 설정
     private void mySetVisibility(final int bottomLayoutState) {

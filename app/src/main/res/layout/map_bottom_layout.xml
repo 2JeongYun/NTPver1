@@ -76,14 +76,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginRight="3dp"
-                            android:text="지역화폐"
+                            android:text="kyonggipay"
                             android:textSize="13sp" />
 
                         <CheckBox
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginRight="3dp"
-                            android:text="제로페이"
+                            android:text="zeropay"
                             android:textSize="13sp" />
 
                         <CheckBox

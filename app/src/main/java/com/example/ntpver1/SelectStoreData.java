@@ -121,6 +121,7 @@ public class SelectStoreData extends AsyncTask<String, Void, String> {
         super.onPostExecute(json_string);
         Log.d(TAG, "onPostExecute() start");
         json_string = json_string.replaceAll("thereisnodata","");
+        Log.d(TAG, json_string);
         if (!json_string.contains("thereisnodata")) {
             if (!json_string.equals("")) {
                 if (!json_string.contains("error")) {
@@ -141,14 +142,18 @@ public class SelectStoreData extends AsyncTask<String, Void, String> {
                             storeAdapter.addItem(store);
                         }
 
+                        ((MapActivity)MapActivity.mapContext).refreshList();
+
+                        /*
                         sweetSheet.show();
-//                        if (!sweetSheet.isShow()) {
-//                            try {
-//                                sweetSheet.show();
-//                            } catch (Exception e) {
-////                                Toast.makeText(getApplicationContext(), "Please, Wait a second", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
+                        if (!sweetSheet.isShow()) {
+                            try {
+                                sweetSheet.show();
+                            } catch (Exception e) {
+                                Toast.makeText(getApplicationContext(), "Please, Wait a second", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                       */
                     } catch (JSONException e) {
                         Log.d(TAG, "json error");
                     }

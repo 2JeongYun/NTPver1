@@ -42,7 +42,7 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
 
     private MapActivity thisClass = this;
     private Activity mapAct;
-    private Context mapContext;
+    public static Context mapContext;
 
     MyTool myTool;
     DBManager dbManager;
@@ -65,7 +65,8 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
     SupportMapFragment mapFragment;
     GoogleMap map;
 
-    //리싸이클러뷰 어댑터
+    //리싸이클러뷰
+    RecyclerView resultRecyclerView;
     StoreAdapter storeAdapter;
 
     //검색바
@@ -88,7 +89,7 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
         setContentView(R.layout.activity_map);
 
         mapAct = MapActivity.this;
-        mapContext = getApplicationContext();
+        mapContext = this;
 
         imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
 
@@ -194,8 +195,7 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
 
     //리싸이클러뷰
     protected void setRecyclerView() {
-        RecyclerView resultRecyclerView = ssView.findViewById(R.id.result_recycler_view);
-
+        resultRecyclerView = ssView.findViewById(R.id.result_recycler_view);
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         resultRecyclerView.setLayoutManager(layoutManager);
@@ -309,17 +309,17 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
 //            Log.d(TAG, "2testset");
 //        }
 
-//        if (requestCode == SEARCH) {
-//            if (!sweetSheet.isShow()) {
-//                try {
-//                    sweetSheet.show();
-//                } catch (Exception e) {
-//                    Toast.makeText(getApplicationContext(), "Please, Wait a second", Toast.LENGTH_SHORT).show();
-//                    bottomLayoutState = ON_SEARCH_SETTING_BUTTON;
-//                    mySetVisibility(bottomLayoutState);
-//                }
-//            }
-//        }
+        if (requestCode == SEARCH) {
+            if (!sweetSheet.isShow()) {
+                try {
+                    sweetSheet.show();
+                } catch (Exception e) {
+                    Toast.makeText(getApplicationContext(), "Please, Wait a second", Toast.LENGTH_SHORT).show();
+                   bottomLayoutState = ON_SEARCH_SETTING_BUTTON;
+                    mySetVisibility(bottomLayoutState);
+               }
+            }
+        }
     }
     //가시성 설정
     private void mySetVisibility(final int bottomLayoutState) {
@@ -340,6 +340,11 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
                 ssView.findViewById(R.id.result_rlayout).setVisibility(View.VISIBLE);
                 break;
         }
+    }
+
+    public void refreshList() {
+        Log.d(TAG, "refreshList() is called");
+        storeAdapter.notifyDataSetChanged();
     }
 
     public Activity getActivity() {

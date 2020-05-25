@@ -70,10 +70,9 @@ public class SearchFragment extends Fragment implements MaterialSearchBar.OnSear
         //Test
 
         ArrayList<String> test = new ArrayList<>();
-        addResult(new Store(test, "TEST", "TEST", "TEST", 3, 33.3, 3.3));
-        addResult(new Store(test, "TEST", "TEST", "TEST", 3, 33.3, 3.3));
-        addResult(new Store(test, "TEST", "TEST", "TEST", 3, 33.3, 3.3));
-
+        addResult(new Store(test, "TEST", "TEST", "TEST", "TEST", 3, 33.3, 3.3));
+        addResult(new Store(test, "TEST", "TEST", "TEST", "TEST", 3, 33.3, 3.3));
+        addResult(new Store(test, "TEST", "TEST", "TEST", "TEST", 3, 33.3, 3.3));
     }
 
     //카테고리버튼 클릭리스너

@@ -27,6 +27,15 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/addressTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:maxLines="1"
+                android:text="지번주소"
+                android:textSize="14sp" />
+
+            <TextView
                 android:id="@+id/phoneTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -34,29 +43,30 @@
                 android:text="전화번호"
                 android:textSize="13sp" />
 
-            <TextView
-                android:id="@+id/starTextView"
+            <LinearLayout
+                android:id="@+id/star_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:maxLines="1"
-                android:text="별점"
-                android:textColor="#FFE700"
-                android:textSize="12sp" />
+                android:orientation="horizontal"
+                android:layout_marginTop="2dp">
+
+                <RatingBar
+                    android:id="@+id/rating_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:numStars="5"
+                    android:rating="0"
+                    android:isIndicator="true"
+                    android:progressTint="@color/ratingBar"
+                    style="@style/Widget.AppCompat.RatingBar.Small" />
+
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
-
-            <TextView
-                android:id="@+id/distanceTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:maxLines="1"
-                android:text="거리"
-                android:textSize="13sp" />
         </LinearLayout>
 
     </LinearLayout>

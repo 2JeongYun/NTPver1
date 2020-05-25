@@ -5,15 +5,17 @@ import java.util.ArrayList;
 public class Store {
     ArrayList<String> pays;
     String name;
+    String address;
     String phone;
     String type;
     double latitude;
     double longitude;
     int star;
 
-    public Store(ArrayList<String> pays, String name, String phone, String type, int star, double latitude, double longitude) {
+    public Store(ArrayList<String> pays, String name, String address, String phone, String type, int star, double latitude, double longitude) {
         this.pays = pays;
         this.name = name;
+        this.address = address;
         this.phone = phone;
         this.type = type;
         this.star = star;
@@ -75,5 +77,13 @@ public class Store {
 
     public void setStar(int star) {
         this.star = star;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

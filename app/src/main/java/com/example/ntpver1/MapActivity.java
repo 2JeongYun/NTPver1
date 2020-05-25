@@ -342,6 +342,7 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
         }
     }
 
+    //리스트 갱신 (무식하게 엎는 방법)
     public void refreshList() {
         Log.d(TAG, "refreshList() is called");
         storeAdapter.notifyDataSetChanged();

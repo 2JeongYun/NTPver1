@@ -252,10 +252,10 @@ public class DBManager {
         this.valid_thru = valid_thru;
     }
 
-    private Store makeStore(String payName, String storeName, String phoneNumber, String category, double latitude, double longitude) {
+    private Store makeStore(String payName, String storeName, String address, String phoneNumber, String category, double latitude, double longitude) {
         ArrayList<String> pays = new ArrayList<>();
         pays.add(payName);
-        Store s = new Store(pays, storeName, phoneNumber, category, 0, latitude, longitude);
+        Store s = new Store(pays, storeName, address, phoneNumber, category, 0, latitude, longitude);
         return s;
     }
 

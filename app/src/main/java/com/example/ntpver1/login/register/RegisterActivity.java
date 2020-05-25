@@ -9,12 +9,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.example.ntpver1.R;
 
 public class RegisterActivity extends Activity {
 
     Button confirmButton;
+    EditText emailEditText;
+    EditText passwordEditText;
+    EditText certificationEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,22 +32,35 @@ public class RegisterActivity extends Activity {
 
     private void init() {
         confirmButton = findViewById(R.id.confirm_button);
-        //TEST 메일 인증절차 구현 완료시 변경할 것
-        enableConfirm();
-        //
+        emailEditText = findViewById(R.id.email);
+        passwordEditText = findViewById(R.id.password);
+        certificationEditText = findViewById(R.id.certification);
+
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String email = emailEditText.getText().toString();
+                String pw = passwordEditText.getText().toString();
+                String cert = certificationEditText.getText().toString();
+
+                if (!email.equals("") && !pw.equals("") && isCertValid(cert)) {
+                    register(email, pw);
+                }
+
                 finish();
             }
         });
     }
 
-    //완료버튼 활성화
-    private void enableConfirm() {
-        if (true) {
-            confirmButton.setEnabled(true);
-        }
+    //인증확인
+    //TEST
+    public boolean isCertValid(String cert) {
+        return true;
+    }
+
+    //등록하기
+    public void register(String email, String pw) {
+
     }
 
     //외부 터치시 종료하지 않도록 함

@@ -6,6 +6,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -44,16 +47,19 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+        int star;
         TextView nameTextView;
         TextView phoneTextView;
-        TextView starTextView;
+        TextView addressTextView;
+        RatingBar ratingBar;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             nameTextView = itemView.findViewById(R.id.nameTextView);
             phoneTextView = itemView.findViewById(R.id.phoneTextView);
-            starTextView = itemView.findViewById(R.id.starTextView);
+            addressTextView = itemView.findViewById(R.id.addressTextView);
+            ratingBar = itemView.findViewById(R.id.rating_bar);
 
             //클릭 리스너 : 리스너를 별도로 설정했을시 설정한 리스너로 동작
             nameTextView.setOnClickListener(new View.OnClickListener() {
@@ -78,10 +84,10 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
         public void setItem(Store item) {
             nameTextView.setText(item.getName());
             phoneTextView.setText(item.getPhone());
-            starTextView.setText(Integer.toString(item.getStar()));
+            addressTextView.setText(item.getAddress());
+            ratingBar.setRating(item.getStar());
         }
     }
-
 
     public void setClean() {
         Log.d(TAG, "setClean() called");

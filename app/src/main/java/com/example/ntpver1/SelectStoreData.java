@@ -42,10 +42,10 @@ public class SelectStoreData extends AsyncTask<String, Void, String> {
         this.results = new ArrayList<>();
     }
 
-    private Store makeStore(String payName, String storeName, String phoneNumber, String category, double latitude, double longitude) {
+    private Store makeStore(String payName, String storeName, String address, String phoneNumber, String category, double latitude, double longitude) {
         ArrayList<String> pays = new ArrayList<>();
         pays.add(payName);
-        Store s = new Store(pays, storeName, phoneNumber, category, 0, latitude, longitude);
+        Store s = new Store(pays, storeName, address, phoneNumber, category, 0, latitude, longitude);
         return s;
     }
 
@@ -132,11 +132,12 @@ public class SelectStoreData extends AsyncTask<String, Void, String> {
                             String payName = jsonObject.getString("pay_name");
                             String storeName = jsonObject.getString("store_name");
                             Log.d(TAG, storeName);
+                            String address = jsonObject.getString("address");
                             String phoneNumber = jsonObject.getString("phone_number");
                             String category = jsonObject.getString("category");
                             double latitude = jsonObject.getDouble("latitude");
                             double longitude = jsonObject.getDouble("longitude");
-                            Store store = makeStore(payName, storeName, phoneNumber, category, latitude, longitude);
+                            Store store = makeStore(payName, storeName, address, phoneNumber, category, latitude, longitude);
                             results.add(store);
                             mapManager.Marking(store);
                             storeAdapter.addItem(store);

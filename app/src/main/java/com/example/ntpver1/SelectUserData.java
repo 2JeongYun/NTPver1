@@ -16,10 +16,9 @@ public class SelectUserData extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... params) {
-//address,cate,ori_cate,"",geoHash.getGeoHashString(),record[5],record[6],"",store_name);
+
         String email = (String)params[1];
         String password = (String)params[2];
-//        컬럼명certificate
 
         String serverURL = (String)params[0];
         String postParameters = "email=" + email

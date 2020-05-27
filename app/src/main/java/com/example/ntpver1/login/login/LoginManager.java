@@ -1,16 +1,24 @@
 package com.example.ntpver1.login.login;
 
+import com.example.ntpver1.DBManager;
+
+import org.json.JSONException;
+
+import java.util.concurrent.ExecutionException;
+
 public class LoginManager {
 
     private LoginManager() {}
 
     private static LoginManager loginManager;
+
+    DBManager dbManager = DBManager.getInstance();
     User user;
 
-    public boolean login(String email, String pw) {
+    public boolean login(String email, String pw) throws InterruptedException, ExecutionException, JSONException {
         //Test
-
-        return true;
+        dbManager.setSearchUserValue(email, pw);
+        return dbManager.readUserData();
     }
 
     public User getUser() {

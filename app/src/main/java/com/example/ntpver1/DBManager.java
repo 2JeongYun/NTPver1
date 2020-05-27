@@ -88,15 +88,12 @@ public class DBManager {
         }
     }
 
-    //유저정보찾기 jjs 05.25
-    public void readUserData() throws ExecutionException, InterruptedException, JSONException {
-            String json_string = "";
-            SelectUserData task = new SelectUserData();
-            task.execute("http://" + this.IP_ADDRESS + "/select_user.php", this.email, this.password);
-            String result = task.get();
-            json_string = result;
-            System.out.println(json_string);
-            JSONArray jsonArray = new JSONArray(json_string);
+    //유저정보찾기 jjs 05.25 login failed 판별을 위해 boolean 으로 바꿈 jjs 05.27
+    public boolean readUserData() throws ExecutionException, InterruptedException, JSONException {
+        SelectUserData task = new SelectUserData();
+        task.execute("http://" + this.IP_ADDRESS + "/select_user.php", this.email, this.password);
+        String result = task.get();
+        return !result.contains("FAIL");
     }
 
     //카드정보찾기 jjs 05.25

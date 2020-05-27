@@ -15,6 +15,10 @@ import com.example.ntpver1.fragments.MenuActivity;
 import com.example.ntpver1.login.find_pw.FindPWActivity;
 import com.example.ntpver1.login.register.RegisterActivity;
 
+import org.json.JSONException;
+
+import java.util.concurrent.ExecutionException;
+
 public class LoginActivity extends AppCompatActivity {
     private static final int REGISTER_ACTIVITY_CODE = 3;
     private static final String TAG = "LoginActivity";
@@ -50,10 +54,18 @@ public class LoginActivity extends AppCompatActivity {
                 String email = emaliEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
                 if (!email.equals("") && !password.equals("")) {
-                    if (loginManager.login(email, password)) {
-                        Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
-                        startActivity(intent);
-                    };
+                    try { // 비동기로 인한 try catch 추가 jjs 05.27
+                        if (loginManager.login(email, password)) {
+                            Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
+                            startActivity(intent);
+                        }
+                        else{
+                            Toast.makeText(getApplicationContext(), "올바른 이메일과 패스워드를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "onClick: Login FAIL!");
+                        }
+                    } catch (InterruptedException | ExecutionException | JSONException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     Toast.makeText(getApplicationContext(), "이메일과 패스워드를 입력해주세요.", Toast.LENGTH_SHORT).show();
                 }

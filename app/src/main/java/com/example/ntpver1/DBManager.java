@@ -27,8 +27,6 @@ public class DBManager {
         results = new ArrayList<>();
         payCategory = new ArrayList<>();
         storeCategory = new ArrayList<>();
-
-        setTest();
     }
 
     private static DBManager dbManager;
@@ -72,14 +70,6 @@ public class DBManager {
         return dbManager;
     }
 
-    private void setTest() {
-        keyWord = "치킨";
-        payCategory.add("경기페이");
-        payCategory.add("제로페이");
-        storeCategory.add("음식점");
-        storeCategory.add("식료품점");
-    }
-
     //가게정보찾기
     public void readData(MapManager mapManager, DBManager dbManager, StoreAdapter storeAdapter, SweetSheet sweetSheet) throws ExecutionException, InterruptedException {
         Set<GeoHashQuery> newQueries = GeoHashQuery.queriesAtLocation(new GeoLocation(this.latitude, this.longitude), this.radius);
@@ -95,35 +85,7 @@ public class DBManager {
             payString = payString.replace("]", "");
             task.execute("http://" + IP_ADDRESS + "/select.php", this.keyWord, payString, "", query.getStartValue(), query.getEndValue());
             String result = task.get();
-//            if(!result.contains("thereisnodata")) {
-//                json_string += result;
-//            }
-        }//for문끝
-/*
-        if(!json_string.equals("")) {
-            if(!json_string.contains("error")) {
-                JSONArray jsonArray = new JSONArray(json_string);
-                for (int i = 0; i < 10; i++) {
-                    JSONObject jsonObject = jsonArray.getJSONObject(i);
-                    String payName = jsonObject.getString("pay_name");
-                    String storeName = jsonObject.getString("store_name");
-//                    System.out.println(storeName);
-                    String phoneNumber = jsonObject.getString("phone_number");
-                    String category = jsonObject.getString("category");
-                    double latitude = jsonObject.getDouble("latitude");
-                    double longitude = jsonObject.getDouble("longitude");
-                    results.add(makeStore(payName, storeName, phoneNumber, category, latitude, longitude));
-                }
-            }
-            else{
-                Log.d(TAG, "readData: db error");
-            }
         }
-        else{
-            Log.d(TAG, "readData: empty list");
-        }
-
- */
     }
 
     //유저정보찾기 jjs 05.25
@@ -163,16 +125,17 @@ public class DBManager {
     }
 
     //유저정보등록하기 jjs 05.25
-    public void writeConsumptionlistData() throws ExecutionException, InterruptedException, JSONException {
+    public void writeUserData() throws ExecutionException, InterruptedException, JSONException {
         String json_string = "";
-        InsertCardData task = new InsertCardData();
-        task.execute("http://" + this.IP_ADDRESS + "/insert_user.php", this.email, this.user_id, this.password, this.user_name, this.phone_number);
+        InsertUserData task = new InsertUserData();
+        task.execute("http://" + this.IP_ADDRESS + "/insert_user.php", this.email, this.password, this.user_name, this.phone_number);
         String result = task.get();
         if (result.equals("success")) {
             System.out.println(result);
         }
         else{
-            System.out.println("error");
+//            System.out.println("error");
+            System.out.println(result);
         }
     }
 
@@ -196,9 +159,9 @@ public class DBManager {
     }
 
     //카드정보찾기설정 05.25 jjs
-    public void setSearchCardValue(String user_id) {
+    public void setSearchCardValue(String email) {
         //user_id
-        this.user_id = user_id;
+        this.email = email;
     }
 
     //소비리스트정보찾기설정 05.25 jjs
@@ -236,19 +199,19 @@ public class DBManager {
     }
 
     //유저등록설정 05.25 jjs
-    public void setInsertUserValue(String email, String user_id, String password, String user_name, String phone_number) {
+    public void setInsertUserValue(String email, String password, String user_name, String phone_number) {
         this.email = email;
-        this.user_id = user_id;
+//        this.user_id = user_id;
         this.password = password;
         this.user_name = user_name;
         this.phone_number = phone_number;
     }
 
     //카드등록설정 05.25 jjs
-    public void setInsertCardValue(String card_kinds, String card_number, String user_id, String valid_thru) {
+    public void setInsertCardValue(String card_kinds, String card_number, String email, String valid_thru) {
         this.card_kinds = card_kinds;
         this.card_number = card_number;
-        this.user_id = user_id;
+        this.email = email;
         this.valid_thru = valid_thru;
     }
 
@@ -258,7 +221,6 @@ public class DBManager {
         Store s = new Store(pays, storeName, address, phoneNumber, category, 0, latitude, longitude);
         return s;
     }
-
 
     private Store reduplicationChecker(String storeName, String phoneNumber, double latitude, double longitude){
         for(Store x : results) {

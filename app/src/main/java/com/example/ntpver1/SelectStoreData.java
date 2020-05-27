@@ -93,7 +93,6 @@ public class SelectStoreData extends AsyncTask<String, Void, String> {
                 inputStream = httpURLConnection.getErrorStream();
             }
 
-
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
@@ -104,10 +103,8 @@ public class SelectStoreData extends AsyncTask<String, Void, String> {
                 toJson += line;
             }
 
-
             bufferedReader.close();
             return toJson;
-
 
         } catch (Exception e) {
 

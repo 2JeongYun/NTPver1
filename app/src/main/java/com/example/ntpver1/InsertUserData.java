@@ -16,21 +16,20 @@ public class InsertUserData extends AsyncTask<String, Void, String> {
 
     @Override
     protected String doInBackground(String... params) {
-//address,cate,ori_cate,"",geoHash.getGeoHashString(),record[5],record[6],"",store_name);
+
         String email = (String)params[1];
-        String user_id = (String)params[2];
-        String password = (String)params[3];
-        String user_name = (String)params[4];
-        String phone_number = (String)params[5];
-//        컬럼명certificate
+//        String user_id = (String)params[2];
+        String password = (String)params[2];
+        String user_name = (String)params[3];
+        String phone_number = (String)params[4];
 
         String serverURL = (String)params[0];
+
         String postParameters = "email=" + email
                 + "&password=" + password
-                + "&user_id=" + user_id
                 + "&phone_number=" + phone_number
                 + "&user_name=" + user_name;
-
+        System.out.println(postParameters);
         try {
 
             URL url = new URL(serverURL);

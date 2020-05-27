@@ -5,13 +5,19 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.ntpver1.DBManager;
 import com.example.ntpver1.R;
+
+import org.json.JSONException;
+
+import java.util.concurrent.ExecutionException;
 
 public class RegisterActivity extends Activity {
 
@@ -19,6 +25,7 @@ public class RegisterActivity extends Activity {
     EditText emailEditText;
     EditText passwordEditText;
     EditText certificationEditText;
+    DBManager dbManager = DBManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +51,12 @@ public class RegisterActivity extends Activity {
                 String cert = certificationEditText.getText().toString();
 
                 if (!email.equals("") && !pw.equals("") && isCertValid(cert)) {
-                    register(email, pw);
+                    try {
+                        register(email, pw, "jongsang", "010-0000-0000");
+                    } catch (InterruptedException | JSONException | ExecutionException e) {
+                        e.printStackTrace();//insert에러 발생시 빨간색으로 바꾸기추가해야됨 jjs
+                    }
                 }
-
-                finish();
             }
         });
     }
@@ -59,8 +68,11 @@ public class RegisterActivity extends Activity {
     }
 
     //등록하기
-    public void register(String email, String pw) {
-
+    public void register(String email, String password, String user_name, String phone_number) throws InterruptedException, ExecutionException, JSONException {
+        System.out.println(email + "\n" + password+ "\n" + user_name+ "\n" + phone_number+ "\n");
+        dbManager.setInsertUserValue(email, password, user_name, phone_number);
+        dbManager.writeUserData();
+        finish();
     }
 
     //외부 터치시 종료하지 않도록 함

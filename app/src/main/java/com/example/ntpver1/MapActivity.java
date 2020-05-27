@@ -303,11 +303,6 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
         Log.d(TAG, "getStoreList() is called");
         //변경 jjs 05.19 getResults로 list 받아오는 것으로 기존 콜백 list에서 변경
         Log.d(TAG, "1testset");
-//        for (Store store : dbManager.getResults()) {
-//            addResult(store);
-//            mapManager.Marking(store);
-//            Log.d(TAG, "2testset");
-//        }
 
         if (requestCode == SEARCH) {
             if (!sweetSheet.isShow()) {

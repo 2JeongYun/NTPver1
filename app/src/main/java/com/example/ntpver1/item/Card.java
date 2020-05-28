@@ -1,46 +1,56 @@
 package com.example.ntpver1.item;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Card {
-    String type;
-    String number;
-    String validity;
-    ArrayList<String> usageHistory;
+    String card_kinds;
+    String card_number;
+    Date valid_thru;
+    ArrayList<Consumptionlist> usageHistory;
+    int id;
 
     public Card() {
         usageHistory = new ArrayList<>();
     }
 
-    public void setUsageHistory(ArrayList<String> usageHistory) {
+    public void setUsageHistory(ArrayList<Consumptionlist> usageHistory) {
         this.usageHistory = usageHistory;
     }
 
-    public ArrayList<String> getUsageHistory() {
+    public ArrayList<Consumptionlist> getUsageHistory() {
         return this.usageHistory;
     }
 
-    public String getType() {
-        return type;
+    public String getCard_kinds() {
+        return this.card_kinds;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setCard_kinds(String card_kinds) {
+        this.card_kinds = card_kinds;
     }
 
-    public String getNumber() {
-        return number;
+    public String getCard_number() {
+        return this.card_number;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setCard_number(String card_number) {
+        this.card_number = card_number;
     }
 
-    public String getValidity() {
-        return validity;
+    public int getId() {
+        return this.id;
     }
 
-    public void setValidity(String validity) {
-        this.validity = validity;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Date getValid_thru() {
+        return valid_thru;
+    }
+
+    public void setValid_thru(Date valid_thru) {
+        this.valid_thru = valid_thru;
     }
 }

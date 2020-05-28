@@ -9,6 +9,7 @@ public class Card {
     Date valid_thru;
     ArrayList<Consumptionlist> usageHistory;
     int id;
+    int balance;
 
     public Card() {
         usageHistory = new ArrayList<>();
@@ -44,6 +45,14 @@ public class Card {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public int getBalance() {
+        return this.balance;
+    }
+
+    public void setBalance(int balance) {
+        this.balance = balance;
     }
 
     public Date getValid_thru() {

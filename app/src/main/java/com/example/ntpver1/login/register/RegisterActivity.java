@@ -25,6 +25,8 @@ public class RegisterActivity extends Activity {
     EditText emailEditText;
     EditText passwordEditText;
     EditText certificationEditText;
+    EditText nameEditText;
+    EditText phoneEditText;
     DBManager dbManager = DBManager.getInstance();
 
     @Override
@@ -42,6 +44,8 @@ public class RegisterActivity extends Activity {
         emailEditText = findViewById(R.id.email);
         passwordEditText = findViewById(R.id.password);
         certificationEditText = findViewById(R.id.certification);
+        nameEditText = findViewById(R.id.name);
+        phoneEditText = findViewById(R.id.phone);
 
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,10 +53,13 @@ public class RegisterActivity extends Activity {
                 String email = emailEditText.getText().toString();
                 String pw = passwordEditText.getText().toString();
                 String cert = certificationEditText.getText().toString();
+                String name = nameEditText.getText().toString();
+                String phone = phoneEditText.getText().toString();
 
-                if (!email.equals("") && !pw.equals("") && isCertValid(cert)) {
+                if (!email.equals("") && !pw.equals("")
+                        && !name.equals("") && !phone.equals("") && isCertValid(cert)) {
                     try {
-                        register(email, pw, "jongsang", "010-0000-0000");
+                        register(email, pw, name, phone);
                     } catch (InterruptedException | JSONException | ExecutionException e) {
                         e.printStackTrace();//insert에러 발생시 빨간색으로 바꾸기추가해야됨 jjs
                     }

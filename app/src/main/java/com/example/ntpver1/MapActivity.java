@@ -121,7 +121,6 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
                 mapManager = MapManager.getInstance(map, thisClass);
                 mapManager.checkPermission();
                 mapManager.getMyLocation();
-                mapManager.showMyLocation();
                 //변경 jjs 05.19 try catch 추가
 //                try {
 //                    doSearch("",mapManager.getSearchCentermymakerlntlng().latitude, mapManager.getSearchCentermymakerlntlng().longitude , 500 ,  2);
@@ -265,7 +264,7 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
 
             //변경 jjs 05.19 try catch 추가
             try {
-                doSearch(keyWord,mapManager.getSearchCentermymakerlntlng().latitude, mapManager.getSearchCentermymakerlntlng().longitude , TEST_RADIUS_VALUE ,  SEARCH);
+                doSearch(keyWord,mapManager.SearchCenter.latitude, mapManager.SearchCenter.longitude , TEST_RADIUS_VALUE ,  SEARCH);
 //                doSearch(keyWord, TEST_LATITUDE_VALUE, TEST_LONGITUDE_VALUE, TEST_RADIUS_VALUE, SEARCH);
             } catch (InterruptedException | ExecutionException | JSONException e) {
                 e.printStackTrace();

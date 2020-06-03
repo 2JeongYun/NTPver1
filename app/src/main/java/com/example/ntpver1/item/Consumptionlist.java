@@ -2,8 +2,10 @@ package com.example.ntpver1.item;
 
 import androidx.annotation.NonNull;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.SimpleTimeZone;
 
 public class Consumptionlist {
     int balance;
@@ -68,5 +70,11 @@ public class Consumptionlist {
 
     public void setUser_email(String user_email) {
         this.user_email = user_email;
+    }
+
+    public String getDateAsString() {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String date = format.format(this.pay_date);
+        return date;
     }
 }

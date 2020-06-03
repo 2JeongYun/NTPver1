@@ -3,6 +3,7 @@ package com.example.ntpver1.fragments;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,10 +18,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MenuActivity extends AppCompatActivity implements OnTabItemSelectedListener {
     private static final String TAG = "MenuActivity";
+    public static Context mContext;
 
     MyInfoFragment myInfoFragment;
     SearchFragment searchFragment;
-
+    CardInfoFragment cardInfoFragment;
     BottomNavigationView bottomNavigation;
 
     @Override
@@ -32,8 +34,10 @@ public class MenuActivity extends AppCompatActivity implements OnTabItemSelected
     }
 
     private void init() {
+        mContext = this;
         myInfoFragment = new MyInfoFragment();
         searchFragment = new SearchFragment();
+        cardInfoFragment = new CardInfoFragment();
 
         //프래그먼트 매니저
         getSupportFragmentManager().beginTransaction().replace(  R.id.container, myInfoFragment).commit();
@@ -74,5 +78,9 @@ public class MenuActivity extends AppCompatActivity implements OnTabItemSelected
         } else if (position == 2) {
             bottomNavigation.setSelectedItemId(R.id.map_tab);
         }
+    }
+
+    public void startCardInfoFragment() {
+        getSupportFragmentManager().beginTransaction().replace(  R.id.container, cardInfoFragment).commit();
     }
 }

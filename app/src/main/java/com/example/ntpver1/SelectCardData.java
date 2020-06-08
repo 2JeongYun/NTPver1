@@ -10,16 +10,31 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import android.content.Intent;
+import android.view.View;
+
+import com.example.ntpver1.fragments.MyInfoFragment;
+
+import com.example.ntpver1.adapter.CardAdapter;
+import com.example.ntpver1.item.Card;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+
 public class SelectCardData extends AsyncTask<String, Void, String> {
     private static final String TAG = "";
     private String json = "";
+    CardAdapter cardAdapter = new CardAdapter();
+    DBManager dbManager = DBManager.getInstance();
 
     @Override
     protected String doInBackground(String... params) {
-        String user_id = (String)params[1];
+        String user_email = (String)params[1];
 
         String serverURL = (String)params[0];
-        String postParameters = "user_id=" + user_id;
+        String postParameters = "user_email=" + user_email;
 
         try {
 
@@ -74,10 +89,32 @@ public class SelectCardData extends AsyncTask<String, Void, String> {
 
     }
     @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
+    protected void onPostExecute(String json_string) {
+        super.onPostExecute(json_string);
 
-        //doInBackground()로 부터 리턴된 값이 onPostExecute()의 매개변수로 넘어오므로 s를 출력한다.
-//        return s;
+        if (!json_string.contains("FAIL")) {
+            try {
+                JSONArray jsonArray = new JSONArray(json_string);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    int balance = jsonObject.getInt("balance");
+                    String card_kinds = jsonObject.getString("card_kinds");
+                    int id = jsonObject.getInt("id");
+                    Card card = new Card();
+                    card.setBalance(balance);
+                    card.setId(id);
+                    card.setId(id);
+                    card.setCard_kinds(card_kinds);
+                    Log.d(TAG, "onPostExecute: " + card_kinds);
+                    cardAdapter.addItem(card);
+                }
+            }
+            catch (JSONException e) {
+                Log.d(TAG, "json error");
+            }
+        }
+
+//        v.refreshDrawableState();
     }
+
 }

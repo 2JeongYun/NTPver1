@@ -27,6 +27,7 @@
             android:layout_weight="1" />
 
         <Button
+            android:id="@+id/certificationButton"
             android:layout_width="wrap_content"
             android:layout_height="31dp"
             android:layout_gravity="center"

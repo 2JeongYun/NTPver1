@@ -38,19 +38,17 @@ public class MyInfoFragment extends Fragment {
         setRecyclerView(rootView);
 
         //------------------TEST START------------------
-        Card card = new Card();
-        card.setBalance(100000);
-        card.setCard_kinds("TEST");
+        Card card1 = new Card();
+        card1.setBalance(100000);
+        card1.setCard_kinds("제로페이");
 
-        cardAdapter.addItem(card);
-        cardAdapter.addItem(card);
-        cardAdapter.addItem(card);
-        cardAdapter.addItem(card);
-        cardAdapter.addItem(card);
-        cardAdapter.addItem(card);
-        cardAdapter.addItem(card);
-        cardAdapter.addItem(card);
-        cardAdapter.addItem(card);
+
+        Card card2 = new Card();
+        card2.setBalance(10000);
+        card2.setCard_kinds("경기페이");
+
+        cardAdapter.addItem(card1);
+        cardAdapter.addItem(card2);
         //------------------TEST END------------------
     }
 
@@ -65,4 +63,10 @@ public class MyInfoFragment extends Fragment {
 
         cardRecyclerView.setAdapter(cardAdapter);
     }
+
+    public void refreshList() {
+        Log.d(TAG, "refreshList() is called");
+        cardAdapter.notifyDataSetChanged();
+    }
+
 }

@@ -49,6 +49,7 @@ public class CardInfoFragment extends Fragment {
         consumptionlist.setPay_date(new Date());
         consumptionlist.setBalance(3333);
         consumptionlist.setPay(33);
+        consumptionlist.setStore_name("store_name");
 
         consumptionAdapter.addItem(consumptionlist);
         consumptionAdapter.addItem(consumptionlist);

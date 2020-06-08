@@ -1,7 +1,10 @@
 package com.example.ntpver1;
 
+import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 
+import com.example.ntpver1.adapter.CardAdapter;
 import com.example.ntpver1.adapter.StoreAdapter;
 import com.example.ntpver1.item.Store;
 import com.koalap.geofirestore.GeoLocation;
@@ -99,12 +102,11 @@ public class DBManager {
     //카드정보찾기 jjs 05.25
     public void readCardData() throws ExecutionException, InterruptedException, JSONException {
         String json_string = "";
-        SelectUserData task = new SelectUserData();
-        task.execute("http://" + this.IP_ADDRESS + "/select_card.php", this.user_id);
+        SelectCardData task = new SelectCardData();
+        task.execute("http://" + this.IP_ADDRESS + "/select_card.php", this.email);
         String result = task.get();
         json_string = result;
         System.out.println(json_string);
-        JSONArray jsonArray = new JSONArray(json_string);
     }
 
     //카드정보등록하기 jjs 05.25
@@ -145,6 +147,15 @@ public class DBManager {
         json_string = result;
         System.out.println(json_string);
         JSONArray jsonArray = new JSONArray(json_string);
+    }
+
+    //인증번호요청 jjs 06.08
+    public String sendCertificationData() throws ExecutionException, InterruptedException, JSONException {
+        SendCertificationData task = new SendCertificationData();
+        task.execute("http://" + this.IP_ADDRESS + "/send_mail.php",this.email);
+        String result = task.get();
+        System.out.println(result);
+        return result;
     }
 
     //유저정보찾기설정 05.25 jjs
@@ -210,6 +221,11 @@ public class DBManager {
         this.card_number = card_number;
         this.email = email;
         this.valid_thru = valid_thru;
+    }
+
+    //인증번호요청설정 jjs 06.08
+    public void setSendCertificationValue(String email){
+        this.email = email;
     }
 
     private Store makeStore(String payName, String storeName, String address, String phoneNumber, String category, double latitude, double longitude) {

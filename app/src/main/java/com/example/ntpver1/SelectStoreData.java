@@ -142,16 +142,6 @@ public class SelectStoreData extends AsyncTask<String, Void, String> {
 
                         ((MapActivity)MapActivity.mapContext).refreshList();
 
-                        /*
-                        sweetSheet.show();
-                        if (!sweetSheet.isShow()) {
-                            try {
-                                sweetSheet.show();
-                            } catch (Exception e) {
-                                Toast.makeText(getApplicationContext(), "Please, Wait a second", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                       */
                     } catch (JSONException e) {
                         Log.d(TAG, "json error");
                     }
@@ -165,6 +155,5 @@ public class SelectStoreData extends AsyncTask<String, Void, String> {
         else{
             Log.d(TAG, "thereisnodata");
         }
-        Log.d(TAG, "2testset");
     }
 }

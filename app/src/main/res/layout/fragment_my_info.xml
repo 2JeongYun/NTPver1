@@ -26,7 +26,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="계정이름\n이름\n주로쓰는페이"
+            android:text="minguu97\n김민규\n주로쓰는페이:제로페이"
             android:lineSpacingExtra="2dp"
             android:textSize="17sp"
             android:padding="14dp" />

@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ntpver1.DBManager;
 import com.example.ntpver1.R;
 import com.example.ntpver1.fragments.MenuActivity;
 import com.example.ntpver1.login.find_pw.FindPWActivity;
@@ -24,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final String TAG = "LoginActivity";
 
     LoginManager loginManager;
+    DBManager dbManager = DBManager.getInstance();
     EditText emaliEditText;
     EditText passwordEditText;
     Button loginButton;
@@ -56,12 +58,16 @@ public class LoginActivity extends AppCompatActivity {
                 if (!email.equals("") && !password.equals("")) {
                     try { // 비동기로 인한 try catch 추가 jjs 05.27
                         if (loginManager.login(email, password)) {
+
+                            //유저정보 및 카드 정보 가져오기 실행
+                            dbManager.setSearchCardValue(email);
+                            dbManager.readCardData();
                             Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
                             startActivity(intent);
+
                         }
                         else{
                             Toast.makeText(getApplicationContext(), "올바른 이메일과 패스워드를 입력해주세요.", Toast.LENGTH_SHORT).show();
-                            Log.d(TAG, "onClick: Login FAIL!");
                         }
                     } catch (InterruptedException | ExecutionException | JSONException e) {
                         e.printStackTrace();

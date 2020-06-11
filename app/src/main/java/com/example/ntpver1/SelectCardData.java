@@ -117,6 +117,7 @@ public class SelectCardData extends AsyncTask<String, Void, String> {
             catch (JSONException e) {
                 Log.d(TAG, e.toString());
             }
+            // 06.11 null point오류 수정 -> 첫로그인시에는 menu액티비티 존재안함
             if(MenuActivity.mContext == null){
 
             }

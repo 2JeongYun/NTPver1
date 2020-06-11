@@ -58,8 +58,6 @@ public class CardInfoFragment extends Fragment {
                 new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         consumptionRecyclerView.setLayoutManager(layoutManager);
 
-        consumptionAdapter = new ConsumptionAdapter();
-
         consumptionRecyclerView.setAdapter(consumptionAdapter);
     }
 
@@ -67,6 +65,8 @@ public class CardInfoFragment extends Fragment {
         if (consumptionAdapter == null) {
             consumptionAdapter = new ConsumptionAdapter();
         }
+
+        consumptionAdapter.setClean();
 
         return consumptionAdapter;
     }

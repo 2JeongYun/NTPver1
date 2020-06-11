@@ -61,8 +61,6 @@ public class MyInfoFragment extends Fragment {
                 new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         cardRecyclerView.setLayoutManager(layoutManager);
 
-        cardAdapter = new CardAdapter();
-
         cardRecyclerView.setAdapter(cardAdapter);
     }
 
@@ -75,6 +73,8 @@ public class MyInfoFragment extends Fragment {
         if (cardAdapter == null) {
             cardAdapter = new CardAdapter();
         }
+
+        cardAdapter.setClean();
 
         return cardAdapter;
     }

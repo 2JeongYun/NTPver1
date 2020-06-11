@@ -85,7 +85,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
                         } catch (ExecutionException | InterruptedException | JSONException e) {
                             e.printStackTrace();
                         }
-//                        ((MenuActivity) MenuActivity.mContext).startCardInfoFragment();
                     }
                 }
             });

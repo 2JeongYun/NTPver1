@@ -3,16 +3,31 @@ package com.example.ntpver1;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.ntpver1.adapter.CardAdapter;
+import com.example.ntpver1.fragments.MyInfoFragment;
+import com.example.ntpver1.login.login.LoginManager;
+import com.example.ntpver1.login.login.User;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 public class SelectUserData extends AsyncTask<String, Void, String> {
     private static final String TAG = "";
     private String json = "";
+    DBManager dbManager = DBManager.getInstance();
+    LoginManager lgManager = LoginManager.getInstance();
+    User user = lgManager.getUser();
+    CardAdapter cardAdapter = MyInfoFragment.getCardAdapterInstance();;
+
 
     @Override
     protected String doInBackground(String... params) {
@@ -77,10 +92,27 @@ public class SelectUserData extends AsyncTask<String, Void, String> {
 
     }
     @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
+    protected void onPostExecute(String json_string) {
+        super.onPostExecute(json_string);
+        if (!json_string.contains("FAIL")) {
+            try {
+                JSONArray jsonArray = new JSONArray(json_string);
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                String user_name = jsonObject.getString("user_name");
+                String email = jsonObject.getString("email");
+                String phone_number = jsonObject.getString("phone_number");
+                user.setUserEmail(email);
+                user.setUserName(user_name);
+                user.setPhoneNumber(phone_number);
 
-        //doInBackground()로 부터 리턴된 값이 onPostExecute()의 매개변수로 넘어오므로 s를 출력한다.
-//        return s;
+                dbManager.setSearchCardValue(email);
+                dbManager.readCardData();
+            }
+            catch (JSONException e) {
+                Log.d(TAG, e.toString());
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }

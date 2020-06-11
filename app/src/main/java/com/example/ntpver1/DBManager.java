@@ -101,12 +101,9 @@ public class DBManager {
 
     //카드정보찾기 jjs 05.25
     public void readCardData() throws ExecutionException, InterruptedException, JSONException {
-        String json_string = "";
         SelectCardData task = new SelectCardData();
         task.execute("http://" + this.IP_ADDRESS + "/select_card.php", this.email);
-        String result = task.get();
-        json_string = result;
-        System.out.println(json_string);
+        task.get();
     }
 
     //카드정보등록하기 jjs 05.25
@@ -140,13 +137,9 @@ public class DBManager {
 
     //소비리스트찾기 jjs 05.25
     public void readConsumptionlistData() throws ExecutionException, InterruptedException, JSONException {
-        String json_string = "";
         SelectConsumptionlistData task = new SelectConsumptionlistData();
-        task.execute("http://" + this.IP_ADDRESS + "/select_consumptionlist.php", this.user_id, this.card_id);
-        String result = task.get();
-        json_string = result;
-        System.out.println(json_string);
-        JSONArray jsonArray = new JSONArray(json_string);
+        task.execute("http://" + this.IP_ADDRESS + "/select_consumptionlist.php", this.email, this.card_kinds);
+        task.get();
     }
 
     //인증번호요청 jjs 06.08
@@ -173,11 +166,11 @@ public class DBManager {
     }
 
     //소비리스트정보찾기설정 05.25 jjs
-    public void setSearchConsumptionlistValue(String user_id, String card_id) {
+    public void setSearchConsumptionlistValue(String user_email, String card_kinds) {
         //user_id
-        this.user_id = user_id;
+        this.email = user_email;
         //user_id
-        this.card_id = card_id;
+        this.card_kinds = card_kinds;
     }
 
     //가게검색설정

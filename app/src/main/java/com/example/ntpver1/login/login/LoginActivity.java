@@ -59,9 +59,7 @@ public class LoginActivity extends AppCompatActivity {
                     try { // 비동기로 인한 try catch 추가 jjs 05.27
                         if (loginManager.login(email, password)) {
 
-                            //유저정보 및 카드 정보 가져오기 실행
-                            dbManager.setSearchCardValue(email);
-                            dbManager.readCardData();
+                            //유저정보 및 카드 정보 가져오기 실행지웠음 jjs 06.11
                             Intent intent = new Intent(getApplicationContext(), MenuActivity.class);
                             startActivity(intent);
 

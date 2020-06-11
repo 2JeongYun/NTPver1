@@ -12,15 +12,23 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ntpver1.DBManager;
 import com.example.ntpver1.R;
 import com.example.ntpver1.adapter.CardAdapter;
 import com.example.ntpver1.adapter.StoreAdapter;
 import com.example.ntpver1.item.Card;
+import com.example.ntpver1.login.login.LoginManager;
+
+import org.json.JSONException;
+
+import java.util.concurrent.ExecutionException;
 
 public class MyInfoFragment extends Fragment {
     private static final String TAG = "MyInfoFragment";
+    private static CardAdapter cardAdapter;
     RecyclerView cardRecyclerView;
-    CardAdapter cardAdapter;
+    DBManager dbManager;
+    LoginManager loginManager = LoginManager.getInstance();
 
     @Nullable
     @Override
@@ -28,6 +36,7 @@ public class MyInfoFragment extends Fragment {
         Log.d(TAG, "onCreateView() is called");
 
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_my_info, container, false);
+        dbManager = DBManager.getInstance();
 
         setUI(rootView);
 
@@ -37,19 +46,12 @@ public class MyInfoFragment extends Fragment {
     private void setUI(ViewGroup rootView) {
         setRecyclerView(rootView);
 
-        //------------------TEST START------------------
-        Card card1 = new Card();
-        card1.setBalance(100000);
-        card1.setCard_kinds("제로페이");
-
-
-        Card card2 = new Card();
-        card2.setBalance(10000);
-        card2.setCard_kinds("경기페이");
-
-        cardAdapter.addItem(card1);
-        cardAdapter.addItem(card2);
-        //------------------TEST END------------------
+        try {
+            dbManager.setSearchCardValue(loginManager.getUser().getUserEmail());
+            dbManager.readCardData();
+        } catch (Exception e) {
+            Log.d(TAG, "setUI, ERROR : can't read card data");
+        }
     }
 
     //리싸이클러뷰
@@ -67,6 +69,14 @@ public class MyInfoFragment extends Fragment {
     public void refreshList() {
         Log.d(TAG, "refreshList() is called");
         cardAdapter.notifyDataSetChanged();
+    }
+
+    public static CardAdapter getCardAdapterInstance() {
+        if (cardAdapter == null) {
+            cardAdapter = new CardAdapter();
+        }
+
+        return cardAdapter;
     }
 
 }

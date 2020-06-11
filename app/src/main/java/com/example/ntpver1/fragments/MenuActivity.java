@@ -70,6 +70,13 @@ public class MenuActivity extends AppCompatActivity implements OnTabItemSelected
         );
     }
 
+    public void callMyInfoFragment(String method) {
+        switch (method) {
+            case "refreshList":
+                myInfoFragment.refreshList();
+        }
+    }
+
     public void onTabSelected(int position) {
         if (position == 0) {
             bottomNavigation.setSelectedItemId(R.id.home_tab);

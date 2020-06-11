@@ -6,15 +6,10 @@ import java.util.ArrayList;
 
 public class User {
 
-    public User(String userEmail, String userName, ArrayList<Card> cards) {
-        this.userEmail = userEmail;
-        this.userName = userName;
-        this.cards = cards;
-    }
-
     String userEmail;
     String userName;
-    ArrayList<Card> cards;
+    String phoneNumber;
+    ArrayList<Card> cards = new ArrayList<Card>();
 
     public String getUserEmail() {
         return userEmail;
@@ -36,7 +31,15 @@ public class User {
         return cards;
     }
 
-    public void setCards(ArrayList<Card> cards) {
-        this.cards = cards;
+    public void setCards(Card card) {
+        this.cards.add(card);
+    }
+
+    public String getPhoneNumber(){
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber){
+        this.phoneNumber = phoneNumber;
     }
 }

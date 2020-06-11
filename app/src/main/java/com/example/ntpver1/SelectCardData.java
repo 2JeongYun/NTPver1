@@ -13,10 +13,15 @@ import java.net.URL;
 import android.content.Intent;
 import android.view.View;
 
+import com.example.ntpver1.fragments.MenuActivity;
 import com.example.ntpver1.fragments.MyInfoFragment;
+
+import com.mingle.sweetpick.SweetSheet;
 
 import com.example.ntpver1.adapter.CardAdapter;
 import com.example.ntpver1.item.Card;
+import com.example.ntpver1.login.login.LoginManager;
+import com.example.ntpver1.login.login.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,9 +31,11 @@ import org.json.JSONObject;
 public class SelectCardData extends AsyncTask<String, Void, String> {
     private static final String TAG = "";
     private String json = "";
-    CardAdapter cardAdapter = new CardAdapter();
-    DBManager dbManager = DBManager.getInstance();
+    CardAdapter cardAdapter = MyInfoFragment.getCardAdapterInstance();
 
+    LoginManager lgManager = LoginManager.getInstance();
+    User user = lgManager.getUser();
+    DBManager dbManager = DBManager.getInstance();
     @Override
     protected String doInBackground(String... params) {
         String user_email = (String)params[1];
@@ -91,7 +98,6 @@ public class SelectCardData extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String json_string) {
         super.onPostExecute(json_string);
-
         if (!json_string.contains("FAIL")) {
             try {
                 JSONArray jsonArray = new JSONArray(json_string);
@@ -103,18 +109,20 @@ public class SelectCardData extends AsyncTask<String, Void, String> {
                     Card card = new Card();
                     card.setBalance(balance);
                     card.setId(id);
-                    card.setId(id);
                     card.setCard_kinds(card_kinds);
-                    Log.d(TAG, "onPostExecute: " + card_kinds);
+                    user.setCards(card);
                     cardAdapter.addItem(card);
                 }
             }
             catch (JSONException e) {
-                Log.d(TAG, "json error");
+                Log.d(TAG, e.toString());
+            }
+            if(MenuActivity.mContext == null){
+
+            }
+            else {
+                ((MenuActivity) MenuActivity.mContext).callMyInfoFragment("refreshList");
             }
         }
-
-//        v.refreshDrawableState();
     }
-
 }

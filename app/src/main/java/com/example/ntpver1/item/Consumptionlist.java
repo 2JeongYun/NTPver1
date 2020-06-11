@@ -1,20 +1,17 @@
 package com.example.ntpver1.item;
 
-import androidx.annotation.NonNull;
-
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.SimpleTimeZone;
 
 public class Consumptionlist {
     int balance;
     int card_id;
     int id;
     int pay;
-    Date pay_date;
+    String pay_date;
     String store_name;
     String user_email;
+    String card_kind;
 
     public int getBalance() {
         return this.balance;
@@ -32,7 +29,7 @@ public class Consumptionlist {
         return this.pay;
     }
 
-    public Date getPay_date(){
+    public String getPay_date(){
         return this.pay_date;
     }
 
@@ -60,7 +57,7 @@ public class Consumptionlist {
         this.pay = pay;
     }
 
-    public void setPay_date(Date pay_date) {
+    public void setPay_date(String pay_date) {
         this.pay_date = pay_date;
     }
 
@@ -72,9 +69,16 @@ public class Consumptionlist {
         this.user_email = user_email;
     }
 
-    public String getDateAsString() {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        String date = format.format(this.pay_date);
-        return date;
+    public void setCard_kind(String card_kind){
+        this.card_kind = card_kind;
     }
+
+    public String getCard_kind(){
+        return card_kind;
+    }
+//    public String getDateAsString() {
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+//        String date = format.format(this.pay_date);
+//        return date;
+//    }
 }

@@ -12,12 +12,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ntpver1.DBManager;
 import com.example.ntpver1.R;
 import com.example.ntpver1.fragments.MenuActivity;
 import com.example.ntpver1.item.Card;
+import com.example.ntpver1.login.login.LoginManager;
 import com.example.ntpver1.myinterface.OnCardItemClickListener;
 
+import org.json.JSONException;
+
 import java.util.ArrayList;
+import java.util.concurrent.BlockingDeque;
+import java.util.concurrent.ExecutionException;
 
 public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> implements OnCardItemClickListener {
     static final String TAG = "CardAdapter";
@@ -55,6 +61,8 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView cardIDTextView;
         TextView balanceTextView;
+        DBManager dbManager = DBManager.getInstance();
+        LoginManager loginManager = LoginManager.getInstance();
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -70,7 +78,14 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
                     if (listener != null) {
                         listener.onItemClick(ViewHolder.this, view, position);
                     } else {
-                        ((MenuActivity) MenuActivity.mContext).startCardInfoFragment();
+                        // 비동기통신 jjs 06.11
+                        dbManager.setSearchConsumptionlistValue(loginManager.getUser().getUserEmail(),cardIDTextView.getText().toString());
+                        try {
+                            dbManager.readConsumptionlistData();
+                        } catch (ExecutionException | InterruptedException | JSONException e) {
+                            e.printStackTrace();
+                        }
+//                        ((MenuActivity) MenuActivity.mContext).startCardInfoFragment();
                     }
                 }
             });

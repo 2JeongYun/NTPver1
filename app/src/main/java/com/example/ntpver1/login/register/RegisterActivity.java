@@ -58,7 +58,6 @@ public class RegisterActivity extends Activity {
             public void onClick(View v) {
                 try {
                     String email = emailEditText.getText().toString();
-
                     dbManager.setSendCertificationValue(email);
                     certificationString = dbManager.sendCertificationData();
                     Toast.makeText(getApplicationContext(), "인증 메일을 발송했습니다.", Toast.LENGTH_SHORT).show();

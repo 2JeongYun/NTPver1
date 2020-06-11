@@ -3,25 +3,37 @@ package com.example.ntpver1;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.ntpver1.adapter.ConsumptionAdapter;
+import com.example.ntpver1.fragments.CardInfoFragment;
+import com.example.ntpver1.fragments.MenuActivity;
+import com.example.ntpver1.item.Card;
+import com.example.ntpver1.item.Consumptionlist;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
 
 public class SelectConsumptionlistData extends AsyncTask<String, Void, String> {
     private static final String TAG = "";
     private String json = "";
+    ConsumptionAdapter Csmpt = CardInfoFragment.getCsmptInstance();
 
     @Override
     protected String doInBackground(String... params) {
-        String user_id = (String)params[1];
-        String card_id = (String)params[2];
+        String user_email = (String) params[1];
+        String card_kinds = (String) params[2];
 
-        String serverURL = (String)params[0];
-        String postParameters = "user_id=" + user_id
-                + "&card_id=" + card_id;
+        String serverURL = (String) params[0];
+        String postParameters = "user_email=" + user_email
+                + "&card_kinds=" + card_kinds;
 
         try {
 
@@ -44,10 +56,9 @@ public class SelectConsumptionlistData extends AsyncTask<String, Void, String> {
             int responseStatusCode = httpURLConnection.getResponseCode();
             Log.d(TAG, "POST response code - " + responseStatusCode);
             InputStream inputStream;
-            if(responseStatusCode == HttpURLConnection.HTTP_OK) {
+            if (responseStatusCode == HttpURLConnection.HTTP_OK) {
                 inputStream = httpURLConnection.getInputStream();
-            }
-            else{
+            } else {
                 inputStream = httpURLConnection.getErrorStream();
             }
 
@@ -58,7 +69,7 @@ public class SelectConsumptionlistData extends AsyncTask<String, Void, String> {
             StringBuilder sb = new StringBuilder();
             String line = null;
             String toJson = "";
-            while((line = bufferedReader.readLine()) != null){
+            while ((line = bufferedReader.readLine()) != null) {
                 toJson += line;
             }
 
@@ -75,11 +86,37 @@ public class SelectConsumptionlistData extends AsyncTask<String, Void, String> {
         }
 
     }
-    @Override
-    protected void onPostExecute(String s) {
-        super.onPostExecute(s);
 
-        //doInBackground()로 부터 리턴된 값이 onPostExecute()의 매개변수로 넘어오므로 s를 출력한다.
-//        return s;
+    @Override
+    protected void onPostExecute(String json_string) {
+        super.onPostExecute(json_string);
+        Log.d(TAG, "onPostExecute: " + json_string);
+        if (!json_string.contains("FAIL")) {
+            try {
+                JSONArray jsonArray = new JSONArray(json_string);
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+                    int balance = jsonObject.getInt("balance");
+                    int pay = jsonObject.getInt("pay");
+                    String pay_date = jsonObject.getString("pay_date");
+                    String card_kinds = jsonObject.getString("card_kinds");
+                    String store_name = jsonObject.getString("store_name");
+                    int id = jsonObject.getInt("id");
+                    Consumptionlist csmpt = new Consumptionlist();
+                    csmpt.setBalance(balance);
+                    csmpt.setId(id);
+                    csmpt.setPay(pay);
+                    csmpt.setPay_date(pay_date);
+                    csmpt.setStore_name(store_name);
+                    csmpt.setCard_kind(card_kinds);
+                    Csmpt.addItem(csmpt);
+                }
+                ((MenuActivity) MenuActivity.mContext).startCardInfoFragment();
+                System.out.println("test done");
+            } catch (JSONException e) {
+                Log.d(TAG, e.toString());
+            }
+
+        }
     }
 }

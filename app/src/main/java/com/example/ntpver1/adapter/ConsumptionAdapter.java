@@ -64,7 +64,7 @@ public class ConsumptionAdapter extends RecyclerView.Adapter<ConsumptionAdapter.
         }
 
         public void setItem(Consumptionlist item) {
-            dateTextView.setText(item.getDateAsString());
+            dateTextView.setText(item.getPay_date());
             usedPlaceTextView.setText(item.getStore_name());
             balanceTextView.setText(Integer.toString(item.getBalance()));
             costTextView.setText(Integer.toString(item.getPay()));

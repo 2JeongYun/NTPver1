@@ -10,11 +10,28 @@
         android:background="#FFFFFF"
         android:visibility="invisible">
 
+        <ImageButton
+            android:id="@+id/close_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:onClick="resultCloseButtonListener"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_highlight_off_24px"
+            android:background="@drawable/round_corner"
+            android:elevation="10dp"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/result_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="bottom" />
+            android:layout_gravity="bottom"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true" />
+
     </RelativeLayout>
 
     <RelativeLayout

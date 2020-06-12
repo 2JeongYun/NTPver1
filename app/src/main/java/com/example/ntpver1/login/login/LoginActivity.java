@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.ntpver1.DBManager;
 import com.example.ntpver1.R;
 import com.example.ntpver1.fragments.MenuActivity;
-import com.example.ntpver1.login.find_pw.FindPWActivity;
 import com.example.ntpver1.login.register.RegisterActivity;
 
 import org.json.JSONException;

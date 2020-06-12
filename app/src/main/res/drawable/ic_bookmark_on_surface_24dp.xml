@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <!--
 ~ Copyright (C) 2019 The Android Open Source Project
 ~
@@ -15,16 +14,13 @@
 ~ limitations under the License.
 -->
 
-<resources>
-    <dimen name="keyline_0">2dp</dimen>
-    <dimen name="keyline_1">4dp</dimen>
-    <dimen name="keyline_2">8dp</dimen>
-    <dimen name="keyline_4">16dp</dimen>
-    <dimen name="keyline_5">24dp</dimen>
-
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-
-    <dimen name="component_label_horizontal_margin">@dimen/keyline_4</dimen>
-    <dimen name="elevation_default_top_app_bar">4dp</dimen>
-</resources>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+  android:width="24dp"
+  android:height="24dp"
+  android:viewportWidth="24.0"
+  android:viewportHeight="24.0"
+  android:tint="?attr/colorOnSurface">
+    <path
+      android:fillColor="#FF000000"
+      android:pathData="M17,3H7c-1.1,0 -1.99,0.9 -1.99,2L5,21l7,-3 7,3V5c0,-1.1 -0.9,-2 -2,-2z"/>
+</vector>

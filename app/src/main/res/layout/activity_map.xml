@@ -7,59 +7,76 @@
     tools:context=".MapActivity">
 
     <fragment
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
         android:id="@+id/map_fragment"
-        class="com.google.android.gms.maps.SupportMapFragment" />
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_alignParentTop="true"
+        android:layout_height="64dp"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
         android:orientation="horizontal">
 
-        <com.mancj.materialsearchbar.MaterialSearchBar
-            style="@style/MaterialSearchBarLight"
-            app:mt_hint="검색"
-            app:mt_maxSuggestionsCount="3"
-            android:layout_width="270dp"
-            android:layout_height="50dp"
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_gravity="center_vertical"
-            android:id="@+id/search_bar" />
+            android:background="#ffffff"
+            android:elevation="10dp"
+            android:shadowColor="#000000"
+            android:shadowRadius="5.0"
+            android:shadowDx="5.0"
+            android:shadowDy="5.0">
 
-        <ImageButton
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="15dp"
-            android:background="@drawable/my_location"
-            android:layout_gravity="center_vertical"
+            <com.mancj.materialsearchbar.MaterialSearchBar
+                android:id="@+id/search_bar"
+                style="@style/MaterialSearchBarLight"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:mt_hint="검색"
+                app:mt_maxSuggestionsCount="3" />
+        </LinearLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/my_location_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_my_location_24px"
+            app:fabSize="mini"
+            android:layout_marginStart="@dimen/keyline_2"
+            app:layout_constraintBottom_toBottomOf="@+id/fab"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/fab"
+            app:layout_constraintTop_toTopOf="@+id/fab"
+            android:layout_gravity="center_vertical"
             android:onClick="MyLocationButtonListener"/>
 
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/sweet_sheet_rlayout"
         android:layout_width="match_parent"
         android:layout_height="320dp"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:id="@+id/sweet_sheet_rlayout">
+        android:layout_alignParentBottom="true">
 
-
-        <Button
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/search_setting_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
             android:onClick="searchSettingButtonListener"
-            android:text="검색설정" />
+            android:src="@drawable/ic_rule_black_24dp" />
+
 
     </RelativeLayout>
 

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 
 import com.example.ntpver1.adapter.StoreAdapter;
+import com.example.ntpver1.fragments.MenuActivity;
 import com.example.ntpver1.item.Store;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -264,7 +266,7 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
 
             //변경 jjs 05.19 try catch 추가
             try {
-                doSearch(keyWord,mapManager.SearchCenter.latitude, mapManager.SearchCenter.longitude , TEST_RADIUS_VALUE ,  SEARCH);
+                doSearch(keyWord, mapManager.SearchCenter.latitude, mapManager.SearchCenter.longitude, TEST_RADIUS_VALUE ,  SEARCH);
 //                doSearch(keyWord, TEST_LATITUDE_VALUE, TEST_LONGITUDE_VALUE, TEST_RADIUS_VALUE, SEARCH);
             } catch (InterruptedException | ExecutionException | JSONException e) {
                 e.printStackTrace();

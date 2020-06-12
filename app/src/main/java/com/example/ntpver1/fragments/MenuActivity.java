@@ -8,22 +8,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 
 import com.example.ntpver1.MapActivity;
 import com.example.ntpver1.R;
-import com.example.ntpver1.myinterface.OnTabItemSelectedListener;
+import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MenuActivity extends AppCompatActivity implements OnTabItemSelectedListener {
+public class MenuActivity extends AppCompatActivity {
     private static final String TAG = "MenuActivity";
+    private static final int REQUEST_MAP_ACTIVITY = 3;
+
     public static Context mContext;
 
     MyInfoFragment myInfoFragment;
     SearchFragment searchFragment;
     CardInfoFragment cardInfoFragment;
-    BottomNavigationView bottomNavigation;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +42,9 @@ public class MenuActivity extends AppCompatActivity implements OnTabItemSelected
         //프래그먼트 매니저
         getSupportFragmentManager().beginTransaction().replace(  R.id.container, myInfoFragment).commit();
 
-        //하단바 네비게이션 리스터
-        bottomNavigation = findViewById(R.id.bottom_navigation);
-        bottomNavigation.setOnNavigationItemSelectedListener(
+        //하단바 네비게이션 리스너
+        bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -54,14 +54,17 @@ public class MenuActivity extends AppCompatActivity implements OnTabItemSelected
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, myInfoFragment).commit();
                                 return true;
 
-                            case R.id.search_tab:
+                            case R.id.recommend_tab:
                                 Log.d(TAG, "search_tab selected");
                                 getSupportFragmentManager().beginTransaction().replace(R.id.container, searchFragment).commit();
                                 return true;
 
-                            case R.id.map_tab:
-                                Intent intent = new Intent(getApplicationContext(), MapActivity.class);
-                                startActivity(intent);
+                            case R.id.map_tap:
+                                Log.d(TAG, "map_tab selected");
+                                bottomNavigationView.setSelectedItemId(R.id.home_tab);
+                                Intent intent = new Intent(MenuActivity.this, MapActivity.class);
+                                startActivityForResult(intent, REQUEST_MAP_ACTIVITY);
+
                                 return true;
                         }
                         return false;
@@ -79,15 +82,43 @@ public class MenuActivity extends AppCompatActivity implements OnTabItemSelected
 
     public void onTabSelected(int position) {
         if (position == 0) {
-            bottomNavigation.setSelectedItemId(R.id.home_tab);
+            bottomNavigationView.setSelectedItemId(R.id.home_tab);
         } else if (position == 1) {
-            bottomNavigation.setSelectedItemId(R.id.search_tab);
+            bottomNavigationView.setSelectedItemId(R.id.recommend_tab);
         } else if (position == 2) {
-            bottomNavigation.setSelectedItemId(R.id.map_tab);
+            bottomNavigationView.setSelectedItemId(R.id.map_tap);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        onTabSelected(0);
     }
 
     public void startCardInfoFragment() {
         getSupportFragmentManager().beginTransaction().replace(  R.id.container, cardInfoFragment).commit();
+    }
+
+    public interface OnBackPressedListener {
+        public void onBack();
+    }
+
+    private OnBackPressedListener mBackListener;
+    public void setOnBackPressedListener(OnBackPressedListener listener) {
+        mBackListener = listener;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mBackListener != null) {
+            mBackListener.onBack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    public MyInfoFragment getMyInfoFragment() {
+        return myInfoFragment;
     }
 }

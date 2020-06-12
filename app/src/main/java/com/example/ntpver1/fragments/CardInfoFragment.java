@@ -1,8 +1,10 @@
 package com.example.ntpver1.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -22,7 +24,7 @@ import com.example.ntpver1.login.login.LoginManager;
 
 import java.util.Date;
 
-public class CardInfoFragment extends Fragment {
+public class CardInfoFragment extends Fragment implements MenuActivity.OnBackPressedListener {
     private static final String TAG = "CardInfofragment";
     private static ConsumptionAdapter consumptionAdapter;
     RecyclerView consumptionRecyclerView;
@@ -69,5 +71,24 @@ public class CardInfoFragment extends Fragment {
         consumptionAdapter.setClean();
 
         return consumptionAdapter;
+    }
+
+    @Override
+    public void onBack() {
+        MenuActivity menuActivity = (MenuActivity)getActivity();
+        menuActivity.setOnBackPressedListener(null);
+        menuActivity.onTabSelected(0);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MenuActivity) MenuActivity.mContext).setOnBackPressedListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ((MenuActivity) MenuActivity.mContext).setOnBackPressedListener(null);
     }
 }

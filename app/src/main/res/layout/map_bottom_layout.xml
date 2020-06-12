@@ -10,16 +10,6 @@
         android:background="#FFFFFF"
         android:visibility="invisible">
 
-        <Button
-            android:id="@+id/result_close_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
-            android:layout_margin="10dp"
-            android:onClick="resultCloseButtonListener"
-            android:text="닫기" />
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/result_recycler_view"
             android:layout_width="match_parent"
@@ -34,15 +24,15 @@
         android:padding="8dp"
         android:visibility="visible">
 
-        <Button
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/search_setting_confirm_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
-            android:layout_margin="7dp"
+            android:layout_margin="16dp"
             android:onClick="searchSettingConfirmButtonListener"
-            android:text="설정완료" />
+            android:src="@drawable/ic_done_black_24dp" />
 
         <ScrollView
             android:layout_width="match_parent"

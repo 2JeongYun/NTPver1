@@ -26,7 +26,7 @@ import java.util.ArrayList;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
-public class SearchFragment extends Fragment implements MaterialSearchBar.OnSearchActionListener {
+public class SearchFragment extends Fragment implements MaterialSearchBar.OnSearchActionListener, MenuActivity.OnBackPressedListener {
     private static final String TAG = "SearchFragment";
 
     private StoreAdapter storeAdapter;
@@ -130,5 +130,24 @@ public class SearchFragment extends Fragment implements MaterialSearchBar.OnSear
         storeAdapter = new StoreAdapter();
 
         resultRecyclerView.setAdapter(storeAdapter);
+    }
+
+    @Override
+    public void onBack() {
+        MenuActivity menuActivity = (MenuActivity)getActivity();
+        menuActivity.setOnBackPressedListener(null);
+        menuActivity.onTabSelected(0);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((MenuActivity) MenuActivity.mContext).setOnBackPressedListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        ((MenuActivity) MenuActivity.mContext).setOnBackPressedListener(null);
     }
 }

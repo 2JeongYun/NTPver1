@@ -5,20 +5,20 @@
         android:id="@+id/home_tab"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@drawable/list_icon"
-        android:title="내 정보" />
+        android:icon="@drawable/ic_credit_card_24px"
+        android:title="페이" />
 
     <item
-        android:id="@+id/search_tab"
+        android:id="@+id/recommend_tab"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@drawable/search_icon"
-        android:title="검색" />
+        android:icon="@drawable/ic_thumb_up_24px"
+        android:title="추천" />
 
     <item
-        android:id="@+id/map_tab"
+        android:id="@+id/map_tap"
         app:showAsAction="ifRoom"
         android:enabled="true"
-        android:icon="@drawable/map_icon"
+        android:icon="@drawable/ic_explore_24px"
         android:title="지도" />
 </menu>

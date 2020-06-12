@@ -169,8 +169,6 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
         }
 
         Log.d(TAG, "myLocation Value : " + myLocation.getLatitude());
-
-
     }
 
     // 내위치 보여주기

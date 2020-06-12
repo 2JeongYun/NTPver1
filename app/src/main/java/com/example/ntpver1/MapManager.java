@@ -12,6 +12,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
@@ -219,20 +220,66 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
     public void Marking(Store store){
 
         LatLng location = new LatLng(store.getLatitude() , store.getLongitude());
-        MarkerOptions markerOptions = ChangeMarkertImage(store);
-        //MarkerOptions markerOptions = new MarkerOptions() ;
-        markerOptions.position(location).title(store.getName());
+        Marker marker = null;
 
-        prelist.add(mMap.addMarker(markerOptions));
+        switch (store.getType()) {
+            case "음식점" :
+                marker = mMap.addMarker(new MarkerOptions()
+                    .position(location)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.restaurant)));
+                break;
+            case "카페" :
+                marker = mMap.addMarker(new MarkerOptions()
+                        .position(location)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.cafe)));
+                break;
+            case "편의점" :
+                marker = mMap.addMarker(new MarkerOptions()
+                        .position(location)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.cstore)));
+                break;
+            case "식료품점" :
+                marker = mMap.addMarker(new MarkerOptions()
+                        .position(location)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.grocery)));
+                break;
+            case "의료" :
+                marker = mMap.addMarker(new MarkerOptions()
+                        .position(location)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.medical)));
+                break;
+            case "패션" :
+                marker = mMap.addMarker(new MarkerOptions()
+                        .position(location)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.clothing)));
+                break;
+            case "전자제품" :
+                marker = mMap.addMarker(new MarkerOptions()
+                        .position(location)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.electronic)));
+                break;
+            case "유흥" :
+                marker = mMap.addMarker(new MarkerOptions()
+                        .position(location)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.pleasure)));
+                break;
+            case "숙박" :
+                marker = mMap.addMarker(new MarkerOptions()
+                        .position(location)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.lodgment)));
+                break;
+            default:
+                marker = mMap.addMarker(new MarkerOptions()
+                        .position(location)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.others)));
+                break;
+        }
+
+
+        prelist.add(marker);
         this.mMap.setOnMarkerClickListener(this);
     }
 
-    public void storesMarking(ArrayList<Store> list)
-    {
-        for(Store st : list){
-            Marking(st);
-        }
-    }
 
     public void navigation(LatLng start , LatLng destination) throws IOException, JSONException {
 
@@ -381,46 +428,6 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
         return data;
     }
 
-    public MarkerOptions ChangeMarkertImage(Store store){
-        MarkerOptions markerOptions = new MarkerOptions();
-        BitmapDrawable bitmapdraw = null;
-        String category = store.getType();
-        switch (category) {
-            case "음식점" :
-                bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.restaurant);
-                break;
-            case "카페" :
-                bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.cafe);
-                break;
-            case "편의점" :
-                bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.cstore);
-                break;
-            case "식료품점" :
-                bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.grocery);
-                break;
-            case "의료" :
-                bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.medical);
-                break;
-            case "패션" :
-                bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.clothing);
-                break;
-            case "전자제품" :
-                bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.electronic);
-                break;
-            case "유흥" :
-                bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.pleasure);
-                break;
-            case "숙박" :
-                bitmapdraw=(BitmapDrawable)getResources().getDrawable(R.drawable.lodgment);
-                break;
-            default:
-                break;
-        }
-        Bitmap b=bitmapdraw.getBitmap();
-        Bitmap smallMarker = Bitmap.createScaledBitmap(b, 100, 100, false);
-        markerOptions.icon(BitmapDescriptorFactory.fromBitmap(smallMarker));
-        return markerOptions;
-    }
 
     //마크가 클릭 되었을때 마크가 있는 곳으로 카메라 중심 이동 , 색상변경
     @Override

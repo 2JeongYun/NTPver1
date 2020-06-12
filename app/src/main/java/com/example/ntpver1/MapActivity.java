@@ -101,7 +101,7 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
         setViews();
         setRecyclerView();
 
-        //TEST
+        searchSettingButtonListener(ssView);
     }
 
     private void setViews() {
@@ -212,7 +212,7 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
     }
 
     //검색설정 버튼
-    public void searchSettingButtonListener(View view) throws InterruptedException {
+    public void searchSettingButtonListener(View view) {
         bottomLayoutState = ON_SEARCH_SETTING_LAYOUT;
         mySetVisibility(bottomLayoutState);
 
@@ -282,6 +282,8 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
 
     //검색결과창 닫기 버튼
     public void resultCloseButtonListener(View view) {
+        Log.d(TAG, "resultCloseButtonListener is called");
+
         sweetSheet.dismiss();
 
         bottomLayoutState = ON_SEARCH_SETTING_BUTTON;

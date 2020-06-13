@@ -12,9 +12,10 @@ public class DriverInfoAdapter implements GoogleMap.InfoWindowAdapter {
 
     View window;
     Store store;
-    public DriverInfoAdapter(View window, Store student){
+
+    public DriverInfoAdapter(View window, Store store){
         this.window = window;
-        this.store = student;//정보를 담은 객체
+        this.store = store;//정보를 담은 객체
     }
 
     @Override

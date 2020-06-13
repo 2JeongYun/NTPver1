@@ -243,6 +243,15 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
                 mySetVisibility(bottomLayoutState);
             }
         }, 500);
+
+        try {
+            if (keyWord == null) {
+                keyWord = "";
+            }
+            doSearch(mapManager.SearchCenter.latitude, mapManager.SearchCenter.longitude, TEST_RADIUS_VALUE, SEARCH);
+        } catch (Exception e) {
+
+        }
     }
 
     public void myLocationButtonListener(View view) {

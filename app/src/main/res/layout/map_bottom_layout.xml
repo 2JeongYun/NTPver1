@@ -60,7 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:padding="7dp">
+                android:padding="8dp">
 
                 <TextView
                     android:layout_width="match_parent"
@@ -73,7 +73,7 @@
                     android:id="@+id/pay_category_tlayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp">
+                    android:layout_marginBottom="16dp">
 
                     <TableRow
                         android:layout_width="match_parent"
@@ -82,23 +82,23 @@
                         <CheckBox
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="3dp"
-                            android:text="kyonggipay"
-                            android:textSize="13sp" />
+                            android:layout_marginRight="4dp"
+                            android:text="경기페이"
+                            android:textSize="12sp" />
 
                         <CheckBox
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="3dp"
-                            android:text="zeropay"
-                            android:textSize="13sp" />
+                            android:layout_marginRight="4dp"
+                            android:text="제로페이"
+                            android:textSize="12sp" />
 
                         <CheckBox
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="3dp"
+                            android:layout_marginRight="4dp"
                             android:text="알리페이"
-                            android:textSize="13sp" />
+                            android:textSize="12sp" />
                     </TableRow>
 
                     <TableRow
@@ -110,7 +110,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginRight="3dp"
                             android:text="카카오페이"
-                            android:textSize="13sp" />
+                            android:textSize="12sp" />
                     </TableRow>
 
                 </TableLayout>
@@ -126,7 +126,7 @@
                     android:id="@+id/store_category_tlayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp">
+                    android:layout_marginBottom="16dp">
 
                     <TableRow
                         android:layout_width="match_parent"
@@ -137,28 +137,28 @@
                             android:layout_height="match_parent"
                             android:layout_marginRight="3dp"
                             android:text="음식점"
-                            android:textSize="13sp" />
+                            android:textSize="12sp" />
 
                         <CheckBox
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginRight="3dp"
                             android:text="카페"
-                            android:textSize="13sp" />
+                            android:textSize="12sp" />
 
                         <CheckBox
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="3dp"
+                            android:layout_marginRight="4dp"
                             android:text="편의점"
-                            android:textSize="13sp" />
+                            android:textSize="12sp" />
 
                         <CheckBox
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="3dp"
+                            android:layout_marginRight="4dp"
                             android:text="식료품점"
-                            android:textSize="13sp" />
+                            android:textSize="12sp" />
                     </TableRow>
 
                     <TableRow
@@ -168,30 +168,30 @@
                         <CheckBox
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="3dp"
+                            android:layout_marginRight="4dp"
                             android:text="의료"
-                            android:textSize="13sp" />
+                            android:textSize="12sp" />
 
                         <CheckBox
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="3dp"
+                            android:layout_marginRight="4dp"
                             android:text="패션"
-                            android:textSize="13sp" />
+                            android:textSize="12sp" />
 
                         <CheckBox
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="3dp"
+                            android:layout_marginRight="4dp"
                             android:text="전자제품"
-                            android:textSize="13sp" />
+                            android:textSize="12sp" />
 
                         <CheckBox
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="3dp"
+                            android:layout_marginRight="4dp"
                             android:text="유흥"
-                            android:textSize="13sp" />
+                            android:textSize="12sp" />
                     </TableRow>
 
                     <TableRow
@@ -208,9 +208,9 @@
                         <CheckBox
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_marginRight="3dp"
+                            android:layout_marginRight="4dp"
                             android:text="기타"
-                            android:textSize="13sp" />
+                            android:textSize="12sp" />
                     </TableRow>
                 </TableLayout>
             </LinearLayout>

@@ -62,4 +62,10 @@
     <!--color on surface (light)-->
     <color name="black_900">#000000</color>
 
+    <color name="brown_50">#EFEBE9</color>
+    <color name="brown_100">#D7CCC8</color>
+    <color name="brown_300">#A1887F</color>
+    <color name="brown_400">#8D6E63</color>
+
+
 </resources>

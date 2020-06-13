@@ -5,54 +5,98 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.MyInfoFragment"
-    android:padding="16dp">
+    tools:context=".fragments.MyInfoFragment">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        >
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="96dp"
+            android:layout_height="96dp"
             app:srcCompat="@drawable/ic_account_circle_black_24dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="minguu97\n김민규\n주로쓰는페이:제로페이"
             android:lineSpacingExtra="2dp"
-            android:textSize="17sp"
-            android:padding="14dp" />
+            android:padding="16dp"
+            android:text="minguu97\n김민규\n주로쓰는페이:제로페이"
+            android:textSize="14sp" />
     </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="페이"
-        android:textStyle="bold"
-        android:textSize="24sp"
-        android:layout_marginTop="16dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@drawable/outline">
+        android:layout_height="0dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_weight="1">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/card_list"
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="페이"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginLeft="16dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"/>
+
+        <Button
+            android:id="@+id/regist_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="추가"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/round_button"
+            android:drawableLeft="@drawable/ic_credit_card_24px"
+            android:drawableTint="@color/white_50"/>
+
+
+    </RelativeLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_weight="5"
+        android:orientation="vertical">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="4dp"
-            android:paddingBottom="4dp"/>
-    </LinearLayout>
+            android:background="@drawable/outline">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/card_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

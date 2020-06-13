@@ -1,11 +1,7 @@
 package com.example.ntpver1.login.register;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -21,7 +17,7 @@ import org.json.JSONException;
 
 import java.util.concurrent.ExecutionException;
 
-public class RegisterActivity extends Activity {
+public class UserRegisterActivity extends Activity {
 
     Button confirmButton;
     Button certificationButton;
@@ -39,7 +35,7 @@ public class RegisterActivity extends Activity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
 
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_user_register);
 
         init();
     }
@@ -51,7 +47,7 @@ public class RegisterActivity extends Activity {
         certificationEditText = findViewById(R.id.certification);
         nameEditText = findViewById(R.id.name);
         phoneEditText = findViewById(R.id.phone);
-        certificationButton = findViewById(R.id.certificationButton); // 버튼추가 jjs 06.08
+        certificationButton = findViewById(R.id.certification_button); // 버튼추가 jjs 06.08
         // 버튼인증이벤트추가 jjs 06.08
         certificationButton.setOnClickListener(new View.OnClickListener() {
             @Override

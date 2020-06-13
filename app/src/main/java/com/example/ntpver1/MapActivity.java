@@ -85,6 +85,8 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
     ArrayList<String> payCategory;
     ArrayList<String> storeCategory;
 
+    String keyWord;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +125,7 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
                 mapManager = MapManager.getInstance(map, thisClass);
                 mapManager.checkPermission();
                 mapManager.getMyLocation();
+                mapManager.showMyLocation();
                 //변경 jjs 05.19 try catch 추가
 //                try {
 //                    doSearch("",mapManager.getSearchCentermymakerlntlng().latitude, mapManager.getSearchCentermymakerlntlng().longitude , 500 ,  2);
@@ -133,7 +136,6 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
         });
     }
 
-    
     //검색바
     private void setSearchBar() {
         searchBar = (MaterialSearchBar) findViewById(R.id.search_bar);
@@ -192,7 +194,6 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
         Log.i("CheckCount", "Pay check count" + Integer.toString(payCategory.size()));
         Log.i("CheckCount", "Store check count" + Integer.toString(storeCategory.size()));
     }
-
 
     //리싸이클러뷰
     protected void setRecyclerView() {
@@ -258,7 +259,7 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
     @Override
     public void onSearchConfirmed(CharSequence text) {
         imm.hideSoftInputFromWindow(searchBar.getWindowToken(), 0);
-        String keyWord = searchBar.getText();
+        keyWord = searchBar.getText();
 
         if (!keyWord.equals("")) {
             bottomLayoutState = ON_RESULT_LAYOUT;
@@ -266,7 +267,7 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
 
             //변경 jjs 05.19 try catch 추가
             try {
-                doSearch(keyWord, mapManager.SearchCenter.latitude, mapManager.SearchCenter.longitude, TEST_RADIUS_VALUE ,  SEARCH);
+                doSearch(mapManager.SearchCenter.latitude, mapManager.SearchCenter.longitude, TEST_RADIUS_VALUE ,  SEARCH);
 //                doSearch(keyWord, TEST_LATITUDE_VALUE, TEST_LONGITUDE_VALUE, TEST_RADIUS_VALUE, SEARCH);
             } catch (InterruptedException | ExecutionException | JSONException e) {
                 e.printStackTrace();
@@ -296,7 +297,7 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
         }, 500);
     }
 
-    public void doSearch(String keyWord, double latitude, double longitude, int radius, int requestCode) throws InterruptedException, ExecutionException, JSONException {
+    public void doSearch(double latitude, double longitude, int radius, int requestCode) throws InterruptedException, ExecutionException, JSONException {
         Log.d(TAG, "doSearch() Called");
 
         dbManager.setSearchValue(keyWord, payCategory, storeCategory, latitude, longitude, radius);
@@ -313,12 +314,13 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
                     sweetSheet.show();
                 } catch (Exception e) {
                     Toast.makeText(getApplicationContext(), "Please, Wait a second", Toast.LENGTH_SHORT).show();
-                   bottomLayoutState = ON_SEARCH_SETTING_BUTTON;
+                    bottomLayoutState = ON_SEARCH_SETTING_BUTTON;
                     mySetVisibility(bottomLayoutState);
                }
             }
         }
     }
+
     //가시성 설정
     private void mySetVisibility(final int bottomLayoutState) {
         switch (bottomLayoutState) {

@@ -1,10 +1,12 @@
 package com.example.ntpver1.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,6 +20,7 @@ import com.example.ntpver1.adapter.CardAdapter;
 import com.example.ntpver1.adapter.StoreAdapter;
 import com.example.ntpver1.item.Card;
 import com.example.ntpver1.login.login.LoginManager;
+import com.example.ntpver1.login.register.UserRegisterActivity;
 
 import org.json.JSONException;
 
@@ -27,6 +30,7 @@ public class MyInfoFragment extends Fragment {
     private static final String TAG = "MyInfoFragment";
     private static CardAdapter cardAdapter;
     RecyclerView cardRecyclerView;
+    Button registCardButton;
     DBManager dbManager;
     LoginManager loginManager = LoginManager.getInstance();
 
@@ -45,6 +49,7 @@ public class MyInfoFragment extends Fragment {
 
     private void setUI(ViewGroup rootView) {
         setRecyclerView(rootView);
+        registCardButton = rootView.findViewById(R.id.regist_card);
 
         try {
             dbManager.setSearchCardValue(loginManager.getUser().getUserEmail());
@@ -52,6 +57,14 @@ public class MyInfoFragment extends Fragment {
         } catch (Exception e) {
             Log.d(TAG, "setUI, ERROR : can't read card data");
         }
+
+        registCardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), CardRegisterActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     //리싸이클러뷰

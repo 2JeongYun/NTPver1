@@ -2,20 +2,23 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="4dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="4dp">
+        android:layout_marginBottom="4dp"
+        app:cardElevation="4dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal">
+            android:layout_height="56dp"
+            android:orientation="horizontal"
+            android:background="@drawable/card_press">
 
             <TextView
                 android:id="@+id/card_id"
@@ -43,5 +46,5 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

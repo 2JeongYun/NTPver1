@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.ntpver1.DBManager;
 import com.example.ntpver1.R;
 import com.example.ntpver1.fragments.MenuActivity;
-import com.example.ntpver1.login.register.RegisterActivity;
+import com.example.ntpver1.login.register.UserRegisterActivity;
 
 import org.json.JSONException;
 
@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+                Intent intent = new Intent(getApplicationContext(), UserRegisterActivity.class);
                 startActivity(intent);
             }
         });

@@ -90,7 +90,7 @@ public class DBManager {
 
         for (final GeoHashQuery query : newQueries) {
             SelectStoreData task = new SelectStoreData(mapManager, dbManager, storeAdapter, sweetSheet);
-            task.execute("http://" + IP_ADDRESS + "/select.php", this.keyWord, "", "", query.getStartValue(), query.getEndValue());
+            task.execute("http://" + IP_ADDRESS + "/select.php", this.keyWord, payString, categoryString, query.getStartValue(), query.getEndValue());
             String result = task.get();
         }
     }

@@ -48,6 +48,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerClickListener {
 
@@ -190,6 +191,7 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
 
     }
 
+    // 내위치 버튼이 클릭될때 작됭되는 함수
     public void clickButton(){
         getMyLocation();
         LatLng location ;
@@ -277,6 +279,7 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
         this.mMap.setOnMarkerClickListener(this);
     }
 
+    // 네비게이션 함수
     public void navigation(LatLng start , LatLng destination) throws IOException, JSONException {
 
         String site="https://maps.googleapis.com/maps/api/directions/json";
@@ -424,7 +427,6 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
         return data;
     }
 
-
     //마크가 클릭 되었을때 마크가 있는 곳으로 카메라 중심 이동 , 색상변경
     @Override
     public boolean onMarkerClick(Marker marker)  {
@@ -442,6 +444,7 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
         return true;
     }
 
+    //현재 선택한 마크의 스토어객체를 리턴하는 함수
     public Store FindStore(){
         Store store = null;
         for(Store s : aroundlist){
@@ -451,15 +454,26 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
         return store;
     }
 
+    //현재 위치에서 5000미터 떨어지면 작동하는 함수
     public void CheckMoveCamera(){
         mMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
             @Override
             public void onCameraMove() {
                 MapActivity mapActivity = new MapActivity();
                 CameraPosition movingposition = mMap.getCameraPosition();
-                if(distance(movingposition.target.latitude , movingposition.target.longitude , SearchCenter.latitude , SearchCenter.longitude) > 1000){
+                if(distance(movingposition.target.latitude , movingposition.target.longitude , SearchCenter.latitude , SearchCenter.longitude) > 5000){
                     LatLng location = new LatLng(movingposition.target.latitude , movingposition.target.longitude);
                     SearchCenter = movingposition.target;
+                    RemovePremarker();
+                    try {
+                        ((MapActivity)MapActivity.mapContext).doSearch(SearchCenter.latitude,SearchCenter.longitude,5000 ,10);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });

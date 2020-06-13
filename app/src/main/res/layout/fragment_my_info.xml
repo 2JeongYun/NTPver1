@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".fragments.MyInfoFragment">
+    tools:context=".fragments.MyInfoFragment"
+    android:padding="16dp">
 
 
     <LinearLayout
@@ -38,21 +39,20 @@
         android:text="페이"
         android:textStyle="bold"
         android:textSize="24sp"
-        android:layout_marginLeft="20dp"
         android:layout_marginTop="16dp"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:padding="5dp" >
+        android:background="@drawable/outline">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/card_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"/>
     </LinearLayout>
 
 </LinearLayout>

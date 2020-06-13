@@ -25,7 +25,7 @@ public class LoginActivity extends AppCompatActivity {
 
     LoginManager loginManager;
     DBManager dbManager = DBManager.getInstance();
-    EditText emaliEditText;
+    EditText emailEditText;
     EditText passwordEditText;
     Button loginButton;
     Button registerButton;
@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void setViews() {
-        EditText emaliEditText = findViewById(R.id.user_email);
+        EditText emailEditText = findViewById(R.id.user_email);
         EditText passwordEditText = findViewById(R.id.password);
         Button loginButton = findViewById(R.id.login);
         Button registerButton = findViewById(R.id.register);
@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = emaliEditText.getText().toString();
+                String email = emailEditText.getText().toString();
                 String password = passwordEditText.getText().toString();
                 if (!email.equals("") && !password.equals("")) {
                     try { // 비동기로 인한 try catch 추가 jjs 05.27
@@ -81,6 +81,12 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        //---------------DEBUG ONLY//AutoLogin---------------
+        emailEditText.setText("master");
+        passwordEditText.setText("0000");
+        loginButton.callOnClick();
     }
 
     @Override

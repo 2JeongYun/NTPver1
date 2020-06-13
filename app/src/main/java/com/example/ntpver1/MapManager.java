@@ -455,7 +455,7 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
     }
 
     //현재 위치에서 5000미터 떨어지면 작동하는 함수
-    public void CheckMoveCamera(){
+    public void checkMoveCamera(){
         mMap.setOnCameraMoveListener(new GoogleMap.OnCameraMoveListener() {
             @Override
             public void onCameraMove() {

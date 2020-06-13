@@ -55,7 +55,7 @@
             app:layout_constraintStart_toEndOf="@+id/fab"
             app:layout_constraintTop_toTopOf="@+id/fab"
             android:layout_gravity="center_vertical"
-            android:onClick="MyLocationButtonListener"/>
+            android:onClick="myLocationButtonListener"/>
 
     </LinearLayout>
 

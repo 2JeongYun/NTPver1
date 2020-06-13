@@ -230,6 +230,8 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
 
     //검색설정완료 버튼
     public void searchSettingConfirmButtonListener(View view) {
+        mapManager.checkMoveCamera();
+
         sweetSheet.dismiss();
 
         setSearchSettingTableValue();
@@ -243,10 +245,8 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
         }, 500);
     }
 
-    public void MyLocationButtonListener(View view) {
-
+    public void myLocationButtonListener(View view) {
         mapManager.clickButton();
-        mapManager.CheckMoveCamera();
     }
 
     //검색바 리스너

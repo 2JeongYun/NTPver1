@@ -65,6 +65,7 @@ public class SelectStoreData extends AsyncTask<String, Void, String> {
                 + "&start_at=" + start_at
                 + "&end_at=" + end_at;
         System.out.println(postParameters);
+        Log.d(TAG, postParameters);
         try {
 
             URL url = new URL(serverURL);

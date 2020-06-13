@@ -75,6 +75,15 @@ public class DBManager {
 
     //가게정보찾기
     public void readData(MapManager mapManager, DBManager dbManager, StoreAdapter storeAdapter, SweetSheet sweetSheet) throws ExecutionException, InterruptedException {
+        String payString = this.payCategory.toString();
+        payString = payString.replaceAll(" ", "");
+        payString = payString.replace("[", "");
+        payString = payString.replace("]", "");
+        String categoryString = this.storeCategory.toString();
+        categoryString = categoryString.replaceAll(" ", "");
+        categoryString = categoryString.replace("[", "");
+        categoryString = categoryString.replace("]", "");
+
         Set<GeoHashQuery> newQueries = GeoHashQuery.queriesAtLocation(new GeoLocation(this.latitude, this.longitude), this.radius);
 
         System.out.println(newQueries);
@@ -82,11 +91,7 @@ public class DBManager {
 
         for (final GeoHashQuery query : newQueries) {
             SelectStoreData task = new SelectStoreData(mapManager, dbManager, storeAdapter, sweetSheet);
-            String payString = this.payCategory.toString();
-            payString = payString.replaceAll(" ", "");
-            payString = payString.replace("[", "");
-            payString = payString.replace("]", "");
-            task.execute("http://" + IP_ADDRESS + "/select.php", this.keyWord, payString, "", query.getStartValue(), query.getEndValue());
+            task.execute("http://" + IP_ADDRESS + "/select.php", this.keyWord, payString, categoryString, query.getStartValue(), query.getEndValue());
             String result = task.get();
         }
     }

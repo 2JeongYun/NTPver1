@@ -270,19 +270,18 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
         imm.hideSoftInputFromWindow(searchBar.getWindowToken(), 0);
         keyWord = searchBar.getText();
 
-        if (!keyWord.equals("")) {
-            bottomLayoutState = ON_RESULT_LAYOUT;
-            mySetVisibility(bottomLayoutState);
+        bottomLayoutState = ON_RESULT_LAYOUT;
+        mySetVisibility(bottomLayoutState);
 
-            //변경 jjs 05.19 try catch 추가
-            try {
-                doSearch(mapManager.SearchCenter.latitude, mapManager.SearchCenter.longitude, TEST_RADIUS_VALUE ,  SEARCH);
+        //변경 jjs 05.19 try catch 추가
+        try {
+            doSearch(mapManager.SearchCenter.latitude, mapManager.SearchCenter.longitude, TEST_RADIUS_VALUE ,  SEARCH);
 //                doSearch(keyWord, TEST_LATITUDE_VALUE, TEST_LONGITUDE_VALUE, TEST_RADIUS_VALUE, SEARCH);
-            } catch (InterruptedException | ExecutionException | JSONException e) {
-                e.printStackTrace();
-            }
+        } catch (InterruptedException | ExecutionException | JSONException e) {
+            e.printStackTrace();
         }
     }
+
 
     @Override
     public void onButtonClicked(int buttonCode) {

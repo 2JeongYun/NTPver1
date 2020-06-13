@@ -85,14 +85,23 @@ public class DBManager {
         categoryString = categoryString.replace("]", "");
 
         Set<GeoHashQuery> newQueries = GeoHashQuery.queriesAtLocation(new GeoLocation(this.latitude, this.longitude), this.radius);
-
         System.out.println(newQueries);
         String json_string = "";
 
         for (final GeoHashQuery query : newQueries) {
             SelectStoreData task = new SelectStoreData(mapManager, dbManager, storeAdapter, sweetSheet);
-            task.execute("http://" + IP_ADDRESS + "/select.php", this.keyWord, payString, categoryString, query.getStartValue(), query.getEndValue());
+            task.execute("http://" + IP_ADDRESS + "/select.php", this.keyWord, "", "", query.getStartValue(), query.getEndValue());
             String result = task.get();
+        }
+    }
+
+    //가게리스트정보찾기
+    public void readStoreListData() throws ExecutionException, InterruptedException {
+        Set<GeoHashQuery> newQueries = GeoHashQuery.queriesAtLocation(new GeoLocation(this.latitude, this.longitude), this.radius);
+        SelectStoreListData task = new SelectStoreListData();
+        for (final GeoHashQuery query : newQueries) {
+            task.execute("http://" + IP_ADDRESS + "/select.php", "", "", "", query.getStartValue(), query.getEndValue());
+            task.get();
         }
     }
 
@@ -203,6 +212,18 @@ public class DBManager {
         //범위
         this.radius = radius;
     }
+
+    //가게리스트검색설정
+    public void setSearchStoreListValue(double latitude, double longitude, int radius) {
+
+        //위도
+        this.latitude = latitude;
+        //경도
+        this.longitude = longitude;
+        //범위
+        this.radius = radius;
+    }
+
 
     //유저등록설정 05.25 jjs
     public void setInsertUserValue(String email, String password, String user_name, String phone_number) {

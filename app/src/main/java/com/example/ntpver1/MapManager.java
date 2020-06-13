@@ -5,16 +5,13 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
 
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -22,14 +19,15 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.TableLayout;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.ntpver1.adapter.DirectionsJSONParser;
+import com.example.ntpver1.adapter.DriverInfoAdapter;
 import com.example.ntpver1.item.Store;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -46,22 +44,20 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
-
-import kotlin.collections.MapsKt;
 
 public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerClickListener {
+
     private MapManager(GoogleMap googleMap, MapActivity mapActivity) {
         this.mMap = googleMap;
         this.mapActivity = mapActivity;
         Log.d(TAG, "MapManager's constructor is called!!");
     }
+
+    public static Context MapManagercontext;
 
     private static final String TAG = "MapManager";
 
@@ -70,13 +66,12 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
     private static final int UPDATE = 2;
 
     MapActivity mapActivity;
-    String ClickedStore;
     Marker mymaker;
     LatLng SearchCenter;
     Marker premaker ;
     ArrayList<Marker> prelist = new ArrayList<>();
+    ArrayList<Store> aroundlist = new ArrayList<>();
     private Polyline mPolyline;
-
     private GoogleMap mMap;
     String[] permission_list={
             Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -93,8 +88,6 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
 
         return mapManager;
     }
-
-
 
     //권환 확인하기
     public void checkPermission(){
@@ -188,6 +181,9 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
         markerOptions.position(location);
         SearchCenter = location;
 
+        if (mymaker != null){
+            mymaker.remove();
+        }
         mymaker = mMap.addMarker(markerOptions);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
         mMap.animateCamera(CameraUpdateFactory.zoomTo(20));
@@ -219,67 +215,67 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
     // 스토어 객체를 받아와 마크찍기
     public void Marking(Store store){
 
+        aroundlist.add(store);
+
         LatLng location = new LatLng(store.getLatitude() , store.getLongitude());
         Marker marker = null;
 
         switch (store.getType()) {
             case "음식점" :
                 marker = mMap.addMarker(new MarkerOptions()
-                    .position(location)
+                    .position(location).title(store.getName())
                     .icon(BitmapDescriptorFactory.fromResource(R.drawable.restaurant)));
                 break;
             case "카페" :
                 marker = mMap.addMarker(new MarkerOptions()
-                        .position(location)
+                        .position(location).title(store.getName())
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.cafe)));
                 break;
             case "편의점" :
                 marker = mMap.addMarker(new MarkerOptions()
-                        .position(location)
+                        .position(location).title(store.getName())
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.cstore)));
                 break;
             case "식료품점" :
                 marker = mMap.addMarker(new MarkerOptions()
-                        .position(location)
+                        .position(location).title(store.getName())
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.grocery)));
                 break;
             case "의료" :
                 marker = mMap.addMarker(new MarkerOptions()
-                        .position(location)
+                        .position(location).title(store.getName())
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.medical)));
                 break;
             case "패션" :
                 marker = mMap.addMarker(new MarkerOptions()
-                        .position(location)
+                        .position(location).title(store.getName())
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.clothing)));
                 break;
             case "전자제품" :
                 marker = mMap.addMarker(new MarkerOptions()
-                        .position(location)
+                        .position(location).title(store.getName())
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.electronic)));
                 break;
             case "유흥" :
                 marker = mMap.addMarker(new MarkerOptions()
-                        .position(location)
+                        .position(location).title(store.getName())
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.pleasure)));
                 break;
             case "숙박" :
                 marker = mMap.addMarker(new MarkerOptions()
-                        .position(location)
+                        .position(location).title(store.getName())
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.lodgment)));
                 break;
             default:
                 marker = mMap.addMarker(new MarkerOptions()
-                        .position(location)
+                        .position(location).title(store.getName())
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.others)));
                 break;
         }
 
-
         prelist.add(marker);
         this.mMap.setOnMarkerClickListener(this);
     }
-
 
     public void navigation(LatLng start , LatLng destination) throws IOException, JSONException {
 
@@ -431,27 +427,28 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
 
     //마크가 클릭 되었을때 마크가 있는 곳으로 카메라 중심 이동 , 색상변경
     @Override
-    public boolean onMarkerClick(Marker marker) {
+    public boolean onMarkerClick(Marker marker)  {
+
         if(marker.equals(mymaker)){
             return false;
         }
-        if(premaker != null){
-            premaker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-        }
+
         premaker = marker;
         mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
-        ClickedStore = marker.getTitle();
-        marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
+        LayoutInflater inflater = (LayoutInflater) mapActivity.getContext().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+        View infoWindow = inflater.from(mapActivity.getActivity()).inflate(R.layout.item_markerinfo ,null);
+        DriverInfoAdapter driverInfoAdapter = new DriverInfoAdapter(infoWindow, FindStore());
+        mMap.setInfoWindowAdapter(driverInfoAdapter);
         return true;
     }
 
-    //마크가 클릭된 뒤에 데이터베이스 list를 사용하여 해당 store객체를 리턴해주는 함수
-    public Store FindStore(ArrayList<Store> list){
-        for(Store s : list){
-            if(s.getName() == ClickedStore)
-                return s;
+    public Store FindStore(){
+        Store store = null;
+        for(Store s : aroundlist){
+            if(premaker.getTitle().equals(s.getName()))
+                return  store = s;
         }
-        return null;
+        return store;
     }
 
     public void CheckMoveCamera(){
@@ -463,7 +460,6 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
                 if(distance(movingposition.target.latitude , movingposition.target.longitude , SearchCenter.latitude , SearchCenter.longitude) > 1000){
                     LatLng location = new LatLng(movingposition.target.latitude , movingposition.target.longitude);
                     SearchCenter = movingposition.target;
-
                 }
             }
         });
@@ -473,13 +469,7 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
         for(Marker m : prelist){
             if(m.getTitle().equals(s.getName())) {
                 premaker = m;
-                if(premaker != null){
-                    premaker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
-                }
-                premaker = m;
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(m.getPosition()));
-                ClickedStore = m.getTitle();
-                m.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
             }
         }
     }
@@ -509,6 +499,7 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
             m.remove();
         }
     }
+
 
 
 }

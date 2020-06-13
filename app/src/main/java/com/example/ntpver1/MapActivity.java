@@ -123,6 +123,7 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
                 mapManager = MapManager.getInstance(map, thisClass);
                 mapManager.checkPermission();
                 mapManager.getMyLocation();
+                mapManager.showMyLocation();
                 //변경 jjs 05.19 try catch 추가
 //                try {
 //                    doSearch("",mapManager.getSearchCentermymakerlntlng().latitude, mapManager.getSearchCentermymakerlntlng().longitude , 500 ,  2);
@@ -133,7 +134,6 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
         });
     }
 
-    
     //검색바
     private void setSearchBar() {
         searchBar = (MaterialSearchBar) findViewById(R.id.search_bar);
@@ -192,7 +192,6 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
         Log.i("CheckCount", "Pay check count" + Integer.toString(payCategory.size()));
         Log.i("CheckCount", "Store check count" + Integer.toString(storeCategory.size()));
     }
-
 
     //리싸이클러뷰
     protected void setRecyclerView() {
@@ -319,6 +318,7 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
             }
         }
     }
+
     //가시성 설정
     private void mySetVisibility(final int bottomLayoutState) {
         switch (bottomLayoutState) {

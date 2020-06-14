@@ -224,7 +224,6 @@ public class DBManager {
         this.radius = radius;
     }
 
-
     //유저등록설정 05.25 jjs
     public void setInsertUserValue(String email, String password, String user_name, String phone_number) {
         this.email = email;

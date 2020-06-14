@@ -2,7 +2,7 @@ package com.example.ntpver1.item;
 
 import java.util.ArrayList;
 
-public class Store {
+public class Store implements Comparable<Store> {
     ArrayList<String> pays;
     String name;
     String address;
@@ -11,6 +11,7 @@ public class Store {
     double latitude;
     double longitude;
     int star;
+    double weight;
 
     public Store(ArrayList<String> pays, String name, String address, String phone, String type, int star, double latitude, double longitude) {
         this.pays = pays;
@@ -85,5 +86,22 @@ public class Store {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public double getWeight(){
+        return weight;
+    }
+
+    public void setWeight(double weight){
+        this.weight = weight;
+    }
+
+    @Override
+    public int compareTo(Store s) {
+        if (this.weight < s.getWeight())
+            return -1;
+        else if(this.weight > s.getWeight())
+            return 1;
+        return 0;
     }
 }

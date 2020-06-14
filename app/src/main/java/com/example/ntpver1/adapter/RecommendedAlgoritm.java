@@ -21,6 +21,7 @@ import com.example.ntpver1.login.login.LoginManager;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.concurrent.ExecutionException;
 
 public class RecommendedAlgoritm extends AppCompatActivity {
@@ -49,6 +50,20 @@ public class RecommendedAlgoritm extends AppCompatActivity {
     LoginManager loginManager = LoginManager.getInstance();
     User user =loginManager.getUser();
 
+    private static RecommendedAlgoritm recommendedAlgoritm;
+
+    private RecommendedAlgoritm(){
+        getmylocation();
+    }
+
+    public static RecommendedAlgoritm getInstance(){
+        if(recommendedAlgoritm == null){
+            recommendedAlgoritm = new RecommendedAlgoritm();
+        }
+
+        return recommendedAlgoritm;
+    }
+
     Location myLocation;
     double Weightres = 0;
     double Weightcafe= 0;
@@ -65,14 +80,16 @@ public class RecommendedAlgoritm extends AppCompatActivity {
     double Kyongipayavg = 0;
 
     ArrayList<Store> stlist = new ArrayList<Store>();
+    ArrayList<Store> recommendlist = new ArrayList<Store>();
 
-    public void CalculationCategoryWeigt(){
+
+    public void calculationCategoryWeigt(){
         ArrayList<Card> cardlist = user.getCards();
         for(Card card: cardlist){
             for(Consumptionlist consumptionlist : card.getUsageHistory()){
-                CalculationpaytypeWeigt(consumptionlist);
+                calculationpaytypeAvg(consumptionlist);
                 count++;
-                switch ("음식점"){
+                switch (consumptionlist.getCategory()){
                     case "음식점" :
                         Weightres++;
                         break;
@@ -118,7 +135,7 @@ public class RecommendedAlgoritm extends AppCompatActivity {
         }
     }
 
-    public void CalculationpaytypeWeigt(Consumptionlist consumptionlist){
+    public void calculationpaytypeAvg(Consumptionlist consumptionlist){
 
         double zero = 0;
         double kyonggi = 0;
@@ -142,6 +159,18 @@ public class RecommendedAlgoritm extends AppCompatActivity {
 
     }
 
+    public void makeRecommendlist(ArrayList<Store> list){
+        for(Store s : list){
+            double diweight = distance(s.getLatitude(), s.getLongitude() , myLocation.getLatitude() , myLocation.getLongitude()) / 100.0;
+            double caweight = discernCategory(s.getType());
+            double payavgweight =comparePayavg(s.getPays());
+            double weight = caweight - Math.pow(diweight, 2) - payavgweight;
+            s.setWeight(weight);
+            recommendlist.add(s);
+        }
+        Collections.sort(recommendlist);
+    }
+
     //slist 값 추가
     public void setStlist(Double latitude, Double longitude, int radius, ArrayList<Store> stlist) throws ExecutionException, InterruptedException {
         int TEST_RADIUS_SET = 300;
@@ -149,6 +178,7 @@ public class RecommendedAlgoritm extends AppCompatActivity {
         dbManager.setSearchStoreListValue(latitude,longitude,TEST_RADIUS_SET);
         dbManager.readStoreListData(stlist);
     }
+
 
     public void getmylocation(){
         if ( Build.VERSION.SDK_INT >= 23 &&
@@ -161,6 +191,90 @@ public class RecommendedAlgoritm extends AppCompatActivity {
         }
     }
 
+    // 두 지점사이의 거리를 meter로 반환해 주기
+    private double distance(double movinglat , double movinglnt , double centerlat , double centerlnt){
+        double theta = Math.abs(movinglnt - centerlnt);
+        double dist = Math.sin(deg2rad(movinglat)) * Math.sin(deg2rad(centerlat)) + Math.cos(deg2rad(movinglat)) * Math.cos(deg2rad(centerlat)) * Math.cos(deg2rad(theta));
+
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515* 1609.344;
+
+        return dist;
+    }
+    // This function converts decimal degrees to radians
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+    // This function converts radians to decimal degrees
+    private static double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
+    }
+    // 카테고리에 따른 가중치를 반환해주는 함수
+    private double discernCategory(String category){
+        double caweight = 0;
+        switch (category){
+            case "음식점" :
+                caweight = Weightres * 10;
+                break;
+            case "카페" :
+                caweight = Weightcafe * 10;
+                break;
+            case "편의점" :
+                caweight = Weightcon * 10;
+                break;
+            case "식료품점" :
+                caweight = Weightgro * 10;
+                break;
+            case "의료" :
+                caweight = Weightmed * 10;
+                break;
+            case "패션" :
+                caweight = Weightfas * 10;
+                break;
+            case "전자제품" :
+                caweight =Weightele * 10;
+                break;
+            case "유흥" :
+                caweight = Weightplay * 10;
+                break;
+            case "숙박" :
+                caweight =Weighthotel * 10;
+                break;
+            default:
+                caweight =Weightother * 10;
+                break;
+        }
+        return caweight;
+    }
+    //페이타입과 남은 금액을 비교해 가중치를 반환해주는 함수
+    private double comparePayavg(ArrayList<String> pay){
+        double weight = 0;
+        double zeropayBalance = user.getCard("zeropay").getBalance();
+        double kyonggipayBalance = user.getCard("kyonggipay").getBalance();
+        for(String s : pay){
+            int c = 0;
+            if(s.equals("zeropay") && c ==0){
+                if(Zeropayavg > zeropayBalance)
+                    weight = weight -10;
+            }
+            if(s.equals("kyonggipay")&& c ==0){
+                if(Kyongipayavg > kyonggipayBalance)
+                    weight = weight -10;
+            }
+            if(s.equals("zeropay") && c ==1){
+                if(Zeropayavg <= zeropayBalance && weight < 0)
+                    weight = 0;
+            }
+
+            if(s.equals("kyonggipay") && c ==1){
+                if(Kyongipayavg <= kyonggipayBalance && weight < 0)
+                    weight = 0;
+            }
+            c++;
+        }
+        return weight;
+    }
 
 }
 

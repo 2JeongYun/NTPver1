@@ -3,6 +3,7 @@ package com.example.ntpver1;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.ntpver1.adapter.RecommendedAlgoritm;
 import com.example.ntpver1.item.Store;
 
 import org.json.JSONArray;
@@ -36,7 +37,7 @@ public class SelectStoreListData extends AsyncTask<String, Void, String> {
         return s;
     }
 
-
+    RecommendedAlgoritm recommendedAlgoritm = RecommendedAlgoritm.getInstance();
 
     @Override
     protected String doInBackground(String... params) {
@@ -127,6 +128,8 @@ public class SelectStoreListData extends AsyncTask<String, Void, String> {
                             stlist.add(store);
                         }
 
+                        recommendedAlgoritm.calculationCategoryWeigt();
+                        recommendedAlgoritm.makeRecommendlist(stlist);
                         //((MapActivity)MapActivity.mapContext).refreshList(); mapcontext새로고침막음
 
                     } catch (JSONException e) {

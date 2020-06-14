@@ -23,6 +23,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.ExecutionException;
 
 public class SelectStoreData extends AsyncTask<String, Void, String> {
@@ -45,7 +46,10 @@ public class SelectStoreData extends AsyncTask<String, Void, String> {
     private Store makeStore(String payName, String storeName, String address, String phoneNumber, String category, double latitude, double longitude) {
         ArrayList<String> pays = new ArrayList<>();
         pays.add(payName);
-        Store s = new Store(pays, storeName, address, phoneNumber, category, 0, latitude, longitude);
+        Random random = new Random(); //랜덤 객체 생성(디폴트 시드값 : 현재시간)
+        random.setSeed(System.currentTimeMillis()); //시드값 설정을 따로 할수도 있음
+        int star = random.nextInt(5);
+        Store s = new Store(pays, storeName, address, phoneNumber, category, star, latitude, longitude);
         return s;
     }
 

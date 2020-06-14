@@ -45,12 +45,6 @@ public class CardInfoFragment extends Fragment implements MenuActivity.OnBackPre
 
     private void setUI(ViewGroup rootView) {
         setRecyclerView(rootView);
-//        try {
-//            dbManager.setSearchConsumptionlistValue(loginManager.getUser().getUserEmail(), loginManager.getUser().get());
-//            dbManager.readConsumptionlistData();
-//        } catch (Exception e) {
-//            Log.d(TAG, "setUI, ERROR : can't read Consumption data");
-//        }
     }
 
     //리싸이클러뷰

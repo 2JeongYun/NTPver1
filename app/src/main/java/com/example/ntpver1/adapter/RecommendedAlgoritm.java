@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.ntpver1.DBManager;
 import com.example.ntpver1.item.Card;
 import com.example.ntpver1.item.Consumptionlist;
 import com.example.ntpver1.item.Store;
@@ -20,6 +21,7 @@ import com.example.ntpver1.login.login.LoginManager;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class RecommendedAlgoritm extends AppCompatActivity {
 
@@ -140,6 +142,13 @@ public class RecommendedAlgoritm extends AppCompatActivity {
 
     }
 
+    //slist 값 추가
+    public void setStlist(Double latitude, Double longitude, int radius, ArrayList<Store> stlist) throws ExecutionException, InterruptedException {
+        int TEST_RADIUS_SET = 300;
+        DBManager dbManager = DBManager.getInstance();
+        dbManager.setSearchStoreListValue(latitude,longitude,TEST_RADIUS_SET);
+        dbManager.readStoreListData(stlist);
+    }
 
     public void getmylocation(){
         if ( Build.VERSION.SDK_INT >= 23 &&

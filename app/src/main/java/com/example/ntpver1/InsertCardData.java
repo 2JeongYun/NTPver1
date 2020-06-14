@@ -18,13 +18,13 @@ public class InsertCardData extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... params) {
         String card_kinds = (String)params[1];
         String card_number = (String)params[2];
-        String user_id = (String)params[3];
+        String user_email = (String)params[3];
         String valid_thru = (String)params[4];
 
         String serverURL = (String)params[0];
         String postParameters = "card_kinds=" + card_kinds
                 + "&card_number=" + card_number
-                + "&user_id=" + user_id
+                + "&user_email=" + user_email
                 + "&valid_thru=" + valid_thru;
 
         try {

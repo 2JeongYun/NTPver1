@@ -96,9 +96,9 @@ public class DBManager {
     }
 
     //가게리스트정보찾기
-    public void readStoreListData() throws ExecutionException, InterruptedException {
+    public void readStoreListData(ArrayList<Store> stlist) throws ExecutionException, InterruptedException {
         Set<GeoHashQuery> newQueries = GeoHashQuery.queriesAtLocation(new GeoLocation(this.latitude, this.longitude), this.radius);
-        SelectStoreListData task = new SelectStoreListData();
+        SelectStoreListData task = new SelectStoreListData(stlist);
         for (final GeoHashQuery query : newQueries) {
             task.execute("http://" + IP_ADDRESS + "/select.php", "", "", "", query.getStartValue(), query.getEndValue());
             task.get();

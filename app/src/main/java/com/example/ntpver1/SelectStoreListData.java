@@ -16,15 +16,23 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class SelectStoreListData extends AsyncTask<String, Void, String> {
     private static final String TAG = "SelectStoreListData";
-    private ArrayList<Store> list_results;
+    private ArrayList<Store> stlist;
+
+    public SelectStoreListData(ArrayList<Store> stlist) {
+        this.stlist = stlist;
+    }
 
     private Store makeStore(String payName, String storeName, String address, String phoneNumber, String category, double latitude, double longitude) {
         ArrayList<String> pays = new ArrayList<>();
         pays.add(payName);
-        Store s = new Store(pays, storeName, address, phoneNumber, category, 0, latitude, longitude);
+        Random random = new Random(); //랜덤 객체 생성(디폴트 시드값 : 현재시간)
+        random.setSeed(System.currentTimeMillis()); //시드값 설정을 따로 할수도 있음
+        int star = random.nextInt(5);
+        Store s = new Store(pays, storeName, address, phoneNumber, category, star, latitude, longitude);
         return s;
     }
 
@@ -116,10 +124,10 @@ public class SelectStoreListData extends AsyncTask<String, Void, String> {
                             double latitude = jsonObject.getDouble("latitude");
                             double longitude = jsonObject.getDouble("longitude");
                             Store store = makeStore(payName, storeName, address, phoneNumber, category, latitude, longitude);
-                            list_results.add(store);
+                            stlist.add(store);
                         }
 
-                        ((MapActivity)MapActivity.mapContext).refreshList();
+                        //((MapActivity)MapActivity.mapContext).refreshList(); mapcontext새로고침막음
 
                     } catch (JSONException e) {
                         Log.d(TAG, "json error" + e.toString());

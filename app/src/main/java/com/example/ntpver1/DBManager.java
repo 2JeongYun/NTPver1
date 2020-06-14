@@ -144,7 +144,6 @@ public class DBManager {
             System.out.println(result);
         }
         else{
-//            System.out.println("error");
             System.out.println(result);
         }
     }
@@ -244,35 +243,6 @@ public class DBManager {
     //인증번호요청설정 jjs 06.08
     public void setSendCertificationValue(String email){
         this.email = email;
-    }
-
-    private Store makeStore(String payName, String storeName, String address, String phoneNumber, String category, double latitude, double longitude) {
-        ArrayList<String> pays = new ArrayList<>();
-        pays.add(payName);
-        Store s = new Store(pays, storeName, address, phoneNumber, category, 0, latitude, longitude);
-        return s;
-    }
-
-    private Store reduplicationChecker(String storeName, String phoneNumber, double latitude, double longitude){
-        for(Store x : results) {
-            if (x.getPhone().equals(phoneNumber) && !x.getPhone().equals("")) {
-                Log.d(TAG, storeName + "전화번호일치");
-                return x;
-            }
-            if (x.getName().equals(storeName)) {
-                Log.d(TAG, storeName + " 이름일치");
-                return x;
-            }
-            if (x.getLatitude() == latitude) {
-                Log.d(TAG, storeName + " 위도일치");
-                return x;
-            }
-            if (x.getLatitude() == longitude) {
-                Log.d(TAG, storeName + "경도일치");
-                return x;
-            }
-        }
-        return null;
     }
 
     public ArrayList<Store> getResults() {

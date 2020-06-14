@@ -12,6 +12,7 @@ public class Consumptionlist {
     String store_name;
     String user_email;
     String card_kind;
+    String category;
 
     public int getBalance() {
         return this.balance;
@@ -75,6 +76,14 @@ public class Consumptionlist {
 
     public String getCard_kind(){
         return card_kind;
+    }
+
+    public void setCategory(String category){
+        this.category = category;
+    }
+
+    public String getCategory(){
+        return this.category;
     }
 //    public String getDateAsString() {
 //        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");

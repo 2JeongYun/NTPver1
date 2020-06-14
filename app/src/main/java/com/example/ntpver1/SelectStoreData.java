@@ -161,4 +161,26 @@ public class SelectStoreData extends AsyncTask<String, Void, String> {
             Log.d(TAG, "thereisnodata");
         }
     }
+
+    private Store reduplicationChecker(String storeName, String phoneNumber, double latitude, double longitude){
+        for(Store x : results) {
+            if (x.getPhone().equals(phoneNumber) && !x.getPhone().equals("")) {
+                Log.d(TAG, storeName + "전화번호일치");
+                return x;
+            }
+            if (x.getName().equals(storeName)) {
+                Log.d(TAG, storeName + " 이름일치");
+                return x;
+            }
+            if (x.getLatitude() == latitude) {
+                Log.d(TAG, storeName + " 위도일치");
+                return x;
+            }
+            if (x.getLatitude() == longitude) {
+                Log.d(TAG, storeName + "경도일치");
+                return x;
+            }
+        }
+        return null;
+    }
 }

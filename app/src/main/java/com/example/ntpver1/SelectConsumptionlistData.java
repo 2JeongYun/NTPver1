@@ -101,6 +101,7 @@ public class SelectConsumptionlistData extends AsyncTask<String, Void, String> {
                     String pay_date = jsonObject.getString("pay_date");
                     String card_kinds = jsonObject.getString("card_kinds");
                     String store_name = jsonObject.getString("store_name");
+                    String category = jsonObject.getString("category");
                     int id = jsonObject.getInt("id");
                     Consumptionlist csmpt = new Consumptionlist();
                     csmpt.setBalance(balance);
@@ -109,10 +110,10 @@ public class SelectConsumptionlistData extends AsyncTask<String, Void, String> {
                     csmpt.setPay_date(pay_date);
                     csmpt.setStore_name(store_name);
                     csmpt.setCard_kind(card_kinds);
+                    csmpt.setCategory(category);
                     Csmpt.addItem(csmpt);
                 }
                 ((MenuActivity) MenuActivity.mContext).startCardInfoFragment();
-                System.out.println("test done");
             } catch (JSONException e) {
                 Log.d(TAG, e.toString());
             }

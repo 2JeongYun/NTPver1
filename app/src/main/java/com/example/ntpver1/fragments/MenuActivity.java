@@ -96,7 +96,10 @@ public class MenuActivity extends AppCompatActivity {
         onTabSelected(0);
     }
 
-    public void startCardInfoFragment() {
+    public void startCardInfoFragment(String cardType) {
+        Bundle bundle = new Bundle();
+        bundle.putString("cardType", cardType);
+        cardInfoFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(  R.id.container, cardInfoFragment).commit();
     }
 

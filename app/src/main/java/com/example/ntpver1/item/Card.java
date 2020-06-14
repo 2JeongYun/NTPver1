@@ -2,8 +2,10 @@ package com.example.ntpver1.item;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class Card {
+    private static HashMap<String, String> koName;
     String card_kinds;
     String card_number;
     Date valid_thru;
@@ -12,7 +14,15 @@ public class Card {
     int balance;
 
     public Card() {
+        koName = new HashMap<String, String> ();
+        koName.put("kyonggipay", "경기페이");
+        koName.put("zeropay", "제로페이");
+
         usageHistory = new ArrayList<>();
+    }
+
+    public String getKoName() {
+        return koName.get(card_kinds);
     }
 
     public void setUsageHistory(ArrayList<Consumptionlist> usageHistory) {

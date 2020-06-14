@@ -25,6 +25,7 @@ public class SelectConsumptionlistData extends AsyncTask<String, Void, String> {
     private static final String TAG = "";
     private String json = "";
     ConsumptionAdapter Csmpt = CardInfoFragment.getCsmptInstance();
+    Consumptionlist csmpt;
 
     @Override
     protected String doInBackground(String... params) {
@@ -103,7 +104,7 @@ public class SelectConsumptionlistData extends AsyncTask<String, Void, String> {
                     String store_name = jsonObject.getString("store_name");
                     String category = jsonObject.getString("category");
                     int id = jsonObject.getInt("id");
-                    Consumptionlist csmpt = new Consumptionlist();
+                    csmpt = new Consumptionlist();
                     csmpt.setBalance(balance);
                     csmpt.setId(id);
                     csmpt.setPay(pay);
@@ -113,7 +114,7 @@ public class SelectConsumptionlistData extends AsyncTask<String, Void, String> {
                     csmpt.setCategory(category);
                     Csmpt.addItem(csmpt);
                 }
-                ((MenuActivity) MenuActivity.mContext).startCardInfoFragment();
+                ((MenuActivity) MenuActivity.mContext).startCardInfoFragment(csmpt.getCard_kind());
             } catch (JSONException e) {
                 Log.d(TAG, e.toString());
             }

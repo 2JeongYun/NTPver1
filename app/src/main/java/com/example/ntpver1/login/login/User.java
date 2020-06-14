@@ -42,4 +42,13 @@ public class User {
     public void setPhoneNumber(String phoneNumber){
         this.phoneNumber = phoneNumber;
     }
+
+    public Card getCard(String cardType) {
+        for (Card card : cards) {
+            if (card.getCard_kinds().equals(cardType))
+                return card;
+        }
+
+        return null;
+    }
 }

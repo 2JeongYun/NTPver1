@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,6 +22,7 @@ import com.example.ntpver1.adapter.ConsumptionAdapter;
 import com.example.ntpver1.item.Card;
 import com.example.ntpver1.item.Consumptionlist;
 import com.example.ntpver1.login.login.LoginManager;
+import com.example.ntpver1.login.login.User;
 
 import java.util.Date;
 
@@ -30,20 +32,40 @@ public class CardInfoFragment extends Fragment implements MenuActivity.OnBackPre
     RecyclerView consumptionRecyclerView;
     DBManager dbManager = DBManager.getInstance();
     LoginManager loginManager = LoginManager.getInstance();
+    User user;
+    Card card;
+    String cardType;
+
+    TextView payBalanceTextView;
+    TextView payTypeTextView;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView() is called");
 
+        if (getArguments() != null) {
+            cardType = getArguments().getString("cardType");
+            Log.d(TAG, cardType);
+        }
+
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_card_info, container, false);
 
-        setUI(rootView);
+        init(rootView);
 
         return rootView;
     }
 
-    private void setUI(ViewGroup rootView) {
+    private void init(ViewGroup rootView) {
+        user = loginManager.getUser();
+        card = user.getCard(cardType);
+
+        payTypeTextView = rootView.findViewById(R.id.pay_type);
+        payBalanceTextView = rootView.findViewById(R.id.pay_balance);
+
+        payTypeTextView.setText(card.getKoName());
+        payBalanceTextView.setText(Integer.toString(card.getBalance()));
+
         setRecyclerView(rootView);
     }
 

@@ -356,6 +356,8 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
         storeAdapter.notifyDataSetChanged();
     }
 
+
+
     public Activity getActivity() {
         return mapAct;
     }

@@ -11,8 +11,10 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.ntpver1.MapActivity;
+import com.example.ntpver1.MapManager;
 import com.example.ntpver1.R;
 import com.example.ntpver1.adapter.RecommendedAlgoritm;
+import com.example.ntpver1.item.Store;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

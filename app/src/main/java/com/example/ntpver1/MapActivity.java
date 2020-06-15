@@ -41,6 +41,10 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
     private static final double TEST_LATITUDE_VALUE = 37.245347801;
     private static final double TEST_LONGITUDE_VALUE = 127.01442311;
     private static final int TEST_RADIUS_VALUE = 500;
+    public static int REQUEST_BY_ADAPTER = 1;
+    public static int NORMAL = 0;
+    static int mode = NORMAL;
+
 
     private MapActivity thisClass = this;
     private Activity mapAct;
@@ -87,6 +91,8 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
 
     String keyWord;
 
+    static Store targetStore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,8 +130,17 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
 
                 mapManager = MapManager.getInstance(map, thisClass);
                 mapManager.checkPermission();
-                mapManager.getMyLocation();
-                mapManager.showMyLocation();
+
+                if (mode == NORMAL) {
+                    mapManager.getMyLocation();
+                    mapManager.showMyLocation();
+                }
+
+                if (mode == REQUEST_BY_ADAPTER) {
+                    mapManager.Marking(targetStore);
+                    mapManager.Findmarker(targetStore);
+                    mapManager.getMyLocation();
+                }
                 //변경 jjs 05.19 try catch 추가
 //                try {
 //                    doSearch("",mapManager.getSearchCentermymakerlntlng().latitude, mapManager.getSearchCentermymakerlntlng().longitude , 500 ,  2);
@@ -202,7 +217,7 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
                 new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         resultRecyclerView.setLayoutManager(layoutManager);
 
-        storeAdapter = new StoreAdapter();
+        storeAdapter = new StoreAdapter(StoreAdapter.SEARCH_RESULT);
 
         resultRecyclerView.setAdapter(storeAdapter);
     }
@@ -275,7 +290,7 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
 
         //변경 jjs 05.19 try catch 추가
         try {
-            doSearch(mapManager.SearchCenter.latitude, mapManager.SearchCenter.longitude, TEST_RADIUS_VALUE ,  SEARCH);
+            doSearch(mapManager.SearchCenter.latitude, mapManager.SearchCenter.longitude, TEST_RADIUS_VALUE, SEARCH);
 //                doSearch(keyWord, TEST_LATITUDE_VALUE, TEST_LONGITUDE_VALUE, TEST_RADIUS_VALUE, SEARCH);
         } catch (InterruptedException | ExecutionException | JSONException e) {
             e.printStackTrace();
@@ -324,7 +339,7 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
                     Toast.makeText(getApplicationContext(), "Please, Wait a second", Toast.LENGTH_SHORT).show();
                     bottomLayoutState = ON_SEARCH_SETTING_BUTTON;
                     mySetVisibility(bottomLayoutState);
-               }
+                }
             }
         }
     }
@@ -350,12 +365,15 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
         }
     }
 
+    public static void setMapTargetStore(Store store) {
+        targetStore = store;
+    }
+
     //리스트 갱신 (무식하게 엎는 방법)
     public void refreshList() {
         Log.d(TAG, "refreshList() is called");
         storeAdapter.notifyDataSetChanged();
     }
-
 
 
     public Activity getActivity() {
@@ -364,5 +382,9 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
 
     public Context getContext() {
         return mapContext;
+    }
+
+    public static void setMapMode(int type) {
+        mode = type;
     }
 }

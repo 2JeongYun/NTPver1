@@ -96,6 +96,14 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
         return mapManager;
     }
 
+    public static MapManager getInstance() {
+        if (mapManager == null) {
+            return null;
+        }
+
+        return mapManager;
+    }
+
     //권환 확인하기
     public void checkPermission(){
         Log.d("1", "checkPermission");
@@ -222,6 +230,7 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
 
     // 스토어 객체를 받아와 마크찍기
     public void Marking(Store store){
+        Log.d(TAG, "Marking() store name : " + store.getName());
 
         aroundlist.add(store);
 
@@ -483,10 +492,13 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
     }
 
     public void Findmarker(Store s){
+        Log.d(TAG, "Findmarker() store name : " + s.getName());
+
         for(Marker m : prelist){
             if(m.getTitle().equals(s.getName())) {
                 premaker = m;
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(m.getPosition()));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(20));
                 LayoutInflater inflater = (LayoutInflater) mapActivity.getContext().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
                 View infoWindow = inflater.inflate(R.layout.item_markerinfo ,null);
                 DriverInfoAdapter driverInfoAdapter = new DriverInfoAdapter(infoWindow, FindStore());

@@ -90,7 +90,7 @@ public class SearchFragment extends Fragment implements MenuActivity.OnBackPress
                 new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         resultRecyclerView.setLayoutManager(layoutManager);
 
-        storeAdapter = new StoreAdapter();
+        storeAdapter = new StoreAdapter(StoreAdapter.RECOMMEND);
 
         resultRecyclerView.setAdapter(storeAdapter);
     }

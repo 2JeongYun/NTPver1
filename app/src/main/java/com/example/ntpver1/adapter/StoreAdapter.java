@@ -4,15 +4,20 @@ import android.app.SearchManager;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.ntpver1.MapActivity;
+import com.example.ntpver1.MapManager;
 import com.example.ntpver1.R;
+import com.example.ntpver1.fragments.MenuActivity;
 import com.example.ntpver1.item.Store;
 import com.example.ntpver1.myinterface.OnStoreItemClickListener;
 
@@ -20,9 +25,17 @@ import java.util.ArrayList;
 
 public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> implements OnStoreItemClickListener {
     static final String TAG = "StoreAdapter";
+    public static final int SEARCH_RESULT = 0;
+    public static final int RECOMMEND = 1;
 
     ArrayList<Store> items = new ArrayList<Store>();
     static OnStoreItemClickListener listener;
+
+    public int mode = 0;
+
+    public StoreAdapter(int mode) {
+        this.mode = mode;
+    }
 
     @NonNull
     @Override
@@ -44,12 +57,13 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
         return items.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         int star;
         TextView nameTextView;
         TextView phoneTextView;
         TextView addressTextView;
         RatingBar ratingBar;
+        MapManager mapManager = MapManager.getInstance();
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -74,6 +88,26 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
                         intent.setAction(Intent.ACTION_WEB_SEARCH);
                         intent.putExtra(SearchManager.QUERY, keyWord);
                         view.getContext().startActivity(intent);
+                    }
+                }
+            });
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = getAdapterPosition();
+
+                    if (listener != null) {
+                        listener.onItemClick(ViewHolder.this, view, position);
+                    } else {
+                        if (mode == SEARCH_RESULT)
+                            mapManager.Findmarker(getItem(position));
+                        else if (mode == RECOMMEND) {
+                            Log.d(TAG, "getItem name : " + getItem(position).getName());
+                            MapActivity.setMapMode(MapActivity.REQUEST_BY_ADAPTER);
+                            MapActivity.setMapTargetStore(getItem(position));
+                            ((MenuActivity) MenuActivity.mContext).onTabSelected(2);
+                        }
                     }
                 }
             });

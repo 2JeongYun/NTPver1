@@ -1,8 +1,9 @@
 package com.example.ntpver1.item;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Store implements Comparable<Store> {
+public class Store implements Comparable<Store>, Serializable {
     ArrayList<String> pays;
     String name;
     String address;

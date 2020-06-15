@@ -63,6 +63,7 @@ public class SearchFragment extends Fragment implements MenuActivity.OnBackPress
 
         //Test
 
+
 <<<<<<< HEAD
         ArrayList<String> test = new ArrayList<>();
         addResult(new Store(test, "TEST", "TEST", "TEST", "TEST", 3, 33.3, 3.3));
@@ -71,6 +72,7 @@ public class SearchFragment extends Fragment implements MenuActivity.OnBackPress
 
         recommendedAlgoritm = RecommendedAlgoritm.getInstance();
 =======
+
         RecommendedAlgoritm recommendedAlgoritm = RecommendedAlgoritm.getInstance();
 
         recommendedAlgoritm.checkPermission();
@@ -99,6 +101,7 @@ public class SearchFragment extends Fragment implements MenuActivity.OnBackPress
     searchBar = (MaterialSearchBar) rootView.findViewById(R.id.search_bar);
         searchBar.setOnSearchActionListener(this);
 }
+
 >>>>>>> 5cb92c6f308fd0f92866c2221eb99eb287c05d41
 
         recommendedAlgoritm.checkPermission();

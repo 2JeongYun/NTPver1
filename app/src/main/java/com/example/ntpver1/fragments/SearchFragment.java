@@ -61,12 +61,7 @@ public class SearchFragment extends Fragment implements MenuActivity.OnBackPress
 
         setRecyclerView(rootView);
 
-        //Test
-
         ArrayList<String> test = new ArrayList<>();
-        addResult(new Store(test, "TEST", "TEST", "TEST", "TEST", 3, 33.3, 3.3));
-        addResult(new Store(test, "TEST", "TEST", "TEST", "TEST", 3, 33.3, 3.3));
-        addResult(new Store(test, "TEST", "TEST", "TEST", "TEST", 3, 33.3, 3.3));
 
         recommendedAlgoritm = RecommendedAlgoritm.getInstance();
 

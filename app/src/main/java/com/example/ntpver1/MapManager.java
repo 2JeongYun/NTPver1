@@ -439,13 +439,7 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
         mMap.moveCamera(CameraUpdateFactory.newLatLng(marker.getPosition()));
         LayoutInflater inflater = (LayoutInflater) mapActivity.getContext().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
         View infoWindow = inflater.inflate(R.layout.item_markerinfo ,null);
-        if(infoWindow == null){
-            Log.d("infoWindow", "null");
-        }
         DriverInfoAdapter driverInfoAdapter = new DriverInfoAdapter(infoWindow, FindStore());
-        if(driverInfoAdapter == null){
-            Log.d("driverInfoAdapter", "null");
-        }
         mMap.setInfoWindowAdapter(driverInfoAdapter);
         marker.showInfoWindow();
         return true;
@@ -493,6 +487,11 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
             if(m.getTitle().equals(s.getName())) {
                 premaker = m;
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(m.getPosition()));
+                LayoutInflater inflater = (LayoutInflater) mapActivity.getContext().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+                View infoWindow = inflater.inflate(R.layout.item_markerinfo ,null);
+                DriverInfoAdapter driverInfoAdapter = new DriverInfoAdapter(infoWindow, FindStore());
+                mMap.setInfoWindowAdapter(driverInfoAdapter);
+                m.showInfoWindow();
             }
         }
     }

@@ -67,5 +67,8 @@
     <color name="brown_300">#A1887F</color>
     <color name="brown_400">#8D6E63</color>
 
+    <color name="income">#029C1B</color>
+    <color name="spending">#BC0909</color>
+
 
 </resources>

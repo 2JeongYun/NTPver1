@@ -7,9 +7,9 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="4dp"
         android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginBottom="4dp">
 
         <LinearLayout
@@ -20,8 +20,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:orientation="horizontal"
-                android:padding="4dp" >
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/pay_date"
@@ -31,7 +30,7 @@
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginTop="4dp"/>
 
                 <View
@@ -39,25 +38,12 @@
                     android:layout_height="0dp"
                     android:layout_weight="1" />
 
-
-                <TextView
-                    android:id="@+id/balance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="잔액"
-                    android:textStyle="bold"
-                    android:textSize="20sp"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="20dp"
-                    android:layout_marginTop="4dp"/>
-
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:orientation="horizontal"
-                android:padding="4dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/used_place"
@@ -67,7 +53,7 @@
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="16dp"
                     android:layout_marginBottom="4dp"/>
 
                 <View
@@ -83,7 +69,7 @@
                     android:textStyle="bold"
                     android:textSize="20sp"
                     android:layout_gravity="center"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="16dp"
                     android:layout_marginBottom="4dp"/>
             </LinearLayout>
 

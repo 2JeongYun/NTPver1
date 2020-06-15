@@ -69,7 +69,7 @@ public class CardInfoFragment extends Fragment implements MenuActivity.OnBackPre
         payBalanceTextView = rootView.findViewById(R.id.pay_balance);
 
         payTypeTextView.setText(card.getKoName(card.getCard_kinds()));
-        payBalanceTextView.setText(Integer.toString(card.getBalance()));
+        payBalanceTextView.setText(Integer.toString(card.getBalance()) + " 원");
 
         setRecyclerView(rootView);
     }

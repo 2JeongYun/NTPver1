@@ -1,5 +1,6 @@
 package com.example.ntpver1.adapter;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,7 +52,6 @@ public class ConsumptionAdapter extends RecyclerView.Adapter<ConsumptionAdapter.
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView dateTextView;
         TextView usedPlaceTextView;
-        TextView balanceTextView;
         TextView costTextView;
 
         public ViewHolder(View itemView) {
@@ -59,15 +59,20 @@ public class ConsumptionAdapter extends RecyclerView.Adapter<ConsumptionAdapter.
 
             dateTextView = itemView.findViewById(R.id.pay_date);
             usedPlaceTextView = itemView.findViewById(R.id.used_place);
-            balanceTextView = itemView.findViewById(R.id.balance);
             costTextView = itemView.findViewById(R.id.cost);
         }
 
+        @SuppressLint("ResourceAsColor")
         public void setItem(Consumptionlist item) {
             dateTextView.setText(item.getPay_date());
             usedPlaceTextView.setText(item.getStore_name());
-            balanceTextView.setText(Integer.toString(item.getBalance()));
-            costTextView.setText(Integer.toString(item.getPay()));
+            if (item.getPay() > 0) {
+                costTextView.setTextColor(itemView.getResources().getColor(R.color.income));
+                costTextView.setText("+" + Integer.toString(item.getPay()) + " 원");
+            } else if (item.getPay() < 0) {
+                costTextView.setTextColor(itemView.getResources().getColor(R.color.spending));
+                costTextView.setText(Integer.toString(item.getPay()) + " 원");
+            }
         }
     }
 

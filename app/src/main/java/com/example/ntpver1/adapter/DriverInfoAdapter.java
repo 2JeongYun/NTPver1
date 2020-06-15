@@ -27,5 +27,4 @@ public class DriverInfoAdapter implements GoogleMap.InfoWindowAdapter {
     public View getInfoContents(Marker marker) {
         return null;
     }
-
 }

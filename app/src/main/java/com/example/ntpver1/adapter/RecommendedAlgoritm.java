@@ -160,20 +160,27 @@ public class RecommendedAlgoritm extends AppCompatActivity {
     //user정보에 있는 결제 금액들을 페이별로 묶어 평균구하기
     public void calculationpaytypeAvg(Consumptionlist consumptionlist){
 
-        double zero = 0;
-        double kyonggi = 0;
+        int zero = 0;
+        int kyonggi = 0;
         double zerocount = 0;
         double kyonggicount = 0;
 
-        switch(consumptionlist.getCard_kind()){
-            case "zeropay":
-                zero = zero+consumptionlist.getPay();
+        String s = consumptionlist.getCard_kind();
+
+        Log.d(TAG, "getcard" + s);
+
+        switch(s){
+
+            case "zeropay" :
+                zero = zero-consumptionlist.getPay();
                 zerocount++;
+                Log.d(TAG, "제로추가 " + Integer.toString(zero));
                 break;
 
-            case "kyonggipay":
-                kyonggi = kyonggi+consumptionlist.getPay();
+            case "kyonggipay" :
+                kyonggi = kyonggi - consumptionlist.getPay();
                 kyonggicount++;
+                Log.d(TAG, "경기추가 " + Integer.toString(zero));
         }
 
         Zeropayavg = zero/zerocount;
@@ -189,8 +196,10 @@ public class RecommendedAlgoritm extends AppCompatActivity {
             double caweight = discernCategory(s.getType());
             double payavgweight =comparePayavg(s.getPays());
             double weight = caweight - Math.pow(diweight, 2) - payavgweight;
-            s.setWeight(weight);
-            recommendlist.add(s);
+            if(weight > -10) {
+                s.setWeight(weight);
+                recommendlist.add(s);
+            }
         }
         Collections.sort(recommendlist);
     }
@@ -198,8 +207,9 @@ public class RecommendedAlgoritm extends AppCompatActivity {
     //slist 값 추가
     public void setStlist(Double latitude, Double longitude, int radius) throws ExecutionException, InterruptedException {
         DBManager dbManager = DBManager.getInstance();
-        dbManager.setSearchStoreListValue(latitude,longitude,radius);
-        dbManager.readStoreListData(stlist);
+        calculationCategoryWeigt();
+        dbManager.setSearchValue("",  getPaytype() , getCategory(), latitude,longitude,radius );
+        dbManager.readStoreListData();
     }
 
     //내위치 가져오기
@@ -342,6 +352,57 @@ public class RecommendedAlgoritm extends AppCompatActivity {
 
     public ArrayList<Store> getRecommendlist(){
         return recommendlist;
+    }
+
+    public ArrayList<String> getCategory(){
+        ArrayList<String> Category = new ArrayList<>();
+        if(Weightres > 0 ) {
+            Category.add("음식점");
+            Log.d(TAG, "음식점 추가");
+        }
+
+        if(Weightcon  > 0 ) {
+            Category.add("편의점");
+            Log.d(TAG, "편의점 추가");
+        }
+
+        if(Weightcafe > 0 ) {
+            Category.add("카페");
+            Log.d(TAG, "카페 추가");
+        }
+
+        if(Weightgro  > 0 ) {
+            Category.add("식료품점");
+            Log.d(TAG, "식료품점 추가");
+        }
+
+        if(Weightmed  > 0 )
+            Category.add("의료");
+
+        if(Weightfas  > 0 )
+            Category.add("패션");
+        if(Weightele  > 0 )
+            Category.add("전자제품");
+        if(Weightplay  > 0 )
+            Category.add("유흥");
+        if(Weighthotel  > 0 )
+            Category.add("숙박");
+        if(Weightother  > 0 )
+            Category.add("기타");
+        return Category;
+    }
+
+    public ArrayList<String> getPaytype(){
+        ArrayList<String> Paytype = new ArrayList<String>();
+        if (Zeropayavg > 0){
+            Paytype.add("제로페이");
+            Log.d(TAG, "제로페이 추가");
+        }
+        if (Kyongipayavg > 0){
+            Paytype.add("경기페이");
+            Log.d(TAG, "경기페이 추가");
+        }
+        return Paytype;
     }
 
 }

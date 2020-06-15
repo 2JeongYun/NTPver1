@@ -22,11 +22,9 @@ import java.util.Random;
 
 public class SelectStoreListData extends AsyncTask<String, Void, String> {
     private static final String TAG = "SelectStoreListData";
-    private ArrayList<Store> stlist;
+    private ArrayList<Store> stlist  = new ArrayList<>();
 
-    public SelectStoreListData(ArrayList<Store> stlist) {
-        this.stlist = stlist;
-    }
+
 
     private Store makeStore(String payName, String storeName, String address, String phoneNumber, String category, double latitude, double longitude) {
         ArrayList<String> pays = new ArrayList<>();
@@ -123,13 +121,13 @@ public class SelectStoreListData extends AsyncTask<String, Void, String> {
                             String address = jsonObject.getString("address");
                             String phoneNumber = jsonObject.getString("phone_number");
                             String category = jsonObject.getString("category");
+                            Log.d(TAG, category);
                             double latitude = jsonObject.getDouble("latitude");
                             double longitude = jsonObject.getDouble("longitude");
                             Store store = makeStore(payName, storeName, address, phoneNumber, category, latitude, longitude);
                             stlist.add(store);
                         }
 
-                        recommendedAlgoritm.calculationCategoryWeigt();
                         recommendedAlgoritm.makeRecommendlist(stlist);
 
                         ((MenuActivity)MenuActivity.mContext).callSearchFragment("setRecomendData");

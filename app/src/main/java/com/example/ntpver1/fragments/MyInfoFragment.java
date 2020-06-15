@@ -46,6 +46,7 @@ public class MyInfoFragment extends Fragment {
     TextView incomeTextView;
     TextView spendingTextView;
     TextView totalTextView;
+    TextView userTotalTextView;
 
     @Nullable
     @Override
@@ -71,6 +72,7 @@ public class MyInfoFragment extends Fragment {
         incomeTextView = rootView.findViewById(R.id.income);
         spendingTextView = rootView.findViewById(R.id.spending);
         totalTextView = rootView.findViewById(R.id.total);
+        userTotalTextView = rootView.findViewById(R.id.user_total_balance);
 
         setStatistics();
 
@@ -84,6 +86,11 @@ public class MyInfoFragment extends Fragment {
     }
 
     public void setStatistics() {
+        int total = 0;
+        int income = 0;
+        int spending = 0;
+        int userTotal = 0;
+
         User user = loginManager.getUser();
         ArrayList<Card> cards = user.getCards();
         ArrayList<TextView> rankings = new ArrayList<>();
@@ -100,12 +107,32 @@ public class MyInfoFragment extends Fragment {
         Log.d(TAG, Integer.toString(cards.size()));
 
         for (int i = 0; i < cards.size(); i++) {
-            rankings.get(i).setText(cards.get(i).getKoName(cards.get(i).getCard_kinds()));
+            rankings.get(i).setText(Integer.toString(i+1) + ". " + cards.get(i).getKoName(cards.get(i).getCard_kinds()));
             Log.d(TAG, rankings.get(i).getText().toString());
             Log.d(TAG, Integer.toString(i));
             if (i >= 2)
                 break;
         }
+
+        for (Card card : cards) {
+            int history = card.getSpending(Integer.MIN_VALUE, Integer.MAX_VALUE);
+            if (0 <= history)
+                income += history;
+            else
+                spending += history;
+            total += card.getSpending(Integer.MIN_VALUE, Integer.MAX_VALUE);
+
+            userTotal += card.getBalance();
+        }
+
+        incomeTextView.setText("+" + Integer.toString(income) + " 원");
+        spendingTextView.setText(Integer.toString(spending) + " 원");
+        if (total > 0)
+            totalTextView.setText("+" + Integer.toString(total) + " 원");
+        else
+            totalTextView.setText(Integer.toString(total) + " 원");
+
+        userTotalTextView.setText(userTotal + " 원");
     }
 
     //리싸이클러뷰

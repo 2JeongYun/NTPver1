@@ -42,8 +42,10 @@ public class Card implements Comparable {
         int total = 0;
 
         for (Consumptionlist consumption : usageHistory) {
-            payDate = consumption.pay_date;
-            temp = payDate.substring(payDate.lastIndexOf(" ") + 1);
+            payDate = consumption.getPay_date();
+            temp = payDate.substring(0, 9);
+            temp = temp.replaceAll("[^0-9]", "");
+            Log.d(TAG, temp);
             payDateNum = Integer.parseInt(temp);
             Log.d(TAG, Integer.toString(payDateNum));
 

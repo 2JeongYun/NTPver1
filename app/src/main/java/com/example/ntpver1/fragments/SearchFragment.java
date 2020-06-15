@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ntpver1.MyTool;
 import com.example.ntpver1.R;
+import com.example.ntpver1.adapter.RecommendedAlgoritm;
 import com.example.ntpver1.adapter.StoreAdapter;
 import com.example.ntpver1.item.Store;
 import com.mancj.materialsearchbar.MaterialSearchBar;
@@ -69,10 +70,14 @@ public class SearchFragment extends Fragment implements MaterialSearchBar.OnSear
 
         //Test
 
-        ArrayList<String> test = new ArrayList<>();
-        addResult(new Store(test, "TEST", "TEST", "TEST", "TEST", 3, 33.3, 3.3));
-        addResult(new Store(test, "TEST", "TEST", "TEST", "TEST", 3, 33.3, 3.3));
-        addResult(new Store(test, "TEST", "TEST", "TEST", "TEST", 3, 33.3, 3.3));
+        RecommendedAlgoritm recommendedAlgoritm = RecommendedAlgoritm.getInstance();
+
+        recommendedAlgoritm.checkPermission();
+        recommendedAlgoritm.getMyLocation();
+        for(Store st : recommendedAlgoritm.getRecommendlist()){
+            addResult(st);
+        }
+
     }
 
     //카테고리버튼 클릭리스너
@@ -90,9 +95,9 @@ public class SearchFragment extends Fragment implements MaterialSearchBar.OnSear
 
     //검색바
     private void setSearchBar(ViewGroup rootView) {
-        searchBar = (MaterialSearchBar) rootView.findViewById(R.id.search_bar);
+    searchBar = (MaterialSearchBar) rootView.findViewById(R.id.search_bar);
         searchBar.setOnSearchActionListener(this);
-    }
+}
 
     //검색바 리스너
     @Override

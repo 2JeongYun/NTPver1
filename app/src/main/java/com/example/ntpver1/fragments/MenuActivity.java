@@ -3,6 +3,7 @@ package com.example.ntpver1.fragments;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,12 +12,16 @@ import android.view.MenuItem;
 
 import com.example.ntpver1.MapActivity;
 import com.example.ntpver1.R;
+import com.example.ntpver1.adapter.RecommendedAlgoritm;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MenuActivity extends AppCompatActivity {
     private static final String TAG = "MenuActivity";
     private static final int REQUEST_MAP_ACTIVITY = 3;
+
+    private MenuActivity thisClass = this;
+    private Activity MenuAct;
 
     public static Context mContext;
 
@@ -25,11 +30,12 @@ public class MenuActivity extends AppCompatActivity {
     CardInfoFragment cardInfoFragment;
     BottomNavigationView bottomNavigationView;
 
+    RecommendedAlgoritm recommendedAlgoritm =RecommendedAlgoritm.getInstance(thisClass);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
         init();
     }
 
@@ -123,5 +129,13 @@ public class MenuActivity extends AppCompatActivity {
 
     public MyInfoFragment getMyInfoFragment() {
         return myInfoFragment;
+    }
+
+    public Activity getActivity() {
+        return MenuAct;
+    }
+
+    public Context getContext() {
+        return mContext;
     }
 }

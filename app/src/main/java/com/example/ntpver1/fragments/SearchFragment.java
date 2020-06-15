@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.ntpver1.MyTool;
 import com.example.ntpver1.R;
+import com.example.ntpver1.adapter.RecommendedAlgoritm;
 import com.example.ntpver1.adapter.StoreAdapter;
 import com.example.ntpver1.item.Store;
 import com.mancj.materialsearchbar.MaterialSearchBar;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
-public class SearchFragment extends Fragment implements MaterialSearchBar.OnSearchActionListener, MenuActivity.OnBackPressedListener {
+public class SearchFragment extends Fragment implements MenuActivity.OnBackPressedListener {
     private static final String TAG = "SearchFragment";
 
     private StoreAdapter storeAdapter;
@@ -39,6 +40,9 @@ public class SearchFragment extends Fragment implements MaterialSearchBar.OnSear
 
     //검색바
     private MaterialSearchBar searchBar;
+
+    RecommendedAlgoritm recommendedAlgoritm;
+    RecyclerView resultRecyclerView;
 
     @Nullable
     @Override
@@ -53,26 +57,28 @@ public class SearchFragment extends Fragment implements MaterialSearchBar.OnSear
     }
 
     private void init(ViewGroup rootView) {
-        myTool = MyTool.getInstance();
         imm = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
 
-        ArrayList<View> views = myTool.getAllViews(rootView.findViewById(R.id.category_layout));
-        categoryButtons = new ArrayList<>();
-        for (int i = 0; i < views.size(); i++) {
-            Button button = (Button) views.get(i);
-            button.setOnClickListener(this::onClickListener);
-            categoryButtons.add(button);
-        }
-
         setRecyclerView(rootView);
-        setSearchBar(rootView);
 
         //Test
 
+<<<<<<< HEAD
         ArrayList<String> test = new ArrayList<>();
         addResult(new Store(test, "TEST", "TEST", "TEST", "TEST", 3, 33.3, 3.3));
         addResult(new Store(test, "TEST", "TEST", "TEST", "TEST", 3, 33.3, 3.3));
         addResult(new Store(test, "TEST", "TEST", "TEST", "TEST", 3, 33.3, 3.3));
+
+        recommendedAlgoritm = RecommendedAlgoritm.getInstance();
+=======
+        RecommendedAlgoritm recommendedAlgoritm = RecommendedAlgoritm.getInstance();
+
+        recommendedAlgoritm.checkPermission();
+        recommendedAlgoritm.getMyLocation();
+        for(Store st : recommendedAlgoritm.getRecommendlist()){
+            addResult(st);
+        }
+
     }
 
     //카테고리버튼 클릭리스너
@@ -90,28 +96,21 @@ public class SearchFragment extends Fragment implements MaterialSearchBar.OnSear
 
     //검색바
     private void setSearchBar(ViewGroup rootView) {
-        searchBar = (MaterialSearchBar) rootView.findViewById(R.id.search_bar);
+    searchBar = (MaterialSearchBar) rootView.findViewById(R.id.search_bar);
         searchBar.setOnSearchActionListener(this);
+}
+>>>>>>> 5cb92c6f308fd0f92866c2221eb99eb287c05d41
+
+        recommendedAlgoritm.checkPermission();
+        recommendedAlgoritm.getMyLocation();
     }
 
-    //검색바 리스너
-    @Override
-    public void onSearchStateChanged(boolean enabled) {
-        //TEST
-        //Toast.makeText(this, "Search bar's onSearchStateChanged Method is called, parameter is " + enabled, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onSearchConfirmed(CharSequence text) {
-        imm.hideSoftInputFromWindow(searchBar.getWindowToken(), 0);
-        String keyWord = searchBar.getText();
-
-    }
-
-    @Override
-    public void onButtonClicked(int buttonCode) {
-        //TEST
-        //Toast.makeText(this, "Search bar onButtonClicked Method is called, code is " + buttonCode, Toast.LENGTH_SHORT).show();
+    public void setRecomendData() {
+        for(Store st : recommendedAlgoritm.getRecommendlist()) {
+            Log.d(TAG, "add Store : " + st.getName());
+            addResult(st);
+        }
+        storeAdapter.notifyDataSetChanged();
     }
 
     //결과데이터 추가
@@ -121,7 +120,7 @@ public class SearchFragment extends Fragment implements MaterialSearchBar.OnSear
 
     //리싸이클러뷰
     protected void setRecyclerView(ViewGroup rootView) {
-        RecyclerView resultRecyclerView = rootView.findViewById(R.id.result_recycler_view);
+        resultRecyclerView = rootView.findViewById(R.id.result_recycler_view);
 
         LinearLayoutManager layoutManager =
                 new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);

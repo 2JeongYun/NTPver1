@@ -94,6 +94,7 @@ public class SelectUserData extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String json_string) {
         super.onPostExecute(json_string);
+        user.uesrInit();
         if (!json_string.contains("FAIL")) {
             try {
                 JSONArray jsonArray = new JSONArray(json_string);

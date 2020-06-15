@@ -35,4 +35,16 @@ public class LoginManager {
 
         return loginManager;
     }
+
+    public void userUpdate() {
+        try {
+            dbManager.readUserData();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 }

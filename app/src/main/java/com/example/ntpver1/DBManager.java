@@ -98,8 +98,8 @@ public class DBManager {
     //가게리스트정보찾기
     public void readStoreListData(ArrayList<Store> stlist) throws ExecutionException, InterruptedException {
         Set<GeoHashQuery> newQueries = GeoHashQuery.queriesAtLocation(new GeoLocation(this.latitude, this.longitude), this.radius);
-        SelectStoreListData task = new SelectStoreListData(stlist);
         for (final GeoHashQuery query : newQueries) {
+            SelectStoreListData task = new SelectStoreListData(stlist);
             task.execute("http://" + IP_ADDRESS + "/select.php", "", "", "", query.getStartValue(), query.getEndValue());
             task.get();
         }
@@ -124,9 +124,9 @@ public class DBManager {
     public void writeCardData() throws ExecutionException, InterruptedException, JSONException {
         String json_string = "";
         InsertCardData task = new InsertCardData();
-        task.execute("http://" + this.IP_ADDRESS + "/insert_card.php", this.card_kinds, this.card_number, this.user_id, this.valid_thru);
+        task.execute("http://" + this.IP_ADDRESS + "/insert_card.php", this.card_kinds, this.card_number, this.email, this.valid_thru);
         String result = task.get();
-        if (result.equals("success")) {
+        if (result.contains("success")) {
             System.out.println(result);
         }
         else{
@@ -336,5 +336,4 @@ public class DBManager {
 
         return queries;
     }
-
 }

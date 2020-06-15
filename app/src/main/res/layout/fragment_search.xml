@@ -5,118 +5,45 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:paddingLeft="50dp"
-        android:paddingRight="50dp">
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp">
 
-        <com.mancj.materialsearchbar.MaterialSearchBar
-            android:id="@+id/search_bar"
-            style="@style/MaterialSearchBarLight"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center_vertical"
-            app:mt_hint="검색"
-            app:mt_maxSuggestionsCount="3" />
-    </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="16dp"
+            android:text="추천"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
 
-    <HorizontalScrollView
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:scrollbars="none">
+        android:layout_height="0dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_weight="6"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/category_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp">
-
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="음식점"
-                android:textColor="@drawable/color_button_state"
-                android:textSize="20sp" />
-
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="카페"
-                android:textColor="@drawable/color_button_state"
-                android:textSize="20sp" />
-
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="편의점"
-                android:textColor="@drawable/color_button_state"
-                android:textSize="20sp" />
-
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="식료품점"
-                android:textColor="@drawable/color_button_state"
-                android:textSize="20sp" />
-
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="의료"
-                android:textColor="@drawable/color_button_state"
-                android:textSize="20sp" />
-
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="패션"
-                android:textColor="@drawable/color_button_state"
-                android:textSize="20sp" />
-
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="전자제품"
-                android:textColor="@drawable/color_button_state"
-                android:textSize="20sp" />
-
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="유흥"
-                android:textColor="@drawable/color_button_state"
-                android:textSize="20sp" />
-
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="숙박"
-                android:textColor="@drawable/color_button_state"
-                android:textSize="20sp" />
-
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:text="기타"
-                android:textColor="@drawable/color_button_state"
-                android:textSize="20sp" />
-        </LinearLayout>
-    </HorizontalScrollView>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="15dp"
-        android:padding="10dp">
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/result_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="bottom" />
-    </LinearLayout>
+            android:background="@drawable/outline">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/result_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

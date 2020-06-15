@@ -2,12 +2,16 @@ package com.example.ntpver1;
 
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.Menu;
+import android.widget.Toast;
 
 import com.example.ntpver1.adapter.ConsumptionAdapter;
 import com.example.ntpver1.fragments.CardInfoFragment;
 import com.example.ntpver1.fragments.MenuActivity;
 import com.example.ntpver1.item.Card;
 import com.example.ntpver1.item.Consumptionlist;
+import com.example.ntpver1.login.login.LoginManager;
+import com.example.ntpver1.login.login.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,10 +26,11 @@ import java.net.URL;
 import java.util.Date;
 
 public class SelectConsumptionlistData extends AsyncTask<String, Void, String> {
-    private static final String TAG = "";
+    private static final String TAG = "SelectConsumptionData";
     private String json = "";
-    ConsumptionAdapter Csmpt = CardInfoFragment.getCsmptInstance();
     Consumptionlist csmpt;
+    LoginManager loginManager = LoginManager.getInstance();
+    User user = loginManager.getUser();
 
     @Override
     protected String doInBackground(String... params) {
@@ -112,13 +117,19 @@ public class SelectConsumptionlistData extends AsyncTask<String, Void, String> {
                     csmpt.setStore_name(store_name);
                     csmpt.setCard_kind(card_kinds);
                     csmpt.setCategory(category);
-                    Csmpt.addItem(csmpt);
+
+                    user.getCard(card_kinds).setUsageHistory(csmpt);
                 }
-                ((MenuActivity) MenuActivity.mContext).startCardInfoFragment(csmpt.getCard_kind());
             } catch (JSONException e) {
                 Log.d(TAG, e.toString());
             }
 
+            if(MenuActivity.mContext == null){
+
+            }
+            else {
+                ((MenuActivity) MenuActivity.mContext).callMyInfoFragment("setStatistics");
+            }
         }
     }
 }

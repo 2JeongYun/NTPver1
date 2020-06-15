@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import com.example.ntpver1.adapter.RecommendedAlgoritm;
+import com.example.ntpver1.fragments.MenuActivity;
 import com.example.ntpver1.item.Store;
 
 import org.json.JSONArray;
@@ -130,7 +131,8 @@ public class SelectStoreListData extends AsyncTask<String, Void, String> {
 
                         recommendedAlgoritm.calculationCategoryWeigt();
                         recommendedAlgoritm.makeRecommendlist(stlist);
-                        //((MapActivity)MapActivity.mapContext).refreshList(); mapcontext새로고침막음
+
+                        ((MenuActivity)MenuActivity.mContext).callSearchFragment("setRecomendData");
 
                     } catch (JSONException e) {
                         Log.d(TAG, "json error" + e.toString());

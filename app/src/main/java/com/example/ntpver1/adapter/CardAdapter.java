@@ -30,6 +30,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
 
     ArrayList<Card> items = new ArrayList<Card>();
     static OnCardItemClickListener listener;
+    String cardEnType;
 
     @NonNull
     @Override
@@ -61,6 +62,7 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView cardIDTextView;
         TextView balanceTextView;
+        TextView cardKoTextView;
         DBManager dbManager = DBManager.getInstance();
         LoginManager loginManager = LoginManager.getInstance();
 
@@ -69,30 +71,28 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
 
             cardIDTextView = itemView.findViewById(R.id.card_id);
             balanceTextView = itemView.findViewById(R.id.balance);
+            cardKoTextView = itemView.findViewById(R.id.card_ko);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Log.d(TAG, "itemView onClick email & card : " + loginManager.getUser().getUserEmail() + cardKoTextView.getText().toString());
                     int position = getAdapterPosition();
 
                     if (listener != null) {
                         listener.onItemClick(ViewHolder.this, view, position);
                     } else {
-                        // 비동기통신 jjs 06.11
-                        dbManager.setSearchConsumptionlistValue(loginManager.getUser().getUserEmail(),cardIDTextView.getText().toString());
-                        try {
-                            dbManager.readConsumptionlistData();
-                        } catch (ExecutionException | InterruptedException | JSONException e) {
-                            e.printStackTrace();
-                        }
+                        ((MenuActivity) MenuActivity.mContext).startCardInfoFragment(cardKoTextView.getText().toString());
                     }
                 }
             });
         }
 
         public void setItem(Card item) {
-            cardIDTextView.setText(item.getCard_kinds());
-            balanceTextView.setText(Integer.toString(item.getBalance()));
+            cardKoTextView.setText(item.getCard_kinds());
+            cardIDTextView.setText(item.getKoName(item.getCard_kinds()));
+            balanceTextView.setText(Integer.toString(item.getBalance()) + " 원");
         }
     }
 
@@ -105,8 +105,6 @@ public class CardAdapter extends RecyclerView.Adapter<CardAdapter.ViewHolder> im
     public void setOnItemClickListener(OnCardItemClickListener listener) {
         this.listener = listener;
     }
-
-
 
     public void addItem(Card item) {
         items.add(item);

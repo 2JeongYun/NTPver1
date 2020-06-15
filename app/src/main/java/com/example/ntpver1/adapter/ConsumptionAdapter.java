@@ -81,8 +81,6 @@ public class ConsumptionAdapter extends RecyclerView.Adapter<ConsumptionAdapter.
         this.listener = listener;
     }
 
-
-
     public void addItem(Consumptionlist item) {
         items.add(item);
     }

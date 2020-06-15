@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 import android.content.Intent;
 import android.view.View;
@@ -29,7 +30,7 @@ import org.json.JSONObject;
 
 
 public class SelectCardData extends AsyncTask<String, Void, String> {
-    private static final String TAG = "";
+    private static final String TAG = "SelectCardData";
     private String json = "";
     CardAdapter cardAdapter = MyInfoFragment.getCardAdapterInstance();
 
@@ -112,11 +113,19 @@ public class SelectCardData extends AsyncTask<String, Void, String> {
                     card.setCard_kinds(card_kinds);
                     user.setCards(card);
                     cardAdapter.addItem(card);
+
+                    dbManager.setSearchConsumptionlistValue(user.getUserEmail(),card_kinds);
+                    try {
+                        dbManager.readConsumptionlistData();
+                    } catch (ExecutionException | InterruptedException | JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             catch (JSONException e) {
                 Log.d(TAG, e.toString());
             }
+
             // 06.11 null point오류 수정 -> 첫로그인시에는 menu액티비티 존재안함
             if(MenuActivity.mContext == null){
 

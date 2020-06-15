@@ -3,6 +3,7 @@ package com.example.ntpver1.fragments;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.MenuItem;
 
 import com.example.ntpver1.MapActivity;
 import com.example.ntpver1.R;
+import com.example.ntpver1.adapter.RecommendedAlgoritm;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -18,18 +20,29 @@ public class MenuActivity extends AppCompatActivity {
     private static final String TAG = "MenuActivity";
     private static final int REQUEST_MAP_ACTIVITY = 3;
 
+    private MenuActivity thisClass = this;
+    private Activity MenuAct;
+
     public static Context mContext;
+
+    private MenuActivity thisClass = this;
+    private Activity menuAct = this;
 
     MyInfoFragment myInfoFragment;
     SearchFragment searchFragment;
     CardInfoFragment cardInfoFragment;
     BottomNavigationView bottomNavigationView;
 
+<<<<<<< HEAD
+    RecommendedAlgoritm recommendedAlgoritm = RecommendedAlgoritm.getInstance(thisClass);
+=======
+    RecommendedAlgoritm recommendedAlgoritm =RecommendedAlgoritm.getInstance(thisClass);
+>>>>>>> 5cb92c6f308fd0f92866c2221eb99eb287c05d41
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
         init();
     }
 
@@ -77,6 +90,15 @@ public class MenuActivity extends AppCompatActivity {
         switch (method) {
             case "refreshList":
                 myInfoFragment.refreshList();
+            case "setStatistics":
+                myInfoFragment.setStatistics();
+        }
+    }
+
+    public void callSearchFragment(String method) {
+        switch (method) {
+            case "setRecomendData":
+                searchFragment.setRecomendData();
         }
     }
 
@@ -123,5 +145,18 @@ public class MenuActivity extends AppCompatActivity {
 
     public MyInfoFragment getMyInfoFragment() {
         return myInfoFragment;
+    }
+<<<<<<< HEAD
+    public Activity getActivity() {
+        return menuAct;
+=======
+
+    public Activity getActivity() {
+        return MenuAct;
+>>>>>>> 5cb92c6f308fd0f92866c2221eb99eb287c05d41
+    }
+
+    public Context getContext() {
+        return mContext;
     }
 }

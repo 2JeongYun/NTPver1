@@ -1,5 +1,7 @@
 package com.example.ntpver1.adapter;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -7,12 +9,17 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.ntpver1.DBManager;
+import com.example.ntpver1.MapManager;
+import com.example.ntpver1.fragments.MenuActivity;
 import com.example.ntpver1.item.Card;
 import com.example.ntpver1.item.Consumptionlist;
 import com.example.ntpver1.item.Store;
@@ -25,16 +32,16 @@ import java.util.Collections;
 import java.util.concurrent.ExecutionException;
 
 public class RecommendedAlgoritm extends AppCompatActivity {
+    private static final String TAG = "RecomendAlgo";
 
-    LocationManager manager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
     GPSListener gpsListener = new GPSListener();
 
     class GPSListener implements LocationListener{
         @Override
         public void onLocationChanged(Location location) {
 
-            Double latitude = location.getLatitude();
-            Double longitude = location.getLongitude();
+            myLocation = location;
+            manager.removeUpdates(this);
         }
 
         @Override
@@ -49,21 +56,37 @@ public class RecommendedAlgoritm extends AppCompatActivity {
 
     LoginManager loginManager = LoginManager.getInstance();
     User user =loginManager.getUser();
-
+    MenuActivity menuActivity ;
     private static RecommendedAlgoritm recommendedAlgoritm;
 
+    String[] permission_list={
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.ACCESS_FINE_LOCATION
+    };
+
     private RecommendedAlgoritm(){
-        getmylocation();
+    }
+
+    private RecommendedAlgoritm(MenuActivity menuActivity) {
+        this.menuActivity = menuActivity;
     }
 
     public static RecommendedAlgoritm getInstance(){
         if(recommendedAlgoritm == null){
+            Log.d(TAG, null);
             recommendedAlgoritm = new RecommendedAlgoritm();
         }
-
         return recommendedAlgoritm;
     }
 
+    public static RecommendedAlgoritm getInstance(MenuActivity menuActivity){
+        if(recommendedAlgoritm == null){
+            recommendedAlgoritm = new RecommendedAlgoritm(menuActivity);
+        }
+        return recommendedAlgoritm;
+    }
+
+    LocationManager manager;
     Location myLocation;
     double Weightres = 0;
     double Weightcafe= 0;
@@ -78,11 +101,10 @@ public class RecommendedAlgoritm extends AppCompatActivity {
     double count = 0;
     double Zeropayavg = 0;
     double Kyongipayavg = 0;
-
     ArrayList<Store> stlist = new ArrayList<Store>();
     ArrayList<Store> recommendlist = new ArrayList<Store>();
 
-
+    //user정보에 있는 카드 정보들을 읽어와 카테고리에 따라 가중치 계산하기
     public void calculationCategoryWeigt(){
         ArrayList<Card> cardlist = user.getCards();
         for(Card card: cardlist){
@@ -135,6 +157,7 @@ public class RecommendedAlgoritm extends AppCompatActivity {
         }
     }
 
+    //user정보에 있는 결제 금액들을 페이별로 묶어 평균구하기
     public void calculationpaytypeAvg(Consumptionlist consumptionlist){
 
         double zero = 0;
@@ -159,6 +182,7 @@ public class RecommendedAlgoritm extends AppCompatActivity {
 
     }
 
+    //모든 가중치를 종합해 추천list만들기
     public void makeRecommendlist(ArrayList<Store> list){
         for(Store s : list){
             double diweight = distance(s.getLatitude(), s.getLongitude() , myLocation.getLatitude() , myLocation.getLongitude()) / 100.0;
@@ -172,22 +196,67 @@ public class RecommendedAlgoritm extends AppCompatActivity {
     }
 
     //slist 값 추가
-    public void setStlist(Double latitude, Double longitude, int radius, ArrayList<Store> stlist) throws ExecutionException, InterruptedException {
-        int TEST_RADIUS_SET = 300;
+    public void setStlist(Double latitude, Double longitude, int radius) throws ExecutionException, InterruptedException {
         DBManager dbManager = DBManager.getInstance();
-        dbManager.setSearchStoreListValue(latitude,longitude,TEST_RADIUS_SET);
+        dbManager.setSearchStoreListValue(latitude,longitude,radius);
         dbManager.readStoreListData(stlist);
     }
 
-
-    public void getmylocation(){
-        if ( Build.VERSION.SDK_INT >= 23 &&
-                ContextCompat.checkSelfPermission( getApplicationContext(), android.Manifest.permission.ACCESS_FINE_LOCATION ) != PackageManager.PERMISSION_GRANTED ) {
-            ActivityCompat.requestPermissions( RecommendedAlgoritm.this, new String[] {  android.Manifest.permission.ACCESS_FINE_LOCATION  },
-                    0 );
-        }
-        else {
+    //내위치 가져오기
+    public void getMyLocation(){
+        manager = (LocationManager) menuActivity.getActivity().getSystemService(Activity.LOCATION_SERVICE);
+        // 권한이 모두 허용되어 있을 때만 동작하도록 한다.
+        int chk1 = ContextCompat.checkSelfPermission(menuActivity.getContext(), Manifest.permission.ACCESS_FINE_LOCATION);
+        int chk2 = ContextCompat.checkSelfPermission(menuActivity.getContext(), Manifest.permission.ACCESS_COARSE_LOCATION);
+        if(chk1 == PackageManager.PERMISSION_GRANTED && chk2 == PackageManager.PERMISSION_GRANTED){
             myLocation = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        }
+
+        try {
+            setStlist(myLocation.getLatitude() , myLocation.getLongitude() , 200);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void checkPermission(){
+        boolean isGrant=false;
+<<<<<<< HEAD
+
+=======
+>>>>>>> 5cb92c6f308fd0f92866c2221eb99eb287c05d41
+        for(String str : permission_list){
+            if(ContextCompat.checkSelfPermission(menuActivity.getActivity(), str)== PackageManager.PERMISSION_GRANTED){          }
+            else{
+                isGrant=false;
+                break;
+            }
+        }
+<<<<<<< HEAD
+=======
+        if(isGrant==false){
+            ActivityCompat.requestPermissions(menuActivity.getActivity(), permission_list,0);
+        }
+>>>>>>> 5cb92c6f308fd0f92866c2221eb99eb287c05d41
+    }
+
+    //어플의 권한 획득하기 , 내위치 불러오기
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        menuActivity.getActivity().onRequestPermissionsResult(requestCode, permissions, grantResults);
+        boolean isGrant = true;
+        for(int result : grantResults){
+            if(result == PackageManager.PERMISSION_DENIED){
+                isGrant = false;
+                break;
+            }
+        }
+        // 모든 권한을 허용했다면 사용자 위치를 측정한다.
+        if(isGrant == true){
+            getMyLocation();
         }
     }
 
@@ -202,14 +271,17 @@ public class RecommendedAlgoritm extends AppCompatActivity {
 
         return dist;
     }
+
     // This function converts decimal degrees to radians
     private static double deg2rad(double deg) {
         return (deg * Math.PI / 180.0);
     }
+
     // This function converts radians to decimal degrees
     private static double rad2deg(double rad) {
         return (rad * 180 / Math.PI);
     }
+
     // 카테고리에 따른 가중치를 반환해주는 함수
     private double discernCategory(String category){
         double caweight = 0;
@@ -247,6 +319,7 @@ public class RecommendedAlgoritm extends AppCompatActivity {
         }
         return caweight;
     }
+
     //페이타입과 남은 금액을 비교해 가중치를 반환해주는 함수
     private double comparePayavg(ArrayList<String> pay){
         double weight = 0;
@@ -276,5 +349,13 @@ public class RecommendedAlgoritm extends AppCompatActivity {
         return weight;
     }
 
-}
+    public ArrayList<Store> getRecommendlist(){
+        return recommendlist;
+    }
+<<<<<<< HEAD
+=======
 
+}
+>>>>>>> 5cb92c6f308fd0f92866c2221eb99eb287c05d41
+
+}

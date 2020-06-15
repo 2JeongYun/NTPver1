@@ -11,6 +11,13 @@ public class User {
     String phoneNumber;
     ArrayList<Card> cards = new ArrayList<Card>();
 
+    public void uesrInit() {
+        userEmail = "";
+        userName = "";
+        phoneNumber = "";
+        cards.clear();
+    }
+
     public String getUserEmail() {
         return userEmail;
     }

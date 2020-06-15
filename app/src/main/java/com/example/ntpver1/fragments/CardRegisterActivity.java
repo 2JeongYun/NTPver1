@@ -10,10 +10,16 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 
+import com.example.ntpver1.DBManager;
 import com.example.ntpver1.R;
+import com.example.ntpver1.item.Card;
 import com.example.ntpver1.login.login.LoginManager;
 import com.example.ntpver1.login.login.User;
 import com.google.android.material.textfield.TextInputEditText;
+
+import org.json.JSONException;
+
+import java.util.concurrent.ExecutionException;
 
 public class CardRegisterActivity extends Activity {
 
@@ -23,6 +29,7 @@ public class CardRegisterActivity extends Activity {
     TextInputEditText cardNumberText;
     TextInputEditText cardValidText;
     Button confirmButton;
+    DBManager dbManager = DBManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +54,19 @@ public class CardRegisterActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (isValid()) {
-                    
+                    dbManager.setInsertCardValue(Card.getEnName(cardTypeText.getText().toString()),
+                            cardNumberText.getText().toString(), user.getUserEmail(), cardValidText.getText().toString());
+                    try {
+                        dbManager.writeCardData();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    finish();
+                    loginManager.userUpdate();
                 }
             }
         });

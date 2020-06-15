@@ -21,6 +21,11 @@
             android:background="@drawable/card_press">
 
             <TextView
+                android:id="@+id/card_ko"
+                android:layout_width="0dp"
+                android:layout_height="0dp" />
+
+            <TextView
                 android:id="@+id/card_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

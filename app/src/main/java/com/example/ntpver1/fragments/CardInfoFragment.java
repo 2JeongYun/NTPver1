@@ -24,6 +24,7 @@ import com.example.ntpver1.item.Consumptionlist;
 import com.example.ntpver1.login.login.LoginManager;
 import com.example.ntpver1.login.login.User;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class CardInfoFragment extends Fragment implements MenuActivity.OnBackPressedListener {
@@ -35,6 +36,8 @@ public class CardInfoFragment extends Fragment implements MenuActivity.OnBackPre
     User user;
     Card card;
     String cardType;
+
+    ArrayList<Consumptionlist> consumptionlist;
 
     TextView payBalanceTextView;
     TextView payTypeTextView;
@@ -59,11 +62,13 @@ public class CardInfoFragment extends Fragment implements MenuActivity.OnBackPre
     private void init(ViewGroup rootView) {
         user = loginManager.getUser();
         card = user.getCard(cardType);
+        consumptionlist = card.getUsageHistory();
+        consumptionAdapter = new ConsumptionAdapter();
 
         payTypeTextView = rootView.findViewById(R.id.pay_type);
         payBalanceTextView = rootView.findViewById(R.id.pay_balance);
 
-        payTypeTextView.setText(card.getKoName());
+        payTypeTextView.setText(card.getKoName(card.getCard_kinds()));
         payBalanceTextView.setText(Integer.toString(card.getBalance()));
 
         setRecyclerView(rootView);
@@ -77,16 +82,10 @@ public class CardInfoFragment extends Fragment implements MenuActivity.OnBackPre
         consumptionRecyclerView.setLayoutManager(layoutManager);
 
         consumptionRecyclerView.setAdapter(consumptionAdapter);
-    }
 
-    public static ConsumptionAdapter getCsmptInstance() {
-        if (consumptionAdapter == null) {
-            consumptionAdapter = new ConsumptionAdapter();
+        for (Consumptionlist cons : consumptionlist) {
+            consumptionAdapter.addItem(cons);
         }
-
-        consumptionAdapter.setClean();
-
-        return consumptionAdapter;
     }
 
     @Override

@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,10 +21,14 @@ import com.example.ntpver1.adapter.CardAdapter;
 import com.example.ntpver1.adapter.StoreAdapter;
 import com.example.ntpver1.item.Card;
 import com.example.ntpver1.login.login.LoginManager;
+import com.example.ntpver1.login.login.User;
 import com.example.ntpver1.login.register.UserRegisterActivity;
 
 import org.json.JSONException;
+import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.concurrent.ExecutionException;
 
 public class MyInfoFragment extends Fragment {
@@ -34,6 +39,14 @@ public class MyInfoFragment extends Fragment {
     DBManager dbManager;
     LoginManager loginManager = LoginManager.getInstance();
 
+    TextView rankFirstTextView;
+    TextView rankSecondTextView;
+    TextView rankThirdTextView;
+
+    TextView incomeTextView;
+    TextView spendingTextView;
+    TextView totalTextView;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,21 +55,24 @@ public class MyInfoFragment extends Fragment {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_my_info, container, false);
         dbManager = DBManager.getInstance();
 
-        setUI(rootView);
+        init(rootView);
 
         return rootView;
     }
 
-    private void setUI(ViewGroup rootView) {
+    private void init(ViewGroup rootView) {
         setRecyclerView(rootView);
         registCardButton = rootView.findViewById(R.id.regist_card);
 
-        try {
-            dbManager.setSearchCardValue(loginManager.getUser().getUserEmail());
-            dbManager.readCardData();
-        } catch (Exception e) {
-            Log.d(TAG, "setUI, ERROR : can't read card data");
-        }
+        rankFirstTextView = rootView.findViewById(R.id.rank_first);
+        rankSecondTextView = rootView.findViewById(R.id.rank_second);
+        rankThirdTextView = rootView.findViewById(R.id.rank_third);
+
+        incomeTextView = rootView.findViewById(R.id.income);
+        spendingTextView = rootView.findViewById(R.id.spending);
+        totalTextView = rootView.findViewById(R.id.total);
+
+        setStatistics();
 
         registCardButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +81,31 @@ public class MyInfoFragment extends Fragment {
                 startActivity(intent);
             }
         });
+    }
+
+    public void setStatistics() {
+        User user = loginManager.getUser();
+        ArrayList<Card> cards = user.getCards();
+        ArrayList<TextView> rankings = new ArrayList<>();
+        Collections.sort(cards);
+
+        for (Card card : cards) {
+            Log.d(TAG, "cards use cnt : " + card.getCard_kinds() + Integer.toString(card.getUseCount()));
+        }
+
+        rankings.add(rankFirstTextView);
+        rankings.add(rankSecondTextView);
+        rankings.add(rankThirdTextView);
+
+        Log.d(TAG, Integer.toString(cards.size()));
+
+        for (int i = 0; i < cards.size(); i++) {
+            rankings.get(i).setText(cards.get(i).getKoName(cards.get(i).getCard_kinds()));
+            Log.d(TAG, rankings.get(i).getText().toString());
+            Log.d(TAG, Integer.toString(i));
+            if (i >= 2)
+                break;
+        }
     }
 
     //리싸이클러뷰

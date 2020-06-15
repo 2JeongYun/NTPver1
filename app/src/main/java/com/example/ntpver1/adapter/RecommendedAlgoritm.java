@@ -32,6 +32,7 @@ import java.util.Collections;
 import java.util.concurrent.ExecutionException;
 
 public class RecommendedAlgoritm extends AppCompatActivity {
+    private static final String TAG = "RecomendAlgo";
 
     GPSListener gpsListener = new GPSListener();
 
@@ -72,6 +73,7 @@ public class RecommendedAlgoritm extends AppCompatActivity {
 
     public static RecommendedAlgoritm getInstance(){
         if(recommendedAlgoritm == null){
+            Log.d(TAG, null);
             recommendedAlgoritm = new RecommendedAlgoritm();
         }
         return recommendedAlgoritm;
@@ -222,15 +224,13 @@ public class RecommendedAlgoritm extends AppCompatActivity {
 
     public void checkPermission(){
         boolean isGrant=false;
+
         for(String str : permission_list){
             if(ContextCompat.checkSelfPermission(menuActivity.getActivity(), str)== PackageManager.PERMISSION_GRANTED){          }
             else{
                 isGrant=false;
                 break;
             }
-        }
-        if(isGrant==false){
-            ActivityCompat.requestPermissions(menuActivity.getActivity(), permission_list,0);
         }
     }
 

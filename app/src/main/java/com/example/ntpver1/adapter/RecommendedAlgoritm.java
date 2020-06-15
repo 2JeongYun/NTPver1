@@ -32,7 +32,6 @@ import java.util.Collections;
 import java.util.concurrent.ExecutionException;
 
 public class RecommendedAlgoritm extends AppCompatActivity {
-    private static final String TAG = "RecomendAlgo";
 
     GPSListener gpsListener = new GPSListener();
 
@@ -73,7 +72,6 @@ public class RecommendedAlgoritm extends AppCompatActivity {
 
     public static RecommendedAlgoritm getInstance(){
         if(recommendedAlgoritm == null){
-            Log.d(TAG, null);
             recommendedAlgoritm = new RecommendedAlgoritm();
         }
         return recommendedAlgoritm;
@@ -224,10 +222,6 @@ public class RecommendedAlgoritm extends AppCompatActivity {
 
     public void checkPermission(){
         boolean isGrant=false;
-<<<<<<< HEAD
-
-=======
->>>>>>> 5cb92c6f308fd0f92866c2221eb99eb287c05d41
         for(String str : permission_list){
             if(ContextCompat.checkSelfPermission(menuActivity.getActivity(), str)== PackageManager.PERMISSION_GRANTED){          }
             else{
@@ -235,12 +229,9 @@ public class RecommendedAlgoritm extends AppCompatActivity {
                 break;
             }
         }
-<<<<<<< HEAD
-=======
         if(isGrant==false){
             ActivityCompat.requestPermissions(menuActivity.getActivity(), permission_list,0);
         }
->>>>>>> 5cb92c6f308fd0f92866c2221eb99eb287c05d41
     }
 
     //어플의 권한 획득하기 , 내위치 불러오기
@@ -352,10 +343,5 @@ public class RecommendedAlgoritm extends AppCompatActivity {
     public ArrayList<Store> getRecommendlist(){
         return recommendlist;
     }
-<<<<<<< HEAD
-=======
-
-}
->>>>>>> 5cb92c6f308fd0f92866c2221eb99eb287c05d41
 
 }

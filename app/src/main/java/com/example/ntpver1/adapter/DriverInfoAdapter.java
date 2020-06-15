@@ -20,11 +20,24 @@ public class DriverInfoAdapter implements GoogleMap.InfoWindowAdapter {
 
     @Override
     public View getInfoWindow(Marker marker) {
+
+        TextView title = window.findViewById(R.id.marker_store_name);
+        TextView address = window.findViewById(R.id.marker_store_address);
+        TextView store_phone = window.findViewById(R.id.marker_store_phone);
+
+        title.setText(store.getName());
+
+        address.setText(store.getAddress());
+
+        store_phone.setText(store.getPhone());
+
         return window;
     }
 
     @Override
     public View getInfoContents(Marker marker) {
+
         return null;
+
     }
 }

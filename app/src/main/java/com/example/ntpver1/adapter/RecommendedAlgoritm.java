@@ -157,36 +157,39 @@ public class RecommendedAlgoritm extends AppCompatActivity {
         }
     }
 
+    int zero = 0;
+    int kyonggi = 0;
+    double zerocount = 0;
+    double kyonggicount = 0;
+
     //user정보에 있는 결제 금액들을 페이별로 묶어 평균구하기
     public void calculationpaytypeAvg(Consumptionlist consumptionlist){
 
-        int zero = 0;
-        int kyonggi = 0;
-        double zerocount = 0;
-        double kyonggicount = 0;
 
         String s = consumptionlist.getCard_kind();
 
         Log.d(TAG, "getcard" + s);
 
         switch(s){
-
             case "zeropay" :
-                zero = zero-consumptionlist.getPay();
-                zerocount++;
-                Log.d(TAG, "제로추가 " + Integer.toString(zero));
+                if(consumptionlist.getPay() < 0) {
+                    zero = zero - consumptionlist.getPay();
+                    zerocount++;
+                    Log.d(TAG, "제로추가 " + Integer.toString(consumptionlist.getPay()));
+                }
                 break;
 
             case "kyonggipay" :
-                kyonggi = kyonggi - consumptionlist.getPay();
-                kyonggicount++;
-                Log.d(TAG, "경기추가 " + Integer.toString(zero));
+                if(consumptionlist.getPay() < 0) {
+                    kyonggi = kyonggi - consumptionlist.getPay();
+                    kyonggicount++;
+                    Log.d(TAG, "경기추가 " + Integer.toString(consumptionlist.getPay()));
+                }
         }
 
         Zeropayavg = zero/zerocount;
-        Kyongipayavg = kyonggicount/kyonggicount;
-
-
+        Kyongipayavg = kyonggi/kyonggicount;
+        
     }
 
     //모든 가중치를 종합해 추천list만들기

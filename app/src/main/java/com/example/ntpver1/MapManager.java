@@ -450,7 +450,7 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
         Store store = null;
         for(Store s : aroundlist){
             if(premaker.getTitle().equals(s.getName()))
-                return  store = s;
+                return  s;
         }
         return store;
     }

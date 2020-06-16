@@ -92,9 +92,7 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
     LocationManager manager;
 
     public static MapManager getInstance(GoogleMap googleMap, MapActivity mapActivity) {
-        if (mapManager == null) {
-            mapManager = new MapManager(googleMap, mapActivity);
-        }
+        mapManager = new MapManager(googleMap, mapActivity);
 
         return mapManager;
     }

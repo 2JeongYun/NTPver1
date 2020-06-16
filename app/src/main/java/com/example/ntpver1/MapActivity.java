@@ -1,6 +1,7 @@
 package com.example.ntpver1;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,6 +13,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
@@ -149,12 +151,6 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
                         }, 3000);
 
                 }
-                //변경 jjs 05.19 try catch 추가
-//                try {
-//                    doSearch("",mapManager.getSearchCentermymakerlntlng().latitude, mapManager.getSearchCentermymakerlntlng().longitude , 500 ,  2);
-//                } catch (InterruptedException | JSONException | ExecutionException e) {
-//                    e.printStackTrace();
-//                }
             }
         });
     }
@@ -394,5 +390,15 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
 
     public static void setMapMode(int type) {
         mode = type;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

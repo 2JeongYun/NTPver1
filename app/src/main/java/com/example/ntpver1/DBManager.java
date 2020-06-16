@@ -75,33 +75,37 @@ public class DBManager {
 
     //가게정보찾기
     public void readData(MapManager mapManager, DBManager dbManager, StoreAdapter storeAdapter, SweetSheet sweetSheet) throws ExecutionException, InterruptedException {
-        String payString = this.payCategory.toString();
-        payString = payString.replaceAll(" ", "");
-        payString = payString.replace("[", "");
-        payString = payString.replace("]", "");
-        String categoryString = this.storeCategory.toString();
-        categoryString = categoryString.replaceAll(" ", "");
-        categoryString = categoryString.replace("[", "");
-        categoryString = categoryString.replace("]", "");
+        this.payCategory.add("제로페이");
+        this.storeCategory.add("편의점");
+        this.storeCategory.add("카페");
+        this.storeCategory.add("음식점");
 
         Set<GeoHashQuery> newQueries = GeoHashQuery.queriesAtLocation(new GeoLocation(this.latitude, this.longitude), this.radius);
         System.out.println(newQueries);
-        String json_string = "";
 
         for (final GeoHashQuery query : newQueries) {
-            SelectStoreData task = new SelectStoreData(mapManager, dbManager, storeAdapter, sweetSheet);
-            task.execute("http://" + IP_ADDRESS + "/select.php", this.keyWord, payString, categoryString, query.getStartValue(), query.getEndValue());
-            String result = task.get();
+            for (String payString : this.payCategory){
+                for ( String categoryString : this.storeCategory) {
+                    SelectStoreData task = new SelectStoreData(mapManager, dbManager, storeAdapter, sweetSheet);
+                    task.execute("http://" + IP_ADDRESS + "/select.php", this.keyWord, payString, categoryString, query.getStartValue(), query.getEndValue());
+                    String result = task.get();
+                }
+            }
         }
     }
 
     //가게리스트정보찾기
     public void readStoreListData() throws ExecutionException, InterruptedException {
         Set<GeoHashQuery> newQueries = GeoHashQuery.queriesAtLocation(new GeoLocation(this.latitude, this.longitude), this.radius);
+
         for (final GeoHashQuery query : newQueries) {
-            SelectStoreListData task = new SelectStoreListData();
-            task.execute("http://" + IP_ADDRESS + "/select.php", "", "", "", query.getStartValue(), query.getEndValue());
-            task.get();
+            for (String payString : this.payCategory) {
+                for (String categoryString : this.storeCategory) {
+                    SelectStoreListData task = new SelectStoreListData();
+                    task.execute("http://" + IP_ADDRESS + "/select.php", "", "", "", query.getStartValue(), query.getEndValue());
+                    task.get();
+                }
+            }
         }
     }
 

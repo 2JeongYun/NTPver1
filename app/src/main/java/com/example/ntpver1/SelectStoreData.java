@@ -68,7 +68,6 @@ public class SelectStoreData extends AsyncTask<String, Void, String> {
                 + "&category=" + category
                 + "&start_at=" + start_at
                 + "&end_at=" + end_at;
-        System.out.println(postParameters);
         Log.d(TAG, postParameters);
         try {
 
@@ -89,7 +88,7 @@ public class SelectStoreData extends AsyncTask<String, Void, String> {
 
 
             int responseStatusCode = httpURLConnection.getResponseCode();
-            Log.d(TAG, "POST response code - " + responseStatusCode);
+//            Log.d(TAG, "POST response code - " + responseStatusCode);
             InputStream inputStream;
             if(responseStatusCode == HttpURLConnection.HTTP_OK) {
                 inputStream = httpURLConnection.getInputStream();
@@ -133,7 +132,6 @@ public class SelectStoreData extends AsyncTask<String, Void, String> {
                             JSONObject jsonObject = jsonArray.getJSONObject(i);
                             String payName = jsonObject.getString("pay_name");
                             String storeName = jsonObject.getString("store_name");
-                            Log.d(TAG, storeName);
                             String address = jsonObject.getString("address");
                             String phoneNumber = jsonObject.getString("phone_number");
                             String category = jsonObject.getString("category");
@@ -148,10 +146,10 @@ public class SelectStoreData extends AsyncTask<String, Void, String> {
                         ((MapActivity)MapActivity.mapContext).refreshList();
 
                     } catch (JSONException e) {
-                        Log.d(TAG, "json error");
+                        Log.d(TAG, "json error" + e.toString());
                     }
                 } else {
-                    Log.d(TAG, "db error");
+                    Log.d(TAG, "db error" + json_string);
                 }
             } else {
                 Log.d(TAG, "empty list");

@@ -399,6 +399,7 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
 
     @Override
     public void onDestroy() {
+        mapManager.init();
         super.onDestroy();
     }
 }

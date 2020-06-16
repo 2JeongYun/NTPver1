@@ -92,9 +92,15 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
     LocationManager manager;
 
     public static MapManager getInstance(GoogleMap googleMap, MapActivity mapActivity) {
-        mapManager = new MapManager(googleMap, mapActivity);
+        if (mapManager == null) {
+            mapManager = new MapManager(googleMap, mapActivity);
+        }
 
         return mapManager;
+    }
+
+    public void init() {
+        mapManager = null;
     }
 
     public static MapManager getInstance() {
@@ -483,7 +489,7 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
             public void onCameraMove() {
                 MapActivity mapActivity = new MapActivity();
                 CameraPosition movingposition = mMap.getCameraPosition();
-                if(distance(movingposition.target.latitude , movingposition.target.longitude , SearchCenter.latitude , SearchCenter.longitude) > 2000){
+                if(distance(movingposition.target.latitude , movingposition.target.longitude , SearchCenter.latitude , SearchCenter.longitude) > 1000){
                     RemovePremarker();
                     pmlist.clear();
                     LatLng location = new LatLng(movingposition.target.latitude , movingposition.target.longitude);
@@ -568,6 +574,8 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
         for(String s : pmlist){
             remove(s);
         }
+        mMap.clear();
+        showMyLocation();
     }
 
     private void remove(String name){

@@ -49,10 +49,11 @@ public class SelectStoreListData extends AsyncTask<String, Void, String> {
 
         String serverURL = (String)params[0];
         String postParameters = "keyword=" + keyword
-                + "&pay_name=" + ""
-                + "&category=" + ""
+                + "&pay_name=" + pay_name
+                + "&category=" + category
                 + "&start_at=" + start_at
                 + "&end_at=" + end_at;
+
         System.out.println(postParameters);
         try {
 

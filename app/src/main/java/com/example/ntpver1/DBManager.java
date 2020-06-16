@@ -97,7 +97,7 @@ public class DBManager {
             for (String payString : this.payCategory) {
                 for (String categoryString : this.storeCategory) {
                     SelectStoreListData task = new SelectStoreListData();
-                    task.execute("http://" + IP_ADDRESS + "/select.php", "", "", "", query.getStartValue(), query.getEndValue());
+                    task.execute("http://" + IP_ADDRESS + "/select.php", keyWord, payString, categoryString, query.getStartValue(), query.getEndValue());
                     task.get();
                 }
             }

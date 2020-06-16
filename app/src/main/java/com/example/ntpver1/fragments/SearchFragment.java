@@ -70,7 +70,9 @@ public class SearchFragment extends Fragment implements MenuActivity.OnBackPress
     }
 
     public void setRecomendData() {
+        storeAdapter.setClean();
         for(Store st : recommendedAlgoritm.getRecommendlist()) {
+            Log.d(TAG, "recomlist lentg =  " + Integer.toString(recommendedAlgoritm.getRecommendlist().size()));
             Log.d(TAG, "add Store : " + st.getName());
             addResult(st);
         }

@@ -1,5 +1,8 @@
 package com.example.ntpver1.adapter;
 
+import android.app.SearchManager;
+import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 

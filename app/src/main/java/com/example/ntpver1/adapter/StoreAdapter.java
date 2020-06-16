@@ -2,6 +2,8 @@ package com.example.ntpver1.adapter;
 
 import android.app.SearchManager;
 import android.content.Intent;
+import android.graphics.Paint;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,6 +22,8 @@ import com.example.ntpver1.R;
 import com.example.ntpver1.fragments.MenuActivity;
 import com.example.ntpver1.item.Store;
 import com.example.ntpver1.myinterface.OnStoreItemClickListener;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -115,6 +119,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
 
         public void setItem(Store item) {
             nameTextView.setText(item.getName());
+            nameTextView.setPaintFlags(nameTextView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
             phoneTextView.setText(item.getPhone());
             addressTextView.setText(item.getAddress());
             ratingBar.setRating(item.getStar());

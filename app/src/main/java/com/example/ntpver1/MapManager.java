@@ -201,7 +201,7 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
         }
         mymaker = mMap.addMarker(markerOptions);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(20));
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(17));
 
     }
 
@@ -217,7 +217,7 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
             mymaker = mMap.addMarker(markerOptions);
             SearchCenter = location;
             mMap.moveCamera(CameraUpdateFactory.newLatLng(location));
-            mMap.animateCamera(CameraUpdateFactory.zoomTo(20));
+            mMap.animateCamera(CameraUpdateFactory.zoomTo(17));
             mapManager.showMyLocation();
         }
         location = new LatLng(mymaker.getPosition().latitude, mymaker.getPosition().longitude);
@@ -498,7 +498,7 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
             if(m.getTitle().equals(s.getName())) {
                 premaker = m;
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(m.getPosition()));
-                mMap.animateCamera(CameraUpdateFactory.zoomTo(20));
+                mMap.animateCamera(CameraUpdateFactory.zoomTo(17));
                 LayoutInflater inflater = (LayoutInflater) mapActivity.getContext().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
                 View infoWindow = inflater.inflate(R.layout.item_markerinfo ,null);
                 DriverInfoAdapter driverInfoAdapter = new DriverInfoAdapter(infoWindow, FindStore());

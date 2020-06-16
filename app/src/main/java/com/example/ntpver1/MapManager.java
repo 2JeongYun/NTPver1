@@ -77,6 +77,7 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
     Marker mymaker;
     LatLng SearchCenter;
     Marker premaker ;
+    MarkerOptions markerOptions;
     ArrayList<String> pmlist = new ArrayList<>();
     ArrayList<Store> aroundlist = new ArrayList<>();
     ArrayList<Marker> prelist = new ArrayList<>();
@@ -199,7 +200,7 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
 
         LatLng location = new LatLng(lat, lng);
 
-        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions = new MarkerOptions();
         markerOptions.position(location);
         SearchCenter = location;
 
@@ -575,7 +576,7 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
             remove(s);
         }
         mMap.clear();
-        showMyLocation();
+        mMap.addMarker(markerOptions);
     }
 
     private void remove(String name){

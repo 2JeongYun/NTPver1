@@ -75,11 +75,6 @@ public class DBManager {
 
     //가게정보찾기
     public void readData(MapManager mapManager, DBManager dbManager, StoreAdapter storeAdapter, SweetSheet sweetSheet) throws ExecutionException, InterruptedException {
-        this.payCategory.add("제로페이");
-        this.storeCategory.add("편의점");
-        this.storeCategory.add("카페");
-        this.storeCategory.add("음식점");
-
         Set<GeoHashQuery> newQueries = GeoHashQuery.queriesAtLocation(new GeoLocation(this.latitude, this.longitude), this.radius);
         System.out.println(newQueries);
 

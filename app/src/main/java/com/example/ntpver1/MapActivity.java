@@ -128,6 +128,8 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
                 Log.d("Map", "Map is ready.");
                 map = googleMap;
 
+                map.setMinZoomPreference(15.0f);
+
                 mapManager = MapManager.getInstance(map, thisClass);
                 mapManager.checkPermission();
 
@@ -137,9 +139,15 @@ public class MapActivity extends AppCompatActivity implements MaterialSearchBar.
                 }
 
                 if (mode == REQUEST_BY_ADAPTER) {
-                    mapManager.Marking(targetStore);
-                    mapManager.Findmarker(targetStore);
                     mapManager.getMyLocation();
+                    mapManager.showMyLocation();
+                    handler.postDelayed(new Runnable(){
+                        public void run()   {
+                            mapManager.Marking(targetStore);
+                            mapManager.Findmarker(targetStore);
+                        }
+                        }, 3000);
+
                 }
                 //변경 jjs 05.19 try catch 추가
 //                try {

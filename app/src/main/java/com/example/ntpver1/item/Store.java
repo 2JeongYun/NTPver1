@@ -99,9 +99,9 @@ public class Store implements Comparable<Store>, Serializable {
 
     @Override
     public int compareTo(Store s) {
-        if (this.weight < s.getWeight())
+        if (this.weight > s.getWeight())
             return -1;
-        else if(this.weight > s.getWeight())
+        else if(this.weight < s.getWeight())
             return 1;
         return 0;
     }

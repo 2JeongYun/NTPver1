@@ -102,7 +102,7 @@ public class RecommendedAlgoritm extends AppCompatActivity {
     double Zeropayavg = 0;
     double Kyongipayavg = 0;
     ArrayList<Store> stlist = new ArrayList<Store>();
-    ArrayList<Store> recommendlist = new ArrayList<Store>();
+    private ArrayList<Store> recommendlist = new ArrayList<Store>();
 
     //user정보에 있는 카드 정보들을 읽어와 카테고리에 따라 가중치 계산하기
     public void calculationCategoryWeigt(){
@@ -194,6 +194,7 @@ public class RecommendedAlgoritm extends AppCompatActivity {
 
     //모든 가중치를 종합해 추천list만들기
     public void makeRecommendlist(ArrayList<Store> list){
+        ArrayList<Store> templist = new ArrayList<>();
         for(Store s : list){
             double diweight = distance(s.getLatitude(), s.getLongitude() , myLocation.getLatitude() , myLocation.getLongitude()) / 100.0;
             double caweight = discernCategory(s.getType());
@@ -201,10 +202,31 @@ public class RecommendedAlgoritm extends AppCompatActivity {
             double weight = caweight - Math.pow(diweight, 2) - payavgweight;
             if(weight > -10) {
                 s.setWeight(weight);
-                recommendlist.add(s);
+                templist.add(s);
             }
         }
-        Collections.sort(recommendlist);
+        sortlist(templist);
+    }
+
+    public void sortlist(ArrayList<Store> list){
+        ArrayList<Store> sortlist = new ArrayList<>();
+        for(Store st : recommendlist)
+            sortlist.add(st);
+        for(Store st : list)
+            sortlist.add(st);
+        recommendlist.clear();
+        Log.d(TAG, " sort after recomlist lentg =  " + Integer.toString(recommendlist.size()));
+        Collections.sort(sortlist);
+        int c = 0;
+        for(Store st : sortlist){
+            c++;
+            recommendlist.add(st);
+            if( c > 20){
+                break;
+            }
+        }
+        Log.d(TAG, " sort after recomlist lentg =  " + Integer.toString(recommendlist.size()));
+
     }
 
     //slist 값 추가
@@ -224,7 +246,6 @@ public class RecommendedAlgoritm extends AppCompatActivity {
         if(chk1 == PackageManager.PERMISSION_GRANTED && chk2 == PackageManager.PERMISSION_GRANTED){
             myLocation = manager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         }
-
         try {
             setStlist(myLocation.getLatitude() , myLocation.getLongitude() , 200);
         } catch (ExecutionException e) {

@@ -9,7 +9,9 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
@@ -21,6 +23,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ntpver1.adapter.DirectionsJSONParser;
@@ -451,6 +454,17 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
         DriverInfoAdapter driverInfoAdapter = new DriverInfoAdapter(infoWindow, FindStore());
         mMap.setInfoWindowAdapter(driverInfoAdapter);
         marker.showInfoWindow();
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                String keyWord = marker.getTitle();
+                Intent intent = new Intent();
+
+                intent.setAction(Intent.ACTION_WEB_SEARCH);
+                intent.putExtra(SearchManager.QUERY, keyWord);
+                ((MapActivity) MapActivity.mapContext).startActivity(intent);
+            }
+        });
         return true;
     }
 
@@ -506,7 +520,31 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
                 m.showInfoWindow();
             }
         }
+
+        mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                String keyWord = marker.getTitle();
+                Intent intent = new Intent();
+
+                intent.setAction(Intent.ACTION_WEB_SEARCH);
+                intent.putExtra(SearchManager.QUERY, keyWord);
+                ((MapActivity) MapActivity.mapContext).startActivity(intent);
+            }
+        });
     }
+
+    //검색설정 버튼
+    public void markerInfoListener(View view) {
+        TextView markerNameTextView = view.findViewById(R.id.marker_store_name);
+        String keyWord = markerNameTextView.getText().toString();
+        Intent intent = new Intent();
+
+        intent.setAction(Intent.ACTION_WEB_SEARCH);
+        intent.putExtra(SearchManager.QUERY, keyWord);
+        view.getContext().startActivity(intent);
+    }
+
     // 두 지점사이의 거리를 meter로 반환해 주기
     private double distance(double movinglat , double movinglnt , double centerlat , double centerlnt){
         double theta = Math.abs(movinglnt - centerlnt);

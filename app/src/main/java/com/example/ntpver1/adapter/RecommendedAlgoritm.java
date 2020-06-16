@@ -111,37 +111,39 @@ public class RecommendedAlgoritm extends AppCompatActivity {
             for(Consumptionlist consumptionlist : card.getUsageHistory()){
                 calculationpaytypeAvg(consumptionlist);
                 count++;
-                switch (consumptionlist.getCategory()){
-                    case "음식점" :
-                        Weightres++;
-                        break;
-                    case "카페" :
-                        Weightcafe++;
-                        break;
-                    case "편의점" :
-                        Weightcon++;
-                        break;
-                    case "식료품점" :
-                        Weightgro++;
-                        break;
-                    case "의료" :
-                        Weightmed++;
-                        break;
-                    case "패션" :
-                        Weightfas++;
-                        break;
-                    case "전자제품" :
-                        Weightele++;
-                        break;
-                    case "유흥" :
-                        Weightplay++;
-                        break;
-                    case "숙박" :
-                        Weighthotel++;
-                        break;
-                    default:
-                        Weightother++;
-                        break;
+                if(consumptionlist.getPay() < 0) {
+                    switch (consumptionlist.getCategory()) {
+                        case "음식점":
+                            Weightres++;
+                            break;
+                        case "카페":
+                            Weightcafe++;
+                            break;
+                        case "편의점":
+                            Weightcon++;
+                            break;
+                        case "식료품점":
+                            Weightgro++;
+                            break;
+                        case "의료":
+                            Weightmed++;
+                            break;
+                        case "패션":
+                            Weightfas++;
+                            break;
+                        case "전자제품":
+                            Weightele++;
+                            break;
+                        case "유흥":
+                            Weightplay++;
+                            break;
+                        case "숙박":
+                            Weighthotel++;
+                            break;
+                        default:
+                            Weightother++;
+                            break;
+                    }
                 }
             }
             Weightres = Weightres/count;
@@ -200,10 +202,9 @@ public class RecommendedAlgoritm extends AppCompatActivity {
             double caweight = discernCategory(s.getType());
             double payavgweight =comparePayavg(s.getPays());
             double weight = caweight - Math.pow(diweight, 2) - payavgweight;
-            if(weight > -10) {
-                s.setWeight(weight);
-                templist.add(s);
-            }
+            s.setWeight(weight);
+            templist.add(s);
+            Log.d(TAG, " 추가리스트  " + Integer.toString(templist.size()));
         }
         sortlist(templist);
     }
@@ -220,7 +221,6 @@ public class RecommendedAlgoritm extends AppCompatActivity {
             sortlist.add(st);
         }
         recommendlist.clear();
-        Log.d(TAG, " sort after recomlist lentg =  " + Integer.toString(recommendlist.size()));
         Collections.sort(sortlist);
         int c = 0;
         for(Store st : sortlist){

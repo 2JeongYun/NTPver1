@@ -212,8 +212,13 @@ public class RecommendedAlgoritm extends AppCompatActivity {
         ArrayList<Store> sortlist = new ArrayList<>();
         for(Store st : recommendlist)
             sortlist.add(st);
-        for(Store st : list)
+        for(Store st : list) {
+            for(Store sort : sortlist) {
+                if(sort.getName().equals(st.getName()))
+                    sortlist.remove(sort);
+            }
             sortlist.add(st);
+        }
         recommendlist.clear();
         Log.d(TAG, " sort after recomlist lentg =  " + Integer.toString(recommendlist.size()));
         Collections.sort(sortlist);

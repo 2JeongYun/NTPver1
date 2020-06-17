@@ -214,12 +214,6 @@ public class RecommendedAlgoritm extends AppCompatActivity {
         for(Store st : recommendlist)
             sortlist.add(st);
         for(Store st : list) {
-            for(int i  =  0; i < sortlist.size() ; i++){
-                if(sortlist.get(i).getName().equals(st.getName())){
-                    sortlist.remove(sortlist.get(i));
-                    continue;
-                }
-            }
             sortlist.add(st);
         }
         recommendlist.clear();
@@ -229,6 +223,7 @@ public class RecommendedAlgoritm extends AppCompatActivity {
             c++;
             recommendlist.add(st);
             if( c > 20){
+
                 break;
             }
         }

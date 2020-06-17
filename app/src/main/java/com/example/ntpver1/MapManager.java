@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -288,6 +289,7 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.others));
                 break;
         }
+
         marker = mMap.addMarker(markerOptions);
         mMarkers.put(store.getName(), markerOptions);
         prelist.add(marker);
@@ -459,6 +461,7 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
         DriverInfoAdapter driverInfoAdapter = new DriverInfoAdapter(infoWindow, FindStore());
         mMap.setInfoWindowAdapter(driverInfoAdapter);
         marker.showInfoWindow();
+
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
@@ -468,6 +471,16 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
                 intent.setAction(Intent.ACTION_WEB_SEARCH);
                 intent.putExtra(SearchManager.QUERY, keyWord);
                 ((MapActivity) MapActivity.mapContext).startActivity(intent);
+            }
+        });
+
+        mMap.setOnInfoWindowLongClickListener(new GoogleMap.OnInfoWindowLongClickListener() {
+            @Override
+            public void onInfoWindowLongClick(Marker marker) {
+                prelist.remove(marker);
+                pmlist.remove(marker.getTitle());
+                marker.remove();
+                Marking(FindStore());
             }
         });
         return true;
@@ -524,6 +537,8 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
                 mMap.setInfoWindowAdapter(driverInfoAdapter);
                 m.showInfoWindow();
             }
+
+
         }
 
         mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {

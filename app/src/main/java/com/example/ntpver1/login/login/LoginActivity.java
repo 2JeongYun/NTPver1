@@ -84,9 +84,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
         //---------------DEBUG ONLY//AutoLogin---------------
-        emailEditText.setText("master");
-        passwordEditText.setText("0000");
-        loginButton.callOnClick();
+//        emailEditText.setText("master");
+//        passwordEditText.setText("0000");
+//        loginButton.callOnClick();
     }
 
     @Override

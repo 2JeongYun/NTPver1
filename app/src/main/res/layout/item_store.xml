@@ -7,9 +7,9 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="4dp"
         android:layout_marginRight="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginBottom="4dp">
 
         <LinearLayout
@@ -24,21 +24,37 @@
                 android:orientation="vertical"
                 android:padding="8dp">
 
-                <TextView
-                    android:id="@+id/nameTextView"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="3dp"
-                    android:maxLines="1"
-                    android:text="가게이름"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
+                    android:orientation="horizontal"
+                    android:baselineAligned="true">
+
+                    <TextView
+                        android:id="@+id/nameTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="3dp"
+                        android:maxLines="1"
+                        android:text="가게이름"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/payTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:text="페이"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/addressTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
+                    android:layout_marginTop="4dp"
                     android:maxLines="1"
                     android:text="지번주소"
                     android:textSize="14sp" />
@@ -61,12 +77,13 @@
                     <RatingBar
                         android:id="@+id/rating_bar"
                         style="@style/Widget.AppCompat.RatingBar.Small"
-                        android:layout_width="match_parent"
-                        android:layout_height="24dp"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
                         android:isIndicator="true"
                         android:numStars="5"
                         android:progressTint="@color/ratingBar"
-                        android:rating="0" />
+                        android:rating="0"
+                        android:visibility="invisible" />
 
                 </LinearLayout>
             </LinearLayout>

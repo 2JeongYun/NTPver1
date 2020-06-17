@@ -66,6 +66,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
         TextView nameTextView;
         TextView phoneTextView;
         TextView addressTextView;
+        TextView payTextView;
         RatingBar ratingBar;
         MapManager mapManager = MapManager.getInstance();
 
@@ -75,6 +76,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
             nameTextView = itemView.findViewById(R.id.nameTextView);
             phoneTextView = itemView.findViewById(R.id.phoneTextView);
             addressTextView = itemView.findViewById(R.id.addressTextView);
+            payTextView = itemView.findViewById(R.id.payTextView);
             ratingBar = itemView.findViewById(R.id.rating_bar);
 
             //클릭 리스너 : 리스너를 별도로 설정했을시 설정한 리스너로 동작
@@ -125,6 +127,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
             phoneTextView.setText(item.getPhone());
             addressTextView.setText(item.getAddress());
             ratingBar.setRating(item.getStar());
+            payTextView.setText(item.getPays().get(0));
         }
     }
 

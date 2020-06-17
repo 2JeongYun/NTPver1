@@ -20,12 +20,14 @@ import com.example.ntpver1.MapActivity;
 import com.example.ntpver1.MapManager;
 import com.example.ntpver1.R;
 import com.example.ntpver1.fragments.MenuActivity;
+import com.example.ntpver1.item.Card;
 import com.example.ntpver1.item.Store;
 import com.example.ntpver1.myinterface.OnStoreItemClickListener;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> implements OnStoreItemClickListener {
     static final String TAG = "StoreAdapter";
@@ -63,6 +65,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         int star;
+        String temp;
         TextView nameTextView;
         TextView phoneTextView;
         TextView addressTextView;
@@ -127,7 +130,10 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
             phoneTextView.setText(item.getPhone());
             addressTextView.setText(item.getAddress());
             ratingBar.setRating(item.getStar());
-            payTextView.setText(item.getPays().get(0));
+            payTextView.setText("");
+            for (int i = 0; i < item.getPays().size(); i++) {
+                payTextView.setText(payTextView.getText().toString() + " " + Card.getKoName(item.getPays().get(i)));
+            }
         }
     }
 
@@ -149,6 +155,20 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
     }
 
     public void addItem(Store item) {
+        Store dupStore;
+        for (int i = 0; i < items.size() ; i++) {
+            dupStore = items.get(i);
+            if (dupStore.getName().equals(item.getName())) {
+                for (int j = 0; j < item.getPays().size(); j++) {
+                    if (dupStore.getPays().contains(item.getPays().get(j))) {
+                        continue;
+                    } else {
+                        dupStore.getPays().add(item.getPays().get(j));
+                    }
+                }
+                return;
+            }
+        }
         items.add(item);
     }
 

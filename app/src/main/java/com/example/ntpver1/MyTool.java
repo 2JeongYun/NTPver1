@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 
+import com.example.ntpver1.item.Store;
+
 import java.util.ArrayList;
 
 public class MyTool {

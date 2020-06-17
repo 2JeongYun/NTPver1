@@ -2,6 +2,7 @@ package com.example.ntpver1.item;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Store implements Comparable<Store>, Serializable {
     ArrayList<String> pays;

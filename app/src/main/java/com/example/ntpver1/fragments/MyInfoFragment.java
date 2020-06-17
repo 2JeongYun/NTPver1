@@ -108,8 +108,6 @@ public class MyInfoFragment extends Fragment {
 
         for (int i = 0; i < cards.size(); i++) {
             rankings.get(i).setText(Integer.toString(i+1) + ". " + cards.get(i).getKoName(cards.get(i).getCard_kinds()));
-            Log.d(TAG, rankings.get(i).getText().toString());
-            Log.d(TAG, Integer.toString(i));
             if (i >= 2)
                 break;
         }

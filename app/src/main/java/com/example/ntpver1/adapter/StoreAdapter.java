@@ -104,8 +104,10 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.ViewHolder> 
                     if (listener != null) {
                         listener.onItemClick(ViewHolder.this, view, position);
                     } else {
-                        if (mode == SEARCH_RESULT)
+                        if (mode == SEARCH_RESULT) {
+                            Log.d(TAG, "Clicked item is " + getItem(position).getName());
                             mapManager.Findmarker(getItem(position));
+                        }
                         else if (mode == RECOMMEND) {
                             Log.d(TAG, "getItem name : " + getItem(position).getName());
                             MapActivity.setMapMode(MapActivity.REQUEST_BY_ADAPTER);

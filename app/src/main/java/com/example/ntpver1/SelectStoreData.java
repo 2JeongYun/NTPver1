@@ -122,7 +122,6 @@ public class SelectStoreData extends AsyncTask<String, Void, String> {
         super.onPostExecute(json_string);
         Log.d(TAG, "onPostExecute() start");
         json_string = json_string.replaceAll("thereisnodata","");
-        Log.d(TAG, json_string);
         if (!json_string.contains("thereisnodata")) {
             if (!json_string.equals("")) {
                 if (!json_string.contains("error")) {

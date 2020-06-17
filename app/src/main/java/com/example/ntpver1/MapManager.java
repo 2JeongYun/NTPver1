@@ -490,14 +490,14 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
             public void onCameraMove() {
                 MapActivity mapActivity = new MapActivity();
                 CameraPosition movingposition = mMap.getCameraPosition();
-                if(distance(movingposition.target.latitude , movingposition.target.longitude , SearchCenter.latitude , SearchCenter.longitude) > 1000){
+                if(distance(movingposition.target.latitude , movingposition.target.longitude , SearchCenter.latitude , SearchCenter.longitude) > 2000){
                     RemovePremarker();
                     pmlist.clear();
                     LatLng location = new LatLng(movingposition.target.latitude , movingposition.target.longitude);
                     SearchCenter = movingposition.target;
                     try {
                         Log.d("search", "movecamera");
-                        ((MapActivity)MapActivity.mapContext).doSearch(location.latitude,location.longitude,3000 ,10);
+                        ((MapActivity)MapActivity.mapContext).doSearch(location.latitude,location.longitude,2000 ,10);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     } catch (ExecutionException e) {

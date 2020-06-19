@@ -185,8 +185,6 @@ public class MapManager extends AppCompatActivity implements GoogleMap.OnMarkerC
         if(manager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
             manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 10, listener);
         }
-
-        Log.d(TAG, "myLocation Value : " + myLocation.getLatitude());
     }
 
     // 내위치 보여주기

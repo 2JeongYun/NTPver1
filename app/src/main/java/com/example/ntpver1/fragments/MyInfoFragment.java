@@ -113,15 +113,15 @@ public class MyInfoFragment extends Fragment {
         }
 
         for (Card card : cards) {
-            int history = card.getSpending(Integer.MIN_VALUE, Integer.MAX_VALUE);
-            if (0 <= history)
-                income += history;
-            else
-                spending += history;
-            total += card.getSpending(Integer.MIN_VALUE, Integer.MAX_VALUE);
+            int historyIncome = card.getIncome(Integer.MIN_VALUE, Integer.MAX_VALUE);
+            int historySpending = card.getSpending(Integer.MIN_VALUE, Integer.MAX_VALUE);
+            income += historyIncome;
+            spending += historySpending;
 
             userTotal += card.getBalance();
         }
+
+        total = income + spending;
 
         incomeTextView.setText("+" + Integer.toString(income) + " 원");
         spendingTextView.setText(Integer.toString(spending) + " 원");

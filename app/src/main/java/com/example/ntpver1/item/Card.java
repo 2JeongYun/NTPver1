@@ -34,6 +34,30 @@ public class Card implements Comparable {
         return usageHistory.size();
     }
 
+    public int getIncome(int start, int end) {
+        String temp;
+        String payDate;
+        int payDateNum;
+
+        int total = 0;
+
+        for (Consumptionlist consumption : usageHistory) {
+            payDate = consumption.getPay_date();
+            temp = payDate.substring(0, 9);
+            temp = temp.replaceAll("[^0-9]", "");
+            Log.d(TAG, temp);
+            payDateNum = Integer.parseInt(temp);
+            Log.d(TAG, Integer.toString(payDateNum));
+
+            if (payDateNum <= end && payDateNum >= start) {
+                if (consumption.getPay() >= 0)
+                    total += consumption.getPay();
+            }
+        }
+
+        return total;
+    }
+
     public int getSpending(int start, int end) {
         String temp;
         String payDate;
@@ -50,7 +74,8 @@ public class Card implements Comparable {
             Log.d(TAG, Integer.toString(payDateNum));
 
             if (payDateNum <= end && payDateNum >= start) {
-                total += consumption.getPay();
+                if (consumption.getPay() < 0)
+                    total += consumption.getPay();
             }
         }
 
